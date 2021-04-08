@@ -47,12 +47,12 @@ li {
 }
 
 .btnEstandar {
-	background-color: #43b287 !important;
+	background-color: #a53636 !important;
 	color: white !important;
 }
 
 .btnEstandar:hover {
-	background-color: #166446 !important;
+	background-color: #cf2626 !important;
 }
 
 .btnEstandar2 {
@@ -115,6 +115,17 @@ li {
 	color: #43b287;
 	border: solid 0.3rem rgb(75, 75, 75);
 	border-radius: 0.5rem;
+}
+
+#imagenPerfil img{
+	border-radius: 150%;
+	border: solid #a53636 0.15rem;
+    height: 50px;
+    width: 50px;
+}
+
+#imagenPerfil div{
+	min-width: 4rem !important;
 }
 
 
@@ -308,6 +319,12 @@ li {
 	background-color: rgb(75, 75, 75);
 	padding-top: 10rem;
 	height: 100vh;
+}
+
+#fotoPerfil{
+	border-radius: 150%;
+    height: 20rem;
+    width: 20rem;
 }
 
 #colaborador table{
