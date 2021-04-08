@@ -18,14 +18,26 @@ function comprobarLogin(data) {
           result.forEach((item) => {
             if(item.password === data.password) {
               console.log("Iniciar sesion");
-              localStorage.setItem("mensajeInicioSesion", "Se ha realizado el login correctamente");
+              localStorage.setItem("alerta", "Se ha realizado el login correctamente");
               localStorage.setItem("sesion", true);
-              window.location = "/";
+              localStorage.setItem("imagenPerfil", item.fotoPerfil);
+
+              //socio
+              if(item.role === 2) {
+                window.location = "/";
+              }
+              //colaborador
+              if(item.role === 4) {
+                window.location = "/colaborador";
+              }
+              //junta directiva
+              if(item.role === 3) {
+                window.location = "/junta-directiva";
+              }
             } else {
               console.log("Contraseña incorrecta");
             }
           })
-        
       },
     );
 }
@@ -45,7 +57,6 @@ export default function Login(props) {
     comprobarLogin(data);
     evt.target.reset();
   };
-
 
   useEffect(() => {
     if(localStorage.getItem("socioCreado") != null) {

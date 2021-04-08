@@ -5,16 +5,20 @@ import Header from "./Components/Home/Header";
 import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
 import Register from "./Components/Register/Register";
+import Colaborador from "./Components/Colaborador/Colaborador";
 
 export default function App(props) {
   return (
     <Router>
       <Header/>
       <Switch>
-      <Route path="/register">
-          <Register/>
-        </Route>
-      <Route path="/login">
+      <Route path="/colaborador">
+            <Colaborador/>
+          </Route>
+        <Route path="/register">
+            <Register/>
+          </Route>
+        <Route path="/login">
           <Login/>
         </Route>
         <Route path="/">

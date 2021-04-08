@@ -13,11 +13,11 @@ export default function Home() {
 
     useEffect(() => {
         console.log(localStorage.getItem("sesion"));
-        if(localStorage.getItem("mensajeInicioSesion") != null) {
-            console.log(localStorage.getItem("mensajeInicioSesion"));
-            document.getElementById("textoAlerta").innerHTML = localStorage.getItem("mensajeInicioSesion");
+        if(localStorage.getItem("alerta") != null) {
+            console.log(localStorage.getItem("alerta"));
+            document.getElementById("textoAlerta").innerHTML = localStorage.getItem("alerta");
             document.getElementById("alerta").style.display = "block";
-            localStorage.removeItem("mensajeInicioSesion");
+            localStorage.removeItem("alerta");
         }
     });
 
