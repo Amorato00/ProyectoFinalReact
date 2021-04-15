@@ -27,6 +27,22 @@ export default function Colaborador() {
           document.getElementById("DNI").value = item.dni;
           document.getElementById("telefono").value = item.telefono;
           document.getElementById("fecha").value = item.fechaNacimiento;
+          document.getElementById("estado").value = item.estado;
+
+          if(item.estado === "Activo") {
+            document.getElementById("estado").className = "form-control inputActivo w-50";
+          }
+
+          if(item.estado === "Pide Pago") {
+            document.getElementById("estado").className = "form-control inputPidePago w-50";
+          }
+
+          if(item.estado === "Baja") {
+            document.getElementById("estado").className = "form-control inputBaja w-50";
+          }
+
+         
+          console.log(item.estado);
         });
       });
   }
@@ -78,7 +94,6 @@ export default function Colaborador() {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <Header />
       <section id="colaboladorSingleSocio" className="text-white">
         <div className="container pt-5">
           <div className="text-center pb-5">
@@ -101,12 +116,25 @@ export default function Colaborador() {
             <div className="col-12 col-lg-5 text-center pt-4">
               <h2 id="nombreTitulo">Nombre</h2>
               <h3 id="id">#id</h3>
-              <div>
+              <div className="pt-3">
                 <img src={"./img/fotoPerfil/"+fotoPerfil} alt="..." id="fotoPerfil"/>
               </div>
             </div>
             <div className="col-12 col-lg-7 d-flex justify-content-end pt-5">
               <table className="w-75">
+              <tr>
+                  <td>Estado</td>
+                  <td>
+                    <input
+                      type="text"
+                      className="form-control inputRed w-50" 
+                      id="estado"
+                      name="estado"
+                      value="estado"
+                      disabled
+                    />
+                  </td>
+                </tr>
                 <tr>
                   <td>Username</td>
                   <td>
@@ -167,13 +195,13 @@ export default function Colaborador() {
                       className="form-control inputRed w-50"
                       id="DNI"
                       name="DNI"
-                      value="Username"
+                      value="DNI"
                       disabled
                     />
                   </td>
                 </tr>
                 <tr>
-                  <td>DNI</td>
+                  <td>Teléfono</td>
                   <td>
                     <input
                       type="text"

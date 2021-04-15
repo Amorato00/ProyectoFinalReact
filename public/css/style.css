@@ -38,6 +38,20 @@ li {
 	border: 1px solid #a53636 !important;
 }
 
+.inputActivo {
+	border: 1px solid #76e272 !important;
+	background-color: #36a536 !important;
+}
+
+.inputPidePago {
+	background-color:#a53636 !important;
+}
+
+.inputBaja {
+	border: 1px solid #72b0e2 !important;
+	background-color: #367ca5 !important;
+}
+
 .obligatorio {
 	color: red;
 }
@@ -76,6 +90,14 @@ li {
     transform: translateX(-50%);
 	z-index: 10;
 	display: none;
+}
+
+.fondo {
+	background-color:  rgb(75, 75, 75) !important;
+}
+
+.fondoRojo {
+	background-color:  #a53636 !important;
 }
 
 /* Estadar Socio y Junta Directiva */
@@ -318,7 +340,7 @@ li {
 #colaborador {
 	background-color: rgb(75, 75, 75);
 	padding-top: 10rem;
-	height: 100vh;
+	height: 100%;
 }
 
 #fotoPerfil{
@@ -361,7 +383,7 @@ li {
 }
 
 #colaboladorSingleSocio table input {
-	background-color:#a53636 !important;
+	background-color:#a53636;
 	color: white !important;
 }
 

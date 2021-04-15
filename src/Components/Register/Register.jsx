@@ -35,6 +35,7 @@ const schema = yup.object().shape({
       "El dni introducido no tiene el formato correcto"
     ),
   fecha: yup.string().required("La fecha de nacimiento es obligatoria"),
+  icono_perfil: yup.string(),
   password: yup
     .string()
     .required("La contraseña es obligatoria")
@@ -63,7 +64,7 @@ function guardar(data) {
             email: data.correo,
             dni: data.dni,
             telefono: data.telefono,
-            fotoPerfil: null,
+            fotoPerfil: data.icono_perfil,
             role: 2,
             estado: null,
             password: data.password

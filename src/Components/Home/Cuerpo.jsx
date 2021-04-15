@@ -33,15 +33,15 @@ class Cuerpo extends React.Component {
                 <ul className="pt-3">
                   <li className="pb-3 pl-5">
                     <i className="fas fa-percent"></i>
-                    Descuentos exclusivos
+                     Descuentos exclusivos
                   </li>
                   <li className="pb-3 pl-5">
                     <i className="far fa-newspaper"></i>
-                    Recibe las últimas noticias
+                     Recibe las últimas noticias
                   </li>
                   <li className="pb-3 pl-5">
                     <i className="fas fa-bicycle"></i>
-                    Realiza actividades exclusivas
+                     Realiza actividades exclusivas
                   </li>
                   <li className="pb-3 pl-5">
                     <i className="fas fa-toolbox"></i>

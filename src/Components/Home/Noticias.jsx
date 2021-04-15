@@ -58,7 +58,7 @@ class Noticias extends React.Component {
       <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         {items.map((item) => (
           <div className="col mb-4" key={item.id}>
-            <div className="card">
+            <div className="card fondoRojo border-white text-white">
               <img
                 src={"./img/" + item.imagen}
                 className="card-img-top"
@@ -71,8 +71,8 @@ class Noticias extends React.Component {
                   {item.texto.substr(0, 100) + "..."}{" "}
                 </p>
               </div>
-              <div className="card-footer text-right">
-                <small className="text-muted">
+              <div className="card-footer text-right border-white">
+                <small className="text-white">
                   <i className="far fa-clock"></i>
                   {(() => {
                     var fechaActual = new Date();

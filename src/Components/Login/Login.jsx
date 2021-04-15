@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,40 +9,8 @@ const schema = yup.object().shape({
   password: yup.string().required("La contraseña es obligatoria"),
 });
 
-function comprobarLogin(data) {
-    fetch("http://api-proyecto-final/api/usuario/search/"+data.emailUsername)
-    .then((res) => res.json())
-    .then(
-      (result) => {
-        
-          result.forEach((item) => {
-            if(item.password === data.password) {
-              console.log("Iniciar sesion");
-              localStorage.setItem("alerta", "Se ha realizado el login correctamente");
-              localStorage.setItem("sesion", true);
-              localStorage.setItem("imagenPerfil", item.fotoPerfil);
-
-              //socio
-              if(item.role === 2) {
-                window.location = "/";
-              }
-              //colaborador
-              if(item.role === 4) {
-                window.location = "/colaborador";
-              }
-              //junta directiva
-              if(item.role === 3) {
-                window.location = "/junta-directiva";
-              }
-            } else {
-              console.log("Contraseña incorrecta");
-            }
-          })
-      },
-    );
-}
-
 export default function Login(props) {
+
   const {
     register,
     handleSubmit,
@@ -58,6 +26,50 @@ export default function Login(props) {
     evt.target.reset();
   };
 
+  function comprobarLogin(data) {
+    fetch("http://api-proyecto-final/api/usuario/search/"+data.emailUsername)
+    .then((res) => res.json())
+    .then(
+      (result) => {
+         
+            result.forEach((item) => {
+              const bcrypt = require('bcryptjs');
+              const doesPasswordMatch = bcrypt.compareSync(data.password, item.password);
+          
+              if (doesPasswordMatch) {
+                console.log("Iniciar sesion");
+                localStorage.setItem("alerta", "Se ha realizado el login correctamente");
+                localStorage.setItem("sesion", true);
+                localStorage.setItem("idUsuario", item.id);
+                localStorage.setItem("imagenPerfil", item.fotoPerfil);
+
+                //socio
+                if(item.role === 2) {
+                  localStorage.setItem("tipoUsuario", "2");
+                  window.location = "/";
+                  
+                }
+                //colaborador
+                if(item.role === 4) {
+                  localStorage.setItem("tipoUsuario", "4");
+                  window.location = "/colaborador";
+                  
+                }
+                //junta directiva
+                if(item.role === 3) {
+                  localStorage.setItem("tipousuario", "3");
+                  window.location = "/junta-directiva";
+                  
+                }
+              } else {
+                console.log("Contraseña incorrecta");
+              }
+          })
+       
+      },
+    );
+}
+
   useEffect(() => {
     if(localStorage.getItem("socioCreado") != null) {
         console.log(localStorage.getItem("socioCreado"));
@@ -69,12 +81,15 @@ export default function Login(props) {
 
   return (
     <div>
-       <div className="alert alert-info alert-dismissible fade show w-50 mx-auto alertaEstandar" role="alert" id="alerta">
+      <div id="divAlerta">
+      <div className="alert alert-info alert-dismissible fade show w-50 mx-auto alertaEstandar" role="alert" id="alerta">
                 <p id="textoAlerta" className="mb-0">Ejemplo de alerta.</p>
                 <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+      </div>
+       
     <div className="container-fuild" id="login">
        {/*Alerta*/}
       <div className="card mx-auto" style={{ maxWidth: "720px" }}>
@@ -84,6 +99,7 @@ export default function Login(props) {
               <h1 className="card-title text-center pt-5 pb-5">Login</h1>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
+                <p className="text-danger mb-1">{alert}</p>
                 <p className="text-danger mb-1">{errors.emailUsername?.message}</p>
                   <Form.Label> Email o Username</Form.Label>
                   <Form.Control

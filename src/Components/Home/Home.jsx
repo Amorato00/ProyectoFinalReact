@@ -46,7 +46,7 @@ export default function Home() {
                     <Noticias/>
                 </div>
                 <div className="text-center pt-3">
-                  <a href="#" className="btn btn-outline-light font-weight-bold">Ver más noticias</a>
+                  <a href="/noticias" className="btn btn-outline-light font-weight-bold">Ver más noticias</a>
                 </div>
             </div>
             <Cuerpo/>
