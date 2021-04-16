@@ -57,7 +57,7 @@ export default function Login(props) {
                 }
                 //junta directiva
                 if(item.role === 3) {
-                  localStorage.setItem("tipousuario", "3");
+                  localStorage.setItem("tipoUsuario", "3");
                   window.location = "/junta-directiva";
                   
                 }

@@ -11,13 +11,22 @@ import Noticias from "./Components/Noticias/Noticias";
 import Footer from "./Components/Home/Footer";
 import Descuentos from "./Components/Descuentos/Descuentos";
 import Perfil from "./Components/Perfil/Perfil";
+import JuntaDirectiva from "./Components/JuntaDirectiva/JuntaDirectiva";
+import HeaderJuntaDirectiva from "./Components/JuntaDirectiva/Header";
+import Contabilidad from "./Components/JuntaDirectiva/Contabilidad/Contabilidad";
 
 export default function App(props) {
   return (
+    
     <Router>
       <Switch>
+      <Route exact path="/">
+          <Header/>
+          <Home/>
+        </Route>
       <Route path="/perfil">
       {(() => {
+        console.log(localStorage.getItem("tipoUsuario"));
         if(localStorage.getItem("tipoUsuario") === "2") { 
           console.log("HEader de socio");
             return <Header/>
@@ -26,10 +35,22 @@ export default function App(props) {
           console.log("HEader de colaborador");
           return <HeaderColaborador/>
          }
+         if(localStorage.getItem("tipoUsuario") === "3") { 
+          console.log("HEader de juntaDirectiva");
+          return <HeaderJuntaDirectiva/>
+         }
         })()}
             
             <Perfil/>
             <Footer/>
+          </Route>
+          <Route path="/junta-directiva/contabilidad">
+            <HeaderJuntaDirectiva/>
+            <Contabilidad/>
+          </Route>
+        <Route path="/junta-directiva">
+            <HeaderJuntaDirectiva/>
+            <JuntaDirectiva/>
           </Route>
       <Route path="/descuentos">
             <Header/>
@@ -55,14 +76,10 @@ export default function App(props) {
           <Login/>
           <Footer/>
         </Route>
-        <Route path="/">
-          <Header/>
-          <Home/>
-        </Route>
-        <Router path="*">
+        <Route path="*">
           <Header/>
           <NoMatch/>
-        </Router>
+        </Route>
       </Switch>
     </Router>
   );
@@ -71,7 +88,7 @@ export default function App(props) {
 function NoMatch() {
   let location = useLocation();
   return (
-    <div>
+    <div id="contenido">
       <h3>
         Error 404 
       </h3>

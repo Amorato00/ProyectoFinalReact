@@ -35,7 +35,6 @@ const schema = yup.object().shape({
       "El dni introducido no tiene el formato correcto"
     ),
   fecha: yup.string().required("La fecha de nacimiento es obligatoria"),
-  icono_perfil: yup.string(),
   password: yup
     .string()
     .required("La contraseña es obligatoria")
@@ -53,6 +52,8 @@ const schema = yup.object().shape({
 //Guardar sosio
 function guardar(data) {
     var fecha = new Date(data.fecha);
+    const bcrypt = require('bcryptjs');
+    const hashedPassword = bcrypt.hashSync(data.password, bcrypt.genSaltSync());
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -67,7 +68,7 @@ function guardar(data) {
             fotoPerfil: data.icono_perfil,
             role: 2,
             estado: null,
-            password: data.password
+            password: hashedPassword
         }),
     };
     fetch(
@@ -217,7 +218,6 @@ export default function Login(props) {
                       className="form-control-file inputRed"
                       type="file"
                       name="icono_perfil"
-                      {...register("icono_perfil")}
                     />
                   </div>
                 </Form.Group>

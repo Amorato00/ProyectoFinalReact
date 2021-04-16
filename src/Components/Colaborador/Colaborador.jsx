@@ -3,7 +3,6 @@ import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Header from "./Header";
 
 const schema = yup.object().shape({
   search: yup.string().required("El campo esta vacio"),
