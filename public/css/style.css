@@ -71,11 +71,22 @@ li {
 
 .btnEstandar2 {
 	background-color: white !important;
-	color: #166446 !important;
+	color: #a53636 !important;
 }
 
 .btnEstandar2:hover {
 	background-color: rgb(201, 201, 201) !important;
+}
+
+.btnEstandar3 {
+	background-color: #a53636;
+	color: white;
+}
+
+.btnEstandar3:hover {
+	background-color: white;
+	color: rgb(46, 46, 46);
+	border: 1px solid #a53636;
 }
 
 .table-dark {
@@ -150,6 +161,18 @@ li {
 	min-width: 4rem !important;
 }
 
+.enlaceEstandar {
+	min-width: 4rem !important;
+}
+
+.enlaceEstandar {
+	color: #a53636 !important;
+}
+
+.enlaceEstandar:hover {
+	color: #0c0c0c !important;
+}
+
 
 
 /*=============================================
@@ -187,7 +210,7 @@ li {
 
 .fila1-texto {
 	position: absolute;
-	top: 50%;
+	top: 89%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: white;
@@ -223,7 +246,7 @@ li {
 
 .partner {
 	height: auto;
-	width: 70%;
+	width: 75%;
 }
 
 #noticias-home {
@@ -288,6 +311,29 @@ li {
 	justify-content: flex-end;
 }
 
+.cardNoticias:hover {
+	cursor: pointer;
+}
+
+.cardNoticias:hover>div>div:first-of-type {
+	color: rgb(75, 75, 75) !important;
+	background-color: white !important;
+}
+
+.cardNoticias:hover>div>div>small {
+	color: rgb(75, 75, 75) !important;
+}
+
+.cardNoticias:hover>div>div:last-of-type {
+	border-top: 1px solid rgb(75, 75, 75) !important;
+	background-color: white !important;
+}
+
+.iconosSocioCuerpo {
+	width: 2rem !important;
+	display: inline-block;
+}
+
 /*=====  Fin Home ======*/
 
 /*=============================================
@@ -303,17 +349,12 @@ li {
 	border: solid 4px #a53636;
 }
 
-#boton_login {
-	background-color: #a53636;
-	color: white;
-}
-
-#boton_login:hover {
-	background-color: rgb(46, 46, 46);
-}
-
 #login span > a {
 	color: #a53636 !important;
+}
+
+#login span > a:hover {
+	color: #864a4a !important;
 }
 
 
@@ -345,8 +386,9 @@ li {
 
 #fotoPerfil{
 	border-radius: 150%;
-    height: 20rem;
-    width: 20rem;
+	border: solid #a53636 0.15rem;
+    height: 10rem;
+    width: 10rem;
 }
 
 #colaborador table{
@@ -387,6 +429,14 @@ li {
 	color: white !important;
 }
 
+#tarjetaSocio {
+	background-color:white !important;
+	color: rgb(75, 75, 75);
+	border: 2px solid #a53636;
+	border-radius: 0.5rem;
+	visibility: hidden;
+}
+
 /*=====  Fin Colaborador ======*/
 
 /*=============================================
@@ -397,10 +447,25 @@ li {
 	background-color: #a53636;
 }
 
+#contenidoJuntaDirectiva table>thead{
+	background-color:white;
+	color:  rgb(46, 46, 46);
+}
+
+#contenidoJuntaDirectiva table>tfoot>tr{
+	background-color: white;
+	color:  rgb(46, 46, 46);
+}
+
+
 .menu-superior2 {
 	width: 100%;
 	background-color: white;
 	z-index: 2;
+}
+
+#contenido2 {
+	padding-top: 0.5rem !important;
 }
 
 
@@ -496,6 +561,63 @@ li {
 	#redes-sociales {
 		margin-top: 0rem !important;
 	}
+	.partner {
+		height: auto;
+		width: 100%;
+	}
+
+	/* Responsive Tabla */
+    .tableResponsive {
+        border: 0;
+    }
+
+
+    .tableResponsive thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    .tableResponsive tr {
+        border: 2px solid black;
+        display: block;
+        margin-bottom: 0px;
+    }
+
+    .tableResponsive tbody td {
+        border: 1px;
+        border-bottom: 1px solid rgb(0, 0, 0);
+        display: block;
+        font-size: .8em;
+        text-align: right;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+
+    }
+
+    .tableResponsive td::before {
+        /*
+        * aria-label has no advantage, it won't be read inside a table
+        content: attr(aria-label);
+        */
+        content: attr(data-label);
+        color: #a53636;
+		background-color: white;
+		padding: 0.2rem;
+		border-radius: 0.5rem;
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .tableResponsive td:last-child {
+        border-bottom: 0;
+    }
 	/* Fin Home Responsive */
 }
 
@@ -567,6 +689,9 @@ li {
 	}
 	#redes-sociales {
 		margin-top: -8rem;
+	}
+	.fila1-texto h1{
+		font-size: 1.5rem !important;
 	}
 	/* Fin Home Responsive */
 }
