@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import { } from "react-bootstrap";
 
 import Cabecera from "./Cabecera";
-import Actividad from "./Actividad";
 import Partners from "./Partners";
 import Noticias from "./Noticias";
 import Cuerpo from "./Cuerpo";
@@ -34,8 +33,6 @@ export default function Home() {
             </div>
             <div className="container my-5">
                 <div className="row flex-column flex-md-row m-0 justify-content-lg-between">
-                    {/*Actividad*/}
-                    <Actividad/>
                     {/*Partners*/}
                     <Partners/>
                 </div>

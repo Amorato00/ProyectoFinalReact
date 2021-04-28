@@ -11,8 +11,10 @@ export default class Detalles extends React.Component {
       item: [],
       telefono: "",
       correo: "",
+      direccion: "",
       errorCorreo: "",
       errorTelefono: "",
+      errorDireccion: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -24,11 +26,16 @@ export default class Detalles extends React.Component {
       .then(
         (result) => {
           result.forEach((item) => {
+            var dir = "";
+            if(item.direccion !== null) {
+              dir = item.direccion;
+            }
             this.setState({
               isLoaded: true,
               telefono: item.telefono,
               correo: item.email,
-              item: result
+              item: result,
+              direccion: dir
             });
           });
         },
@@ -42,8 +49,8 @@ export default class Detalles extends React.Component {
   }
 
   //Guardar sosio
-guardar() {
-  const { correo, telefono, item } = this.state;
+guardar(tick) {
+  const { correo, telefono, item, direccion } = this.state;
   var fechaGuardar = new Date(item[0].fechaNacimiento);
   const requestOptions = {
       method: "PUT",
@@ -60,6 +67,9 @@ guardar() {
           role: item[0].role,
           estado: item[0].estado,
           password: item[0].contraseña,
+          iban: item[0].iban,
+          seccion: item[0].seccion,
+          direccion: direccion
       }),
   };
   fetch(
@@ -67,7 +77,9 @@ guardar() {
       requestOptions
   ).then((response) => { 
     if(response.ok) { 
-      console.log("funciomnnnnnaa");
+      console.log(tick);
+      document.getElementById(tick).style.display = "block";
+      document.getElementById(tick).className = "d-inline";
       localStorage.setItem("alerta", "Se ha modificado correctamente");
       response.json();
       
@@ -80,18 +92,24 @@ guardar() {
   }
 
   handleChange(event) {  
+    document.getElementById("tickCorreo").style.display = "none";
+    document.getElementById("tickCorreo").className = "";
+    document.getElementById("tickTelefono").style.display = "none";
+    document.getElementById("tickTelefono").className = "";
+    document.getElementById("tickDireccion").style.display = "none";
+    document.getElementById("tickDireccion").className = "";
     var name = event.target.name; 
     this.setState({
       [name]: event.target.value
     });
     //Validar telefono
     if(name === "telefono") {
-      var expreg = /^\d{9}$/;
+      var expregTelefono = /^\d{9}$/;
       if(event.target.value === "") {
         this.setState({
           errorTelefono: "El telefono esta vacio",
         });
-      } else if(!expreg.test(event.target.value)){
+      } else if(!expregTelefono.test(event.target.value)){
         this.setState({
           errorTelefono: "El número de telefono no tiene 9 digitos",
         });
@@ -101,27 +119,27 @@ guardar() {
         });
       }
     }
-      //Validar correo
-      if(name === "correo") {
-        var expreg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if(event.target.value === "") {
-          this.setState({
-            errorCorreo: "El email esta vacio",
-          });
-        } else if(!expreg.test(event.target.value)){
-          this.setState({
-            errorCorreo: "Correo electronico invalido",
-          });
-        } else {
-          this.setState({
-            errorCorreo: "",
-          });
-        }
+    //Validar correo
+    if(name === "correo") {
+      var expregCorreo = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if(event.target.value === "") {
+        this.setState({
+          errorCorreo: "El email esta vacio",
+        });
+      } else if(!expregCorreo.test(event.target.value)){
+        this.setState({
+          errorCorreo: "Correo electronico invalido",
+        });
+      } else {
+        this.setState({
+          errorCorreo: "",
+        });
       }
+    }
   }
 
 render() { 
-  const { telefono, errorTelefono, correo, errorCorreo} = this.state;
+  const { telefono, errorTelefono, correo, errorCorreo, direccion, errorDireccion} = this.state;
   return (
     <div class="col-12 col-md-6">
       <div class="card border-0 rounded rounded-1">
@@ -147,15 +165,16 @@ render() {
                   onBlur={() => {
                     if(errorCorreo === "") {
                       console.log('Enviar');
-                      this.guardar();
+                      this.guardar("tickCorreo");
                     }
                   }}
                   class="rounded pl-1"
                 />
+                <div id="tickCorreo" style={{display:"none"}}><i className="fas fa-check-circle pl-5 text-success"></i></div>
               </td>
             </tr>
             <tr>
-              <td class="font-weight-bold">Teléfono</td>
+              <td class="font-weight-bold">Fecha</td>
               <td>
               {(() => {
                   if(errorTelefono !== ""){
@@ -163,7 +182,7 @@ render() {
                   }
                 })()}
                 <input
-                  type="number"
+                  type="text"
                   id="telefono"
                   name="telefono"
                   value={telefono}
@@ -171,11 +190,38 @@ render() {
                   onBlur={() => {
                     if(errorTelefono === "") {
                       console.log('Enviar');
-                      this.guardar();
+                      this.guardar("tickTelefono");
                     }
                   }}
                   class="rounded pl-1"
                 />
+                <div id="tickTelefono" style={{display:"none"}}><i className="fas fa-check-circle pl-5 text-success"></i></div>
+              </td>
+            </tr>
+            <tr>
+              <td className="font-weight-bold">Dirección</td>
+              <td>
+                {(() => {
+                  if(errorDireccion !== ""){
+                    return (<p className="text-danger">{errorDireccion}</p>);
+                  }
+                })()}
+                <input
+                  type="text"
+                  id="direccion"
+                  name="direccion"
+                  placeholder="Direccion"
+                  value={direccion}
+                  onChange={this.handleChange}
+                  onBlur={() => {
+                    if(errorDireccion === "") {
+                      console.log('Enviar');
+                      this.guardar("tickDireccion");
+                    }
+                  }}
+                  className="rounded pl-1"
+                />
+                <div id="tickDireccion" style={{display:"none"}}><i className="fas fa-check-circle pl-5 text-success"></i></div>
               </td>
             </tr>
           </table>

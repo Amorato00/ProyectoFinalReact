@@ -37,7 +37,7 @@ class Descuentos extends React.Component {
     this.sacarDescuentos();
   }
   render() {
-    const { items, meses } = this.state;
+    const { items } = this.state;
     return (
       <div
         className="container-fluid p-0 pb-5"

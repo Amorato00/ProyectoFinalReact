@@ -4,7 +4,7 @@ import { Nav, Navbar, Button } from "react-bootstrap";
 export default function Header() {
   const [sesion, setSesion] = useState(false);
   const [fotoPerfil, setFotoPerfil] = useState("");
-
+  const [location] = useState(window.location);
   useEffect(() => {
     console.log("Sesion: " + localStorage.getItem("sesion"));
     console.log("Imagen Perfil: " + localStorage.getItem("imagenPerfil"));
@@ -94,33 +94,74 @@ export default function Header() {
           })()}
           <div className="collapse navbar-collapse" id="navbarMenuHome">
             <ul className="navbar-nav ">
-              <li className="nav-item active my-auto">
-                <a className="nav-link marcar enlace-nav" href="/">
-                  Home
-                </a>
-              </li>
-              <li className="dropdown nav-item active my-auto">
-                <a
-                  typpe="button"
-                  className="nav-link dropdown-toggle enlace-nav"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Noticias
-                </a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item" href="/#noticias-home">
-                    Últimas noticias
+              {location.pathname === "/" ? (
+                <li className="nav-item active my-auto">
+                  <a className="nav-link marcar enlace-nav" href="/">
+                    Home
                   </a>
-                  <a className="dropdown-item" href="/noticias">
-                    Ver todas
+                </li>
+              ) : (
+                <li className="nav-item active my-auto">
+                  <a className="nav-link enlace-nav" href="/">
+                    Home
                   </a>
-                </div>
-              </li>
+                </li>
+              )}
+
+              {location.pathname === "/noticias" ? (
+                <li className="dropdown nav-item active my-auto">
+                  <a
+                    typpe="button"
+                    className="nav-link dropdown-toggle marcar enlace-nav"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Noticias
+                  </a>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <a className="dropdown-item" href="/#noticias-home">
+                      Últimas noticias
+                    </a>
+                    <a className="dropdown-item" href="/noticias">
+                      Ver todas
+                    </a>
+                  </div>
+                </li>
+              ) : (
+                <li className="dropdown nav-item active my-auto">
+                  <a
+                    typpe="button"
+                    className="nav-link dropdown-toggle enlace-nav"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Noticias
+                  </a>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <a className="dropdown-item" href="/#noticias-home">
+                      Últimas noticias
+                    </a>
+                    <a className="dropdown-item" href="/noticias">
+                      Ver todas
+                    </a>
+                  </div>
+                </li>
+              )}
+
               {(() => {
                 if (sesion === false) {
                   return (
@@ -153,25 +194,49 @@ export default function Header() {
                     </li>
                   );
                 } else {
-                  return (
-                    <li className="active my-auto">
-                      <Nav.Link className="enlace-nav" href="/descuentos">
-                        Descuentos
-                      </Nav.Link>
-                    </li>
-                  );
+                  if (location.pathname === "/descuentos") {
+                    return (
+                      <li className="active my-auto">
+                        <Nav.Link
+                          className="enlace-nav marcar"
+                          href="/descuentos"
+                        >
+                          Descuentos
+                        </Nav.Link>
+                      </li>
+                    );
+                  } else {
+                    return (
+                      <li className="active my-auto">
+                        <Nav.Link className="enlace-nav" href="/descuentos">
+                          Descuentos
+                        </Nav.Link>
+                      </li>
+                    );
+                  }
                 }
               })()}
-               {(() => {
+              {(() => {
                 if (sesion === true) {
-                  return (
-                    <li className="active my-auto">
-                      <Nav.Link className="enlace-nav" href="/">
+                  if (location.pathname === "/agenda") {
+                    return (
+                      <li className="active my-auto">
+                        <Nav.Link className="enlace-nav marcar" href="/agenda">
+                          Agenda
+                        </Nav.Link>
+                      </li>
+                    );
+                  } else {
+                    return (
+                      <li className="active my-auto">
+                      <Nav.Link className="enlace-nav" href="/agenda">
                         Agenda
                       </Nav.Link>
                     </li>
                     );
-                } 
+                  }
+                  
+                }
               })()}
               <li className="active my-auto">
                 <Nav.Link className="enlace-nav" href="/#quines-somos">
@@ -183,11 +248,13 @@ export default function Header() {
                   Contactanos
                 </Nav.Link>
               </li>
+              {/*
               <li className="active my-auto">
                 <a className="nav-link enlace-nav" href="/">
                   ES
                 </a>
               </li>
+              */}
               {(() => {
                 if (sesion === false) {
                   return (

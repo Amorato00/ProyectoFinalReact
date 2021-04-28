@@ -94,11 +94,13 @@ export default function Header() {
           })()}
           <div className="collapse navbar-collapse" id="navbarMenuHome">
             <ul className="navbar-nav ">
+              {/*
               <li className="active my-auto">
                 <a className="nav-link enlace-nav" href="/">
                   ES
                 </a>
               </li>
+              */}
               {(() => {
                 if (sesion === false) {
                   return (

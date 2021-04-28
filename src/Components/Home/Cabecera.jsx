@@ -44,7 +44,6 @@ export default function Cabecera() {
               src={"./img/StockSnap_SNIKX3KGKD-min.jpg"}
               alt="Imagen1"
               className="d-block w-100"
-              alt="Imagen 1"
             />
             <div className="carousel-caption">
               <h1>¡Hazte socio!</h1>

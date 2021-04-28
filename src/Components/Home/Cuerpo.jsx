@@ -32,19 +32,27 @@ class Cuerpo extends React.Component {
                 <h1 className="pl-4 pt-4">Beneficios de ser socio</h1>
                 <ul className="pt-3">
                   <li className="pb-3 pl-5">
-                    <i className="fas fa-percent"></i>
-                     Descuentos exclusivos
+                    <div className="iconosSocioCuerpo">
+                      <i className="fas fa-percent"></i>
+                    </div>
+                    Descuentos exclusivos
                   </li>
                   <li className="pb-3 pl-5">
-                    <i className="far fa-newspaper"></i>
-                     Recibe las últimas noticias
+                    <div className="iconosSocioCuerpo">
+                      <i className="far fa-newspaper"></i>
+                    </div>
+                    Recibe las últimas noticias
                   </li>
                   <li className="pb-3 pl-5">
-                    <i className="fas fa-bicycle"></i>
-                     Realiza actividades exclusivas
+                    <div className="iconosSocioCuerpo">
+                      <i className="fas fa-bicycle"></i>
+                    </div>
+                    Realiza actividades exclusivas
                   </li>
                   <li className="pb-3 pl-5">
-                    <i className="fas fa-toolbox"></i>
+                    <div className="iconosSocioCuerpo">
+                      <i className="fas fa-toolbox"></i>
+                    </div>
                     Recibe todas las novedades sobre las reuniones de la junta
                     directiva
                   </li>
@@ -54,7 +62,9 @@ class Cuerpo extends React.Component {
           </div>
           <div className="col-4 p-0 d-none d-lg-block">
             <img
-              src={"./img/cyclist-drinking-from-a-bottle-picjumbo-com-min-min.jpg"}
+              src={
+                "./img/cyclist-drinking-from-a-bottle-picjumbo-com-min-min.jpg"
+              }
               className="card-img-top"
               id="imagen-lateral-1"
               alt="..."

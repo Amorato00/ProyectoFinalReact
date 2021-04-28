@@ -56,6 +56,9 @@ guardar(fotoPerfil) {
           role: item[0].role,
           estado: item[0].estado,
           password: item[0].password,
+          iban: item[0].iban,
+          direccion: item[0].direccion,
+          seccion: item[0].seccion
       }),
   };
   fetch(
@@ -63,7 +66,7 @@ guardar(fotoPerfil) {
       requestOptions
   ).then((response) => { 
     if(response.ok) { 
-      console.log("funciomnnnnnaa");
+
       localStorage.setItem("imagenPerfil", fotoPerfil);
       localStorage.setItem("alerta", "Se ha modificado correctamente");
       response.json();
@@ -87,7 +90,7 @@ guardar(fotoPerfil) {
   render(){  
     const { fotoPerfil } = this.state;
   return (
-    <div class="col-12 col-md-6 my-auto pt-5 pt-md-0">
+    <div class="col-12 col-md-6 pt-5 pt-md-0">
       <div className="card border-0 rounded rounded-1 mb-5">
         <h4 className="card-title bg-secondary py-3 text-white mb-0 pl-3 rounded-top rounded-1">
           <i className="far fa-image"></i> Cambiar foto de perfil

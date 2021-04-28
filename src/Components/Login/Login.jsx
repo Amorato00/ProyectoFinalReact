@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,12 +27,14 @@ export default function Login(props) {
   };
 
   function comprobarLogin(data) {
+    document.getElementById("modalCarga").style.display = "block";
     fetch("http://api-proyecto-final/api/usuario/search/"+data.emailUsername)
     .then((res) => res.json())
     .then(
       (result) => {
-         
+          
             result.forEach((item) => {
+              document.getElementById("modalCarga").style.display = "none";
               const bcrypt = require('bcryptjs');
               const doesPasswordMatch = bcrypt.compareSync(data.password, item.password);
           
@@ -45,9 +47,9 @@ export default function Login(props) {
 
                 //socio
                 if(item.role === 2) {
+                  console.log("Hola");
                   localStorage.setItem("tipoUsuario", "2");
                   window.location = "/";
-                  
                 }
                 //colaborador
                 if(item.role === 4) {
@@ -64,11 +66,12 @@ export default function Login(props) {
               } else {
                 console.log("Contraseña incorrecta");
               }
+            });
           })
-       
-      },
-    );
-}
+          .finally(function () {
+            document.getElementById("modalCarga").style.display = "none";
+          });
+      }
 
   useEffect(() => {
     if(localStorage.getItem("socioCreado") != null) {
@@ -89,7 +92,20 @@ export default function Login(props) {
                 </button>
             </div>
       </div>
+
+      <div class="modal" id="modalCarga" style={{display:"none" , backgroundColor: "rgba(0,0,0, 0.5)"}} >
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content py-4 mx-auto w-25 border-0"  style={{backgroundColor: "rgba(0,0,0, 0.5)"}} >
+            <div class="d-flex justify-content-center text-white">
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
        
+    
     <div className="container-fuild" id="login">
        {/*Alerta*/}
       <div className="card mx-auto" style={{ maxWidth: "720px" }}>
@@ -126,7 +142,7 @@ export default function Login(props) {
                 <Form.Group className="text-center">
                   <input
                     type="submit"
-                    className="btn"
+                    className="btn btnEstandar3"
                     value="Login"
                     id="boton_login"
                   />

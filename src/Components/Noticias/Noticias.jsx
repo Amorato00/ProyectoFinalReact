@@ -57,7 +57,7 @@ class Noticias extends React.Component {
         <h1 className="text-center pb-5 pt-5 text-white"> Noticias </h1>
         <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 px-5">
           {items.map((item) => (
-            <div className="col mb-4" key={item.id}>
+            <div className="col mb-4 cardNoticias" key={item.id}>
               <div className="card fondo text-white border-white">
                 <img
                   src={"./img/" + item.imagen}

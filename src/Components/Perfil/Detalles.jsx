@@ -12,35 +12,66 @@ export default class Detalles extends React.Component {
       nombre: "",
       apellidos: "",
       DNI: "",
-      sexo: "",
       fecha: "",
+      iban: "",
       errorUsername: "",
       errorNombre: "",
       errorApellidos: "",
       errorDNI: "",
       errorFecha: "",
+      errorIban: "",
+      idEstado: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
   }
   
   sacarUsuario() {
+    document.getElementById("modalCarga").style.display = "block";
     fetch("http://api-proyecto-final/api/usuario/" + localStorage.getItem("idUsuario"))
       .then((res) => res.json())
       .then(
         (result) => {
           result.forEach((item) => {
+            var ibanGuardar = "";
+            if(item.iban !== null) {
+              ibanGuardar = item.iban;
+            }
+
             this.setState({
               isLoaded: true,
               username: item.username,
               nombre: item.nombre,
               apellidos: item.apellidos,
               DNI: item.dni,
-              sexo: "",
               fecha: item.fechaNacimiento,
-              item: result
+              item: result,
+              iban: ibanGuardar
             });
           });
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      )
+      .finally(function () {
+        document.getElementById("modalCarga").style.display = "none";
+      });
+  }
+
+  sacarIdEstado(estado) {
+    fetch("http://api-proyecto-final/api/estado/" + estado)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          
+            this.setState({
+              idEstado: result.id
+            });
+         
         },
         (error) => {
           this.setState({
@@ -52,9 +83,11 @@ export default class Detalles extends React.Component {
   }
 
   //Guardar sosio
-guardar() {
-  const { username, nombre, apellidos, DNI, fecha,  item } = this.state;
-  var fechaGuardar = new Date(fecha);
+guardar(tick) {
+  const { username, nombre, apellidos, DNI, fecha,  item, iban, idEstado } = this.state;
+  
+  this.sacarIdEstado(item.estado);
+
   const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -62,7 +95,7 @@ guardar() {
           username: username,
           nombre:  nombre,
           apellidos: apellidos,
-          fechaNacimiento: fechaGuardar,
+          fechaNacimiento: fecha,
           email: item[0].email,
           dni: DNI,
           telefono: item[0].telefono,
@@ -70,6 +103,9 @@ guardar() {
           role: item[0].role,
           estado: item[0].estado,
           password: item[0].password,
+          iban: iban,
+          direccion: item[0].direccion,
+          seccion: item[0].seccion
       }),
   };
   fetch(
@@ -77,7 +113,8 @@ guardar() {
       requestOptions
   ).then((response) => { 
     if(response.ok) { 
-      console.log("funciomnnnnnaa");
+      document.getElementById(tick).style.display = "block";
+      document.getElementById(tick).className = "d-inline";
       localStorage.setItem("alerta", "Se ha modificado correctamente");
       response.json();
       
@@ -91,7 +128,23 @@ guardar() {
     this.sacarUsuario();
   }
 
-  handleChange(event) {  
+  reiniciarTick() {
+    document.getElementById("tickUsername").style.display = "none";
+    document.getElementById("tickUsername").className = "";
+    document.getElementById("tickNombre").style.display = "none";
+    document.getElementById("tickNombre").className = "";
+    document.getElementById("tickApellidos").style.display = "none";
+    document.getElementById("tickApellidos").className = "";
+    document.getElementById("tickIban").style.display = "none";
+    document.getElementById("tickIban").className = "";
+    document.getElementById("tickDNI").style.display = "none";
+    document.getElementById("tickDNI").className = "";
+    document.getElementById("tickFecha").style.display = "none";
+    document.getElementById("tickFecha").className = "";
+  }
+
+  handleChange(event) { 
+    this.reiniciarTick(); 
     var name = event.target.name; 
     this.setState({
       [name]: event.target.value
@@ -156,6 +209,20 @@ guardar() {
         });
       }
     }
+
+    //validar Cuenta Contable
+    if(name === "iban") {
+      expreg = /([A-Z]{2})\s*\t*(\d\d)\s*\t*(\d\d\d\d)\s*\t*(\d\d\d\d)\s*\t*(\d\d\d\d)\s*\t*(\d\d\d\d)/g;
+     if(!expreg.test(event.target.value)){
+        this.setState({
+          errorIban: "El formato del IBAN es incorrecto",
+        });
+      } else {
+        this.setState({
+          errorIban: "",
+        });
+      }
+    }
    
   }
 
@@ -163,10 +230,28 @@ guardar() {
 
 render() { 
   const { username, nombre, apellidos, DNI, fecha, errorUsername, errorNombre,
-  errorApellidos, errorDNI, errorFecha } = this.state;
+  errorApellidos, errorDNI, errorFecha, iban, errorIban } = this.state;
  
   return (
     <div class="col-12 col-md-6 mx-auto">
+         <div
+          class="modal"
+          id="modalCarga"
+          style={{ display: "none", backgroundColor: "rgba(0,0,0, 0.5)" }}
+        >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div
+              class="modal-content py-4 mx-auto w-25 border-0"
+              style={{ backgroundColor: "rgba(0,0,0, 0.5)" }}
+            >
+              <div class="d-flex justify-content-center text-white">
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       <div className="card border-0 rounded rounded-1">
         <h4 className="card-title bg-secondary py-3 text-white mb-0 pl-3 rounded-top rounded-1">
           <i className="fa fa-user"></i> Detalles
@@ -192,11 +277,12 @@ render() {
                   onBlur={() => {
                     if(errorUsername === "") {
                       console.log('Enviar');
-                      this.guardar();
+                      this.guardar("tickUsername");
                     }
                   }}
                   className="rounded pl-1"
                 />
+                <div id="tickUsername" style={{display:"none"}}><i className="fas fa-check-circle pl-5 text-success"></i></div>
               </td>
             </tr>
             <tr>
@@ -217,11 +303,12 @@ render() {
                   onBlur={() => {
                     if(errorNombre === "") {
                       console.log('Enviar');
-                      this.guardar();
+                      this.guardar("tickNombre");
                     }
                   }}
                   className="rounded pl-1"
                 />
+                <div id="tickNombre" style={{display:"none"}}><i className="fas fa-check-circle pl-5 text-success"></i></div>
               </td>
             </tr>
             <tr>
@@ -242,11 +329,38 @@ render() {
                   onBlur={() => {
                     if(errorApellidos === "") {
                       console.log('Enviar');
-                      this.guardar();
+                      this.guardar("tickApellidos");
                     }
                   }}
                   className="rounded pl-1"
                 />
+                <div id="tickApellidos" style={{display:"none"}}><i className="fas fa-check-circle pl-5 text-success"></i></div>
+              </td>
+            </tr>
+            <tr>
+              <td className="font-weight-bold">Cuenta IBAN</td>
+              <td>
+              {(() => {
+                  if(errorIban !== ""){
+                    return (<p className="text-danger">{errorIban}</p>);
+                  }
+                })()}
+                <input
+                  type="text"
+                  id="iban"
+                  name="iban"
+                  placeholder="Cuenta IBAN"
+                  value={iban}
+                  onChange={this.handleChange}
+                  onBlur={() => {
+                    if(errorIban === "") {
+                      console.log('Enviar');
+                      this.guardar("tickIban");
+                    }
+                  }}
+                  className="rounded pl-1"
+                />
+                <div id="tickIban" style={{display:"none"}}><i className="fas fa-check-circle pl-5 text-success"></i></div>
               </td>
             </tr>
             <tr>
@@ -267,32 +381,12 @@ render() {
                   onBlur={() => {
                     if(errorDNI === "") {
                       console.log('Enviar');
-                      this.guardar();
+                      this.guardar("tickDNI");
                     }
                   }}
                   className="rounded pl-1"
                 />
-              </td>
-            </tr>
-            <tr>
-              <td className="font-weight-bold">Sexo</td>
-              <td>
-                <input
-                  type="radio"
-                  id="mujer"
-                  name="mujer"
-                  value="mujer"
-                  checked
-                />{" "}
-                Mujer
-                <input
-                  type="radio"
-                  id="hombre"
-                  name="hombre"
-                  value="hombre"
-                  class="ml-5"
-                />{" "}
-                Hombre
+                <div id="tickDNI" style={{display:"none"}}><i className="fas fa-check-circle pl-5 text-success"></i></div>
               </td>
             </tr>
             <tr>
@@ -312,11 +406,12 @@ render() {
                   onBlur={() => {
                     if(errorFecha === "") {
                       console.log('Enviar');
-                      this.guardar();
+                      this.guardar("tickFecha");
                     }
                   }}
                   className="rounded pl-1"
                 />
+                <div id="tickFecha" style={{display:"none"}}><i className="fas fa-check-circle pl-5 text-success"></i></div>
               </td>
             </tr>
           </table>

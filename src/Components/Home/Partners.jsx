@@ -4,9 +4,9 @@ import {} from "react-bootstrap";
 class Partners extends React.Component {
     render() {
         return (
-            <div className="card col-12 col-lg-4 border-danger mx-auto mt-5 mt-md-5 mt-lg-0" style={{width: "18rem"}}>
+            <div className="card col-12 col-lg-10 border-0 mx-auto mt-md-5 mt-lg-0 " style={{width: "18rem"}}>
             <div className="card-body text-center">
-                <h5 className="card-title pt-4">Partners Oficiales</h5>
+                <h3 className="card-title pb-4">Partners Oficiales</h3>
                 <div className="row justify-content-between py-3">
                     <div className="col-3 p-0">
                         <img src={"./img/logo/PlayStation-Logo.png"} className="partner" alt=""/>
@@ -18,7 +18,6 @@ class Partners extends React.Component {
                         <img src={"./img/logo/Logo_de_Cola_Cao_opt.jpg"} className="partner" alt=""/>
                     </div>
                 </div>
-                <button type="button" className="btn btn-outline-danger">Ver Todos</button>
             </div>
         </div>
         )
