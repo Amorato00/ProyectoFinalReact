@@ -111,6 +111,20 @@ li {
 	background-color:  #a53636 !important;
 }
 
+.paginador {
+	color: #a53636  !important;
+}
+
+.paginador:hover {
+	background-color:  #a53636 !important;
+	color: white !important;
+}
+
+.paginadorActivo {
+	background-color:  #a53636 !important;
+	color: white !important;
+}
+
 /* Estadar Socio y Junta Directiva */
 
 .header img {
@@ -435,6 +449,11 @@ li {
 	border: 2px solid #a53636;
 	border-radius: 0.5rem;
 	visibility: hidden;
+}
+
+#logoColaborador {
+	width: 10rem;
+	height: auto;
 }
 
 /*=====  Fin Colaborador ======*/
