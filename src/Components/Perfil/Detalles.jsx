@@ -20,14 +20,13 @@ export default class Detalles extends React.Component {
       errorDNI: "",
       errorFecha: "",
       errorIban: "",
-      idEstado: "",
+      idEstado: null,
     };
 
     this.handleChange = this.handleChange.bind(this);
   }
   
   sacarUsuario() {
-    document.getElementById("modalCarga").style.display = "block";
     fetch("http://api-proyecto-final/api/usuario/" + localStorage.getItem("idUsuario"))
       .then((res) => res.json())
       .then(
@@ -57,36 +56,12 @@ export default class Detalles extends React.Component {
           });
         }
       )
-      .finally(function () {
-        document.getElementById("modalCarga").style.display = "none";
-      });
+      
   }
 
-  sacarIdEstado(estado) {
-    fetch("http://api-proyecto-final/api/estado/" + estado)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          
-            this.setState({
-              idEstado: result.id
-            });
-         
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
-        }
-      );
-  }
-
-  //Guardar sosio
+//Guardar sosio
 guardar(tick) {
-  const { username, nombre, apellidos, DNI, fecha,  item, iban, idEstado } = this.state;
-  
-  this.sacarIdEstado(item.estado);
+  const { username, nombre, apellidos, DNI, fecha, iban, idEstado } = this.state;
 
   const requestOptions = {
       method: "PUT",
@@ -96,23 +71,16 @@ guardar(tick) {
           nombre:  nombre,
           apellidos: apellidos,
           fechaNacimiento: fecha,
-          email: item[0].email,
           dni: DNI,
-          telefono: item[0].telefono,
-          fotoPerfil: item[0].fotoPerfil,
-          role: item[0].role,
-          estado: item[0].estado,
-          password: item[0].password,
+          estado: idEstado,
           iban: iban,
-          direccion: item[0].direccion,
-          seccion: item[0].seccion
       }),
   };
   fetch(
       "http://api-proyecto-final/api/usuario/"+ localStorage.getItem("idUsuario"),
       requestOptions
   ).then((response) => { 
-    if(response.ok) { 
+    if(response.ok) {  
       document.getElementById(tick).style.display = "block";
       document.getElementById(tick).className = "d-inline";
       localStorage.setItem("alerta", "Se ha modificado correctamente");
@@ -234,24 +202,6 @@ render() {
  
   return (
     <div class="col-12 col-md-6 mx-auto">
-         <div
-          class="modal"
-          id="modalCarga"
-          style={{ display: "none", backgroundColor: "rgba(0,0,0, 0.5)" }}
-        >
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div
-              class="modal-content py-4 mx-auto w-25 border-0"
-              style={{ backgroundColor: "rgba(0,0,0, 0.5)" }}
-            >
-              <div class="d-flex justify-content-center text-white">
-                <div class="spinner-border" role="status">
-                  <span class="visually-hidden"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       <div className="card border-0 rounded rounded-1">
         <h4 className="card-title bg-secondary py-3 text-white mb-0 pl-3 rounded-top rounded-1">
           <i className="fa fa-user"></i> Detalles

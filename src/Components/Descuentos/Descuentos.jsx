@@ -8,6 +8,10 @@ class Descuentos extends React.Component {
       error: null,
       isLoaded: false,
       items: [],
+      itemsPaginacion: [],
+      size: 0,
+      totalPaginas: 0,
+      paginaActual: 0,
     };
   }
 
@@ -16,10 +20,15 @@ class Descuentos extends React.Component {
       .then((res) => res.json())
       .then(
         (result) => {
+          var total = Math.ceil(result.length / 4);
+          console.log(total);
           this.setState({
             isLoaded: true,
             items: result,
+            size: result.length,
+            totalPaginas: total,
           });
+          this.paginacion(1);
         },
         // Nota: es importante manejar errores aquí y no en
         // un bloque catch() para que no interceptemos errores
@@ -33,11 +42,31 @@ class Descuentos extends React.Component {
       );
   }
 
+  paginacion(pagina) {
+    var arrayPaginacion = [];
+
+    const { items } = this.state;
+    var variacion = pagina * 4;
+
+    if (variacion > items.length) {
+      variacion = items.length;
+    }
+
+    for (var i = (pagina - 1) * 4; i < variacion; i++) {
+      arrayPaginacion.push(items[i]);
+    }
+
+    this.setState({
+      itemsPaginacion: arrayPaginacion,
+      paginaActual: pagina,
+    });
+  }
+
   componentDidMount() {
     this.sacarDescuentos();
   }
   render() {
-    const { items } = this.state;
+    const { totalPaginas, paginaActual, itemsPaginacion } = this.state;
     return (
       <div
         className="container-fluid p-0 pb-5"
@@ -45,7 +74,7 @@ class Descuentos extends React.Component {
         style={{ backgroundColor: "rgb(75, 75, 75)" }}
       >
         <h1 className="text-center pb-5 pt-5 text-white"> Descuentos </h1>
-        {items.map((item) => (
+        {itemsPaginacion.map((item) => (
           <div className="card mb-3 w-50 mx-auto fondo border-white text-white" key={ item.id }>
             <div className="row no-gutters">
               <div className="col-md-4">
@@ -68,6 +97,40 @@ class Descuentos extends React.Component {
             </div>
           </div>
         ))}
+         <div className="d-flex justify-content-center">
+          <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                {[...Array(totalPaginas)].map((x, i) => {
+                  if (i+1 === paginaActual) {
+                    return (
+                      <li key={i + 1} class="page-item">
+                        <button
+                          class="page-link text-danger paginador paginadorActivo"
+                          disabled
+                          onClick={() => this.paginacion(i + 1)}
+                        >
+                          {i + 1}
+                        </button>
+                      </li>
+                    );
+                  } else {
+                    return (
+                      <li key={i + 1} class="page-item">
+                        <button
+                          class="page-link text-danger paginador"
+                          onClick={() => this.paginacion(i + 1)}
+                        >
+                          {i + 1}
+                        </button>
+                      </li>
+                    );
+                  }
+                })}
+              </ul>
+            </nav>
+          </nav>
+        </div>
       </div>
     );
   }

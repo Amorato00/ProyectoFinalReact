@@ -2,22 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Navbar, Button } from "react-bootstrap";
 
 export default function Header() {
-  //const [sesion, setSesion] = useState(false);
+ 
   const [fotoPerfil, setFotoPerfil] = useState("");
   const [location] = useState(window.location);
+
   useEffect(() => {
-    console.log("Sesion: " + localStorage.getItem("sesion"));
-    console.log("Imagen Perfil: " + localStorage.getItem("imagenPerfil"));
-    //if (
-    //  localStorage.getItem("sesion") != null &&
-    //  localStorage.getItem("sesion") !== false
-    //) {
-    //  setSesion(true);
-    //}
     if (localStorage.getItem("imagenPerfil") != null) {
       setFotoPerfil(localStorage.getItem("imagenPerfil"));
     }
-  });
+  }, []);
 
   return (
     <header className="menu-superior2">
@@ -47,17 +40,15 @@ export default function Header() {
             className="dropdown nav-item active my-auto d-block d-lg-none mr-0"
             id="imagenPerfil"
           >
-            <a
-              className="nav-link enlace-nav"
-              href="#"
+            <button
+              className="nav-link enlace-nav btn"
               id="navbarDropdown2"
-              role="button"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             >
               <img src={"/img/fotoPerfil/" + fotoPerfil} alt="" />
-            </a>
+            </button>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
               <a href="/perfil" title="perfil" className="dropdown-item">
                 <i className="fa fa-user"></i>
@@ -200,17 +191,15 @@ export default function Header() {
                 className="dropdown nav-item active my-auto  d-none d-lg-block"
                 id="imagenPerfil"
               >
-                <a
-                  className="nav-link enlace-nav"
-                  href="#"
+                <button
+                  className="nav-link enlace-nav btn"
                   id="navbarDropdown2"
-                  role="button"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
                   <img src={"/img/fotoPerfil/" + fotoPerfil} alt="" />
-                </a>
+                </button>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a href="/perfil" title="perfil" className="dropdown-item">
                     <i className="fa fa-user"></i>

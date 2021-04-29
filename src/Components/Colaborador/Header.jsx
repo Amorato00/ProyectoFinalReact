@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Nav, Navbar, Button } from "react-bootstrap";
+import { Navbar, Button } from "react-bootstrap";
 
 export default function Header() {
   const [sesion, setSesion] = useState(false);
   const [fotoPerfil, setFotoPerfil] = useState("");
 
   useEffect(() => {
-    console.log("Sesion: " + localStorage.getItem("sesion"));
-    console.log("Imagen Perfil: " + localStorage.getItem("imagenPerfil"));
     if (
       localStorage.getItem("sesion") != null &&
       localStorage.getItem("sesion") !== false
@@ -17,7 +15,7 @@ export default function Header() {
     if (localStorage.getItem("imagenPerfil") != null) {
       setFotoPerfil(localStorage.getItem("imagenPerfil"));
     }
-  });
+  }, []);
 
   return (
     <header className="menu-superior">
@@ -43,55 +41,37 @@ export default function Header() {
             <img src={"./img/logo/logo.png"} alt="Logo de bycyryde" />
             <h3 className="d-md-inline d-none d-md-block pl-4">BYCIRYDE</h3>
           </Navbar.Brand>
-          {(() => {
-            if (sesion === false) {
-              return (
-                <Nav.Link
-                  className="nav-link enlace-nav d-block d-lg-none"
-                  href="/login"
-                >
-                  <i className="fas fa-user h3"></i>
-                </Nav.Link>
-              );
-            } else {
-              return (
-                <Navbar.Brand
-                  className="dropdown nav-item active my-auto d-block d-lg-none mr-0"
-                  id="imagenPerfil"
-                >
-                  <a
-                    className="nav-link enlace-nav"
-                    href="#"
-                    id="navbarDropdown2"
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <img src={"./img/fotoPerfil/" + fotoPerfil} alt="" />
-                  </a>
-                  <div
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
-                  >
-                    <a href="/perfil" title="perfil" className="dropdown-item">
-                      <i className="fa fa-user"></i>
-                    </a>
-                    <Button
-                      onClick={() => {
-                        localStorage.clear();
-                        localStorage.setItem("alerta", "Sesion cerrada");
-                        window.location = "/";
-                      }}
-                      className="dropdown-item"
-                    >
-                      <i className="fas fa-sign-in-alt" aria-hidden="true"></i>
-                    </Button>
-                  </div>
-                </Navbar.Brand>
-              );
-            }
-          })()}
+
+          <Navbar.Brand
+            className="dropdown nav-item active my-auto d-block d-lg-none mr-0"
+            id="imagenPerfil"
+          >
+            <button
+              className="nav-link enlace-nav btn"
+              id="navbarDropdown2"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <img src={"./img/fotoPerfil/" + fotoPerfil} alt="" />
+            </button>
+            <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a href="/perfil" title="perfil" className="dropdown-item">
+                <i className="fa fa-user"></i>
+              </a>
+              <Button
+                onClick={() => {
+                  localStorage.clear();
+                  localStorage.setItem("alerta", "Sesion cerrada");
+                  window.location = "/";
+                }}
+                className="dropdown-item"
+              >
+                <i className="fas fa-sign-in-alt" aria-hidden="true"></i>
+              </Button>
+            </div>
+          </Navbar.Brand>
+
           <div className="collapse navbar-collapse" id="navbarMenuHome">
             <ul className="navbar-nav ">
               {/*
@@ -101,61 +81,36 @@ export default function Header() {
                 </a>
               </li>
               */}
-              {(() => {
-                if (sesion === false) {
-                  return (
-                    <li className="active d-none d-lg-block my-auto">
-                      <a className="nav-link enlace-nav" href="/login">
-                        <i className="fas fa-user h4"></i>
-                      </a>
-                    </li>
-                  );
-                } else {
-                  return (
-                    <li
-                      className="dropdown nav-item active my-auto  d-none d-lg-block"
-                      id="imagenPerfil"
-                    >
-                      <a
-                        className="nav-link enlace-nav"
-                        href="#"
-                        id="navbarDropdown2"
-                        role="button"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        <img src={"./img/fotoPerfil/" + fotoPerfil} alt="" />
-                      </a>
-                      <div
-                        className="dropdown-menu"
-                        aria-labelledby="navbarDropdown"
-                      >
-                        <a
-                          href="/perfil"
-                          title="perfil"
-                          className="dropdown-item"
-                        >
-                          <i className="fa fa-user"></i>
-                        </a>
-                        <Button
-                          onClick={() => {
-                            localStorage.clear();
-                            localStorage.setItem("alerta", "Sesion cerrada");
-                            window.location = "/";
-                          }}
-                          className="dropdown-item"
-                        >
-                          <i
-                            className="fas fa-sign-in-alt"
-                            aria-hidden="true"
-                          ></i>
-                        </Button>
-                      </div>
-                    </li>
-                  );
-                }
-              })()}
+
+              <li
+                className="dropdown nav-item active my-auto  d-none d-lg-block"
+                id="imagenPerfil"
+              >
+                <button
+                  className="nav-link enlace-nav btn"
+                  id="navbarDropdown2"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <img src={"./img/fotoPerfil/" + fotoPerfil} alt="" />
+                </button>
+                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a href="/perfil" title="perfil" className="dropdown-item">
+                    <i className="fa fa-user"></i>
+                  </a>
+                  <Button
+                    onClick={() => {
+                      localStorage.clear();
+                      localStorage.setItem("alerta", "Sesion cerrada");
+                      window.location = "/";
+                    }}
+                    className="dropdown-item"
+                  >
+                    <i className="fas fa-sign-in-alt" aria-hidden="true"></i>
+                  </Button>
+                </div>
+              </li>
             </ul>
           </div>
         </Navbar>

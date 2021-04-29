@@ -95,7 +95,7 @@ export default function App() {
         <Route path="/junta-directiva/eventos">
           <HeaderJuntaDirectiva />
           <div className="container-fluid fondo" id="juntaDirectiva">
-            <div className="row fondoRojo">
+            <div className="row">
               <HeaderLeft />
               <Evento />
             </div>

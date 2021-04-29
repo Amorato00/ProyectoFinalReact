@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,7 +11,7 @@ const schema = yup.object().shape({
 
 export default function AddConcepto() {
   //Guardar contabilidilidad
-  function guardar(data) {
+  function guardar(data, imagen) {
     var fecha = new Date();
 
     const requestOptions = {
@@ -21,7 +21,7 @@ export default function AddConcepto() {
         titulo: data.titulo,
         texto: data.texto,
         fecha: fecha,
-        imagen: "nofoto-min.jpg",
+        imagen: imagen,
         archivo: null,
         usuario: localStorage.getItem("idUsuario")
       }),
@@ -29,7 +29,7 @@ export default function AddConcepto() {
     fetch("http://api-proyecto-final/api/add/noticia", requestOptions).then(
       (response) => {
         if (response.ok) {
-          localStorage.setItem("alerta", "Añadido concepto con exito");
+          localStorage.setItem("alerta", "Noticia añadida con exito");
           window.location = "/junta-directiva/noticias";
           response.json();
         }
@@ -44,12 +44,23 @@ export default function AddConcepto() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
+  const [imagenError, setImagenError] = useState("");
   //Enviar formulario
   const onSubmit = (data, evt) => {
-    console.log(data);
-    guardar(data);
-    evt.target.reset();
+    if(document.getElementById("imagen").value.length > 0) {
+      if(document.getElementById("imagen").files[0].type === "image/jpg" || document.getElementById("imagen").files[0].type === "image/png"
+      || document.getElementById("imagen").files[0].type === "image/jpeg") {
+        setImagenError("");
+        guardar(data, document.getElementById("imagen").files[0].name);
+        evt.target.reset();
+      }else {
+        setImagenError("Tipo de imagen no correcta, tipos aceptados[image/jpg, image/jpeg, image/png]");
+     
+      }
+    } else {
+      setImagenError("La imagen es obligatoria");
+    }
+    
   };
   return (
     <div
@@ -109,12 +120,13 @@ export default function AddConcepto() {
                 />
               </Form.Group>
               <Form.Group>
-                <Form.Label>Imagen</Form.Label>
+              <p className="text-danger mb-1">{imagenError}</p>
+                <Form.Label>Imagen<span className="obligatorio">*</span></Form.Label>
                 <input
-                  id="icono_perfil"
+                  id="imagen"
                   className="form-control-file"
                   type="file"
-                  name="icono_perfil"
+                  name="imagen"
                 />
               </Form.Group>
             </div>

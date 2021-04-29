@@ -18,7 +18,11 @@ export default class Contabilidad extends PureComponent {
       itemEditar: [],
       concepto: "",
       errorConcepto: "",
-      search: ""
+      search: "",
+      itemsPaginacion: [],
+      size: 0,
+      totalPaginas: 0,
+      paginaActual: 0,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -54,10 +58,15 @@ export default class Contabilidad extends PureComponent {
       .then((res) => res.json())
       .then(
         (result) => {
+          var total = Math.ceil(result.length / 10);
+          console.log(total);
           this.setState({
             isLoaded: true,
             items: result,
+            size: result.length,
+            totalPaginas: total,
           });
+          this.paginacion(1);
         },
         // Nota: es importante manejar errores aquí y no en
         // un bloque catch() para que no interceptemos errores
@@ -126,12 +135,20 @@ export default class Contabilidad extends PureComponent {
     });
     this.sacarContabilidad(year);
     this.sacarConceptoYearPasado(year);
+
+    if (localStorage.getItem("alerta") != null) {
+      document.getElementById("textoAlerta").innerHTML = localStorage.getItem(
+        "alerta"
+      );
+      document.getElementById("alerta").style.display = "block";
+      localStorage.removeItem("alerta");
+    }
   }
 
   print = () => {
-    const { items, ultimoConcepto } = this.state;
+    const { itemsPaginacion, ultimoConcepto } = this.state;
     const string = renderToString(
-      <Prints items={items} ultimoConcepto={ultimoConcepto} />
+      <Prints items={itemsPaginacion} ultimoConcepto={ultimoConcepto} />
     );
     const pdf = new jsPDF();
     pdf.fromHTML(string);
@@ -143,31 +160,50 @@ export default class Contabilidad extends PureComponent {
 
     var arrayFecha = itemEditar.fecha.split("/");
     const requestOptions = {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fecha: arrayFecha[2] + arrayFecha[1] + arrayFecha[0],
-          concepto: concepto,
-          d_h : itemEditar.d_h,
-          importe: itemEditar.importe,
-          saldo: itemEditar.saldo,
-          usuario: itemEditar.usuario
-        }),
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fecha: arrayFecha[2] + arrayFecha[1] + arrayFecha[0],
+        concepto: concepto,
+        d_h: itemEditar.d_h,
+        importe: itemEditar.importe,
+        saldo: itemEditar.saldo,
+        usuario: itemEditar.usuario,
+      }),
     };
     fetch(
-        "http://api-proyecto-final/api/contabilidad/"+itemEditar.id,
-        requestOptions
-    ).then((response) => { 
-      if(response.ok) { 
+      "http://api-proyecto-final/api/contabilidad/" + itemEditar.id,
+      requestOptions
+    ).then((response) => {
+      if (response.ok) {
         console.log("funciomnnnnnaa");
         localStorage.setItem("alerta", "Se ha modificado correctamente");
         //window.location = "/junta-directiva/contabilidad";
         this.sacarContabilidad(selecYear);
         response.json();
-        
       }
-     });
+    });
+  }
+
+  paginacion(pagina) {
+    var arrayPaginacion = [];
+
+    const { items } = this.state;
+    var variacion = pagina * 10;
+
+    if (variacion > items.length) {
+      variacion = items.length;
     }
+
+    for (var i = (pagina - 1) * 10; i < variacion; i++) {
+      arrayPaginacion.push(items[i]);
+    }
+
+    this.setState({
+      itemsPaginacion: arrayPaginacion,
+      paginaActual: pagina,
+    });
+  }
 
   handleChange(event) {
     const { selecYear } = this.state;
@@ -177,7 +213,7 @@ export default class Contabilidad extends PureComponent {
       [name]: event.target.value,
     });
 
-    if(name === "search") {
+    if (name === "search") {
       console.log(event.target.value);
       if (event.target.value === "") {
         this.sacarContabilidad(selecYear);
@@ -209,10 +245,21 @@ export default class Contabilidad extends PureComponent {
   }
 
   render() {
-    const { items, ultimoConcepto, itemEditar, errorConcepto, concepto } = this.state;
+    const {
+      ultimoConcepto,
+      itemEditar,
+      errorConcepto,
+      concepto,
+      totalPaginas,
+      paginaActual,
+      itemsPaginacion,
+    } = this.state;
     return (
-      <div className="col-12 col-md-9 col-lg-10 pt-5" id="contenidoJuntaDirectiva">
-          <div
+      <div
+        className="col-12 col-md-9 col-lg-10 pt-5"
+        id="contenidoJuntaDirectiva"
+      >
+        <div
           class="modal"
           id="modalCarga"
           style={{ display: "none", backgroundColor: "rgba(0,0,0, 0.5)" }}
@@ -230,6 +277,24 @@ export default class Contabilidad extends PureComponent {
             </div>
           </div>
         </div>
+        <div
+          className="alert alert-info alert-dismissible fade show w-50 mx-auto alertaEstandar"
+          role="alert"
+          id="alerta"
+        >
+          <p id="textoAlerta" className="mb-0">
+            Ejemplo de alerta.
+          </p>
+          <button
+            type="button"
+            className="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
         <div className="row">
           <div className="col-12 px-5">
             <div className="text-center pb-5">
@@ -290,7 +355,7 @@ export default class Contabilidad extends PureComponent {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
+                {itemsPaginacion.map((item) => (
                   <tr key={item.id}>
                     <td data-label="Fecha">{item.fecha}</td>
                     <td data-label="Concepto">{item.concepto}</td>
@@ -310,22 +375,22 @@ export default class Contabilidad extends PureComponent {
                     </td>
                   </tr>
                 ))}
-                  {(() => {
+                {(() => {
                   if (Object.keys(ultimoConcepto).length !== 0) {
                     return (
                       <tr>
-                    <td data-label="Fecha">{ultimoConcepto.fecha}</td>
-                    <td data-label="Concepto">{ultimoConcepto.concepto}</td>
-                    <td data-label="D/H">{ultimoConcepto.d_h}</td>
-                    <td data-label="Importe">{ultimoConcepto.importe} €</td>
-                    <td data-label="Saldo">{ultimoConcepto.saldo} €</td>
-                    <td className="d-none"></td>
-                  </tr>
+                        <td data-label="Fecha">{ultimoConcepto.fecha}</td>
+                        <td data-label="Concepto">{ultimoConcepto.concepto}</td>
+                        <td data-label="D/H">{ultimoConcepto.d_h}</td>
+                        <td data-label="Importe">{ultimoConcepto.importe} €</td>
+                        <td data-label="Saldo">{ultimoConcepto.saldo} €</td>
+                        <td className="d-none"></td>
+                      </tr>
                     );
                   }
                 })()}
               </tbody>
-              <tfoot>  
+              <tfoot>
                 <tr>
                   <td></td>
                   <td></td>
@@ -343,6 +408,40 @@ export default class Contabilidad extends PureComponent {
                 </tr>
               </tfoot>
             </table>
+            <div className="d-flex justify-content-center">
+              <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                    {[...Array(totalPaginas)].map((x, i) => {
+                      if (i + 1 === paginaActual) {
+                        return (
+                          <li key={i + 1} class="page-item">
+                            <button
+                              class="page-link paginador paginadorActivo"
+                              disabled
+                              onClick={() => this.paginacion(i + 1)}
+                            >
+                              {i + 1}
+                            </button>
+                          </li>
+                        );
+                      } else {
+                        return (
+                          <li key={i + 1} class="page-item">
+                            <button
+                              class="page-link paginador"
+                              onClick={() => this.paginacion(i + 1)}
+                            >
+                              {i + 1}
+                            </button>
+                          </li>
+                        );
+                      }
+                    })}
+                  </ul>
+                </nav>
+              </nav>
+            </div>
           </div>
         </div>
         <div

@@ -11,7 +11,6 @@ import Footer from "./Footer";
 export default function Home() {
 
     useEffect(() => {
-        console.log(localStorage.getItem("sesion"));
         if(localStorage.getItem("alerta") != null) {
             console.log(localStorage.getItem("alerta"));
             document.getElementById("textoAlerta").innerHTML = localStorage.getItem("alerta");

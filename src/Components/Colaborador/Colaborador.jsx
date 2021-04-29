@@ -122,8 +122,16 @@ export default function Colaborador() {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <section id="colaboladorSingleSocio" className="text-white">
+      <section id="colaboladorSingleSocio" className="text-white py-5">
         <div className="container pt-5">
+          <div className="d-flex justify-content-center">
+              <img
+                  src={"./img/fotoPerfil/" + localStorage.getItem("imagenPerfil")}
+                  alt="..."
+                  id="logoColaborador"
+                  className="pt-2"
+                />
+          </div>
           <div className="text-center pb-5">
             <Form onSubmit={handleSubmit(onSubmit)}>
               <p className="text-danger mb-1">{errors.search?.message}</p>

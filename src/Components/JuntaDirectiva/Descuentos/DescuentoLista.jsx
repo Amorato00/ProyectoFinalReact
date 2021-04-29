@@ -36,6 +36,10 @@ export default class DescuentoLista extends React.Component {
       errorTexto: "",
       errorImagen: "",
       errorDescuento: "",
+      itemsPaginacion: [],
+      size: 0,
+      totalPaginas: 0,
+      paginaActual: 0,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -46,10 +50,15 @@ export default class DescuentoLista extends React.Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          document.getElementById("modalCarga").style.display = "none";
+          var total = Math.ceil(result.length / 5);
+          console.log(total);
           this.setState({
+            isLoaded: true,
             items: result,
+            size: result.length,
+            totalPaginas: total,
           });
+          this.paginacion(1);
         },
         // Nota: es importante manejar errores aquí y no en
         // un bloque catch() para que no interceptemos errores
@@ -66,14 +75,40 @@ export default class DescuentoLista extends React.Component {
       });
   }
 
+  paginacion(pagina) {
+    var arrayPaginacion = [];
+
+    const { items } = this.state;
+    var variacion = pagina * 5;
+
+    if (variacion > items.length) {
+      variacion = items.length;
+    }
+
+    for (var i = (pagina - 1) * 5; i < variacion; i++) {
+      arrayPaginacion.push(items[i]);
+    }
+
+    this.setState({
+      itemsPaginacion: arrayPaginacion,
+      paginaActual: pagina,
+    });
+  }
+
   sacarDescuentoSearch(search) {
     fetch("http://api-proyecto-final/api/descuento/search/" + search)
       .then((res) => res.json())
       .then(
         (result) => {
+          var total = Math.ceil(result.length / 5);
+          console.log(total);
           this.setState({
+            isLoaded: true,
             items: result,
+            size: result.length,
+            totalPaginas: total,
           });
+          this.paginacion(1);
         },
         // Nota: es importante manejar errores aquí y no en
         // un bloque catch() para que no interceptemos errores
@@ -157,7 +192,6 @@ export default class DescuentoLista extends React.Component {
 
   handleChange(event) {
     var name = event.target.name;
-    console.log(name);
     this.setState({
       [name]: event.target.value,
     });
@@ -193,7 +227,6 @@ export default class DescuentoLista extends React.Component {
 
   render() {
     const {
-      items,
       meses,
       titulo,
       texto,
@@ -203,9 +236,11 @@ export default class DescuentoLista extends React.Component {
       errorTitulo,
       errorTexto,
       errorFechaInicio,
-      horaInicio,
       descuento,
       errorDescuento,
+      totalPaginas,
+      paginaActual,
+      itemsPaginacion,
     } = this.state;
     return (
       <div class="list-group mt-5">
@@ -227,7 +262,7 @@ export default class DescuentoLista extends React.Component {
             </div>
           </div>
         </div>
-        {items.map((item) => (
+        {itemsPaginacion.map((item) => (
           <button
             data-toggle="modal"
             onClick={() => this.sacarDescuentoId(item.id)}
@@ -241,13 +276,13 @@ export default class DescuentoLista extends React.Component {
                 var fechaArrayInicio = item.fechaInicio.split("/");
 
                 var mesFin = "";
-                if (fechaArrayFin[1] != "0") {
+                if (fechaArrayFin[1] !== "0") {
                   mesFin = meses[parseInt(fechaArrayFin[1]) - 1];
                 } else {
                   mesFin = meses[parseInt(fechaArrayFin[1])];
                 }
                 var mesInicio = "";
-                if (fechaArrayInicio[1] != "0") {
+                if (fechaArrayInicio[1] !== "0") {
                   mesInicio = meses[parseInt(fechaArrayInicio[1]) - 1];
                 } else {
                   mesInicio = meses[parseInt(fechaArrayInicio[1])];
@@ -426,6 +461,40 @@ export default class DescuentoLista extends React.Component {
             </div>
           </div>
         </div>
+        <div className="d-flex justify-content-center mt-5">
+              <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                    {[...Array(totalPaginas)].map((x, i) => {
+                      if (i + 1 === paginaActual) {
+                        return (
+                          <li key={i + 1} class="page-item">
+                            <button
+                              class="page-link paginador paginadorActivo"
+                              disabled
+                              onClick={() => this.paginacion(i + 1)}
+                            >
+                              {i + 1}
+                            </button>
+                          </li>
+                        );
+                      } else {
+                        return (
+                          <li key={i + 1} class="page-item">
+                            <button
+                              class="page-link paginador"
+                              onClick={() => this.paginacion(i + 1)}
+                            >
+                              {i + 1}
+                            </button>
+                          </li>
+                        );
+                      }
+                    })}
+                  </ul>
+                </nav>
+              </nav>
+            </div>
       </div>
     );
   }

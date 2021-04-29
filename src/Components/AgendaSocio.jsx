@@ -2,7 +2,6 @@ import React from "react";
 import "../agenda.css";
 import {
   ScheduleComponent,
-  WorkWeek,
   Week,
   Month,
   Inject,

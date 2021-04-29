@@ -4,7 +4,6 @@ import { Line, Pie } from "react-chartjs-2";
 
 import {
   ScheduleComponent,
-  WorkWeek,
   Week,
   Month,
   Inject,
@@ -58,8 +57,6 @@ export default class Cuerpo extends React.Component {
   }
 
   sacarSocios() {
-    var fecha = new Date();
-    var year = fecha.getFullYear();
     fetch("http://api-proyecto-final/api/socio")
       .then((res) => res.json())
       .then(

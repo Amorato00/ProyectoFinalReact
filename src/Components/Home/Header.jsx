@@ -17,7 +17,7 @@ export default function Header() {
     if (localStorage.getItem("imagenPerfil") != null) {
       setFotoPerfil(localStorage.getItem("imagenPerfil"));
     }
-  });
+  }, []);
 
   return (
     <header className="menu-superior">
@@ -59,17 +59,15 @@ export default function Header() {
                   className="dropdown nav-item active my-auto d-block d-lg-none"
                   id="imagenPerfil"
                 >
-                  <a
-                    className="nav-link enlace-nav"
-                    href="#"
+                  <button
+                    className="nav-link enlace-nav btn"
                     id="navbarDropdown2"
-                    role="button"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
                     <img src={"./img/fotoPerfil/" + fotoPerfil} alt="" />
-                  </a>
+                  </button>
                   <div
                     className="dropdown-menu"
                     aria-labelledby="navbarDropdown"
@@ -110,18 +108,16 @@ export default function Header() {
 
               {location.pathname === "/noticias" ? (
                 <li className="dropdown nav-item active my-auto">
-                  <a
+                  <button
                     typpe="button"
-                    className="nav-link dropdown-toggle marcar enlace-nav"
-                    href="#"
+                    className="nav-link dropdown-toggle marcar enlace-nav btn"
                     id="navbarDropdown"
-                    role="button"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
                     Noticias
-                  </a>
+                  </button>
                   <div
                     className="dropdown-menu"
                     aria-labelledby="navbarDropdown"
@@ -136,18 +132,16 @@ export default function Header() {
                 </li>
               ) : (
                 <li className="dropdown nav-item active my-auto">
-                  <a
+                  <button
                     typpe="button"
-                    className="nav-link dropdown-toggle enlace-nav"
-                    href="#"
+                    className="nav-link dropdown-toggle enlace-nav btn"
                     id="navbarDropdown"
-                    role="button"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
                     Noticias
-                  </a>
+                  </button>
                   <div
                     className="dropdown-menu"
                     aria-labelledby="navbarDropdown"
@@ -166,17 +160,15 @@ export default function Header() {
                 if (sesion === false) {
                   return (
                     <li className="dropdown nav-item active my-auto">
-                      <a
-                        className="nav-link dropdown-toggle enlace-nav"
-                        href="#"
+                      <button
+                        className="nav-link dropdown-toggle enlace-nav btn"
                         id="navbarDropdown2"
-                        role="button"
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
                         Socio
-                      </a>
+                      </button>
                       <div
                         className="dropdown-menu"
                         aria-labelledby="navbarDropdown"
@@ -270,17 +262,15 @@ export default function Header() {
                       className="dropdown nav-item active my-auto d-none d-lg-block"
                       id="imagenPerfil"
                     >
-                      <a
-                        className="nav-link enlace-nav"
-                        href="#"
+                      <button
+                        className="nav-link enlace-nav btn"
                         id="navbarDropdown2"
-                        role="button"
                         data-toggle="dropdown"
                         aria-haspopup="true"
                         aria-expanded="false"
                       >
                         <img src={"./img/fotoPerfil/" + fotoPerfil} alt="" />
-                      </a>
+                      </button>
                       <div
                         className="dropdown-menu"
                         aria-labelledby="navbarDropdown"

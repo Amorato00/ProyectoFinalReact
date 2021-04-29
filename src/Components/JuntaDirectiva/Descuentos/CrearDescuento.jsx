@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,13 +9,14 @@ const schema = yup.object().shape({
   texto: yup.string().required("El texto esta vacio "),
   fechaInicio: yup.string().required("La fecha de inicio es obligatoria ").nullable().transform ( ( curr ,  orig )  =>  orig  ===  '' ? null : curr ),
   fechaFin: yup.string().required("La fecha de fin es obligatoria ").nullable().transform ( ( curr ,  orig )  =>  orig  ===  '' ? null : curr ),
-  numDescuento: yup.number().required("El descuento es oblibatorio"),
-  imagen: yup.mixed().nullable(),
+  numDescuento: yup.number().typeError("El descuento es oblibatorio").min(1, "El minimo no puede ser 0").max(100, "El maximo no puede ser mayor de 100"),
 });
 
 export default function CrearDescuento() {
+
+  const [imagenError, setImagenError] = useState("");
   //Guardar contabilidilidad
-  function guardar(data) {
+  function guardar(data, imagen) {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -25,15 +26,15 @@ export default function CrearDescuento() {
         fechaInicio: data.fechaInicio,
         fechaFin: data.fechaFin,
         numDescuento: data.numDescuento,
-        imagen: data.imagen[0].name,
+        imagen: imagen,
         usuario: localStorage.getItem("idUsuario")
       }),
     };
     fetch("http://api-proyecto-final/api/add/descuento", requestOptions).then(
       (response) => {
         if (response.ok) {
-          localStorage.setItem("alerta", "Añadido concepto con exito");
-          window.location = "/junta-directiva/noticias";
+          localStorage.setItem("alerta", "Descuento añadido con exito");
+          window.location = "/junta-directiva/descuentos";
           response.json();
         }
       }
@@ -50,9 +51,20 @@ export default function CrearDescuento() {
 
   //Enviar formulario
   const onSubmit = (data, evt) => {
-    console.log(data);
-    guardar(data);
-    evt.target.reset();
+    if(document.getElementById("imagen").value.length > 0) {
+      if(document.getElementById("imagen").files[0].type === "image/jpg" || document.getElementById("imagen").files[0].type === "image/png"
+      || document.getElementById("imagen").files[0].type === "image/jpeg") {
+        setImagenError("");
+        guardar(data, document.getElementById("imagen").files[0].name);
+        evt.target.reset();
+      }else {
+        setImagenError("Tipo de imagen no correcta, tipos aceptados[image/jpg, image/jpeg, image/png]");
+     
+      }
+    } else {
+      setImagenError("La imagen es obligatoria");
+    }
+    
   };
   return (
     <>
@@ -113,7 +125,7 @@ export default function CrearDescuento() {
                 />
               </Form.Group>
               <Form.Group>
-                <p className="text-danger mb-1">{errors.descuento?.message}</p>
+                <p className="text-danger mb-1">{errors.numDescuento?.message}</p>
                 <Form.Label>
                   {" "}
                   Descuento<span className="obligatorio">*</span>{" "}
@@ -124,6 +136,7 @@ export default function CrearDescuento() {
                   className="form-control"
                   name="descuento"
                   id="descuento"
+                  max="100"
                   {...register("numDescuento")}
                 />
               </Form.Group>
@@ -154,13 +167,13 @@ export default function CrearDescuento() {
                   />
                 </Form.Group>
               <Form.Group>
-                <Form.Label>Imagen</Form.Label>
+              <p className="text-danger">{imagenError}</p>
+                <Form.Label>Imagen<span className="obligatorio">*</span></Form.Label>
                 <input
-                  id="icono_perfil"
+                  id="imagen"
                   className="form-control-file"
                   type="file"
-                  name="icono_perfil"
-                  {...register("imagen")}
+                  name="imagen"
                 />
               </Form.Group>
             </div>

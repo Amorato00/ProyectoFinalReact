@@ -9,6 +9,10 @@ export default class SociosLista extends React.Component {
       isLoaded: false,
       items: [],
       gestionSocio: [],
+      itemsPaginacion: [],
+      size: 0,
+      totalPaginas: 0,
+      paginaActual: 0,
     };
   }
 
@@ -17,10 +21,15 @@ export default class SociosLista extends React.Component {
       .then((res) => res.json())
       .then(
         (result) => {
+          var total = Math.ceil(result.length / 10);
+          console.log(total);
           this.setState({
             isLoaded: true,
             items: result,
+            size: result.length,
+            totalPaginas: total,
           });
+          this.paginacion(1);
         },
         // Nota: es importante manejar errores aquí y no en
         // un bloque catch() para que no interceptemos errores
@@ -67,10 +76,15 @@ export default class SociosLista extends React.Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          document.getElementById("modalCarga").style.display = "none";
+          var total = Math.ceil(result.length / 10);
+          console.log(total);
           this.setState({
+            isLoaded: true,
             items: result,
+            size: result.length,
+            totalPaginas: total,
           });
+          this.paginacion(1);
         },
         // Nota: es importante manejar errores aquí y no en
         // un bloque catch() para que no interceptemos errores
@@ -91,8 +105,28 @@ export default class SociosLista extends React.Component {
     this.sacarSocio();
   }
 
+  paginacion(pagina) {
+    var arrayPaginacion = [];
+
+    const { items } = this.state;
+    var variacion = pagina * 10;
+
+    if (variacion > items.length) {
+      variacion = items.length;
+    }
+
+    for (var i = (pagina - 1) * 10; i < variacion; i++) {
+      arrayPaginacion.push(items[i]);
+    }
+
+    this.setState({
+      itemsPaginacion: arrayPaginacion,
+      paginaActual: pagina,
+    });
+  }
+
   render() {
-    const { items, gestionSocio } = this.state;
+    const { gestionSocio, totalPaginas, paginaActual, itemsPaginacion } = this.state;
     return (
       <div>
         <div
@@ -124,7 +158,7 @@ export default class SociosLista extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
+            {itemsPaginacion.map((item) => (
               <tr
                 key={item.id}
                 data-toggle="modal"
@@ -141,6 +175,40 @@ export default class SociosLista extends React.Component {
             ))}
           </tbody>
         </table>
+        <div className="d-flex justify-content-center">
+          <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                {[...Array(totalPaginas)].map((x, i) => {
+                  if (i+1 === paginaActual) {
+                    return (
+                      <li key={i + 1} class="page-item">
+                        <button
+                          class="page-link text-danger paginador paginadorActivo"
+                          disabled
+                          onClick={() => this.paginacion(i + 1)}
+                        >
+                          {i + 1}
+                        </button>
+                      </li>
+                    );
+                  } else {
+                    return (
+                      <li key={i + 1} class="page-item">
+                        <button
+                          class="page-link text-danger paginador"
+                          onClick={() => this.paginacion(i + 1)}
+                        >
+                          {i + 1}
+                        </button>
+                      </li>
+                    );
+                  }
+                })}
+              </ul>
+            </nav>
+          </nav>
+        </div>
         <GestionSocio gestionSocio={gestionSocio} />
       </div>
     );

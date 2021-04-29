@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -51,7 +51,7 @@ export default function AddConcepto() {
     ).then((response) => {
       if (response.ok) {
         document.getElementById("modalCarga").style.display = "none";
-        localStorage.setItem("alerta", "Añadido concepto con exito");
+        localStorage.setItem("alerta", "Concepto añadido con exito");
         window.location = "/junta-directiva/contabilidad";
         response.json();
       } else {

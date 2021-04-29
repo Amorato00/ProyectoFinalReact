@@ -13,16 +13,16 @@ class Footer extends React.Component {
                     </div>
                     <div className="col-12 col-lg-7 d-flex flex-column flex-lg-row justify-content-between  text-center"
                         id="enlaces-footer">
-                        <a href="#">
+                        <a href="/">
                             <p className="m-0">Términos Legales</p>
                         </a>
-                        <a href="#">
+                        <a href="/">
                             <p className="m-0">Políticas de privacidad</p>
                         </a>
-                        <a href="#">
+                        <a href="/">
                             <p className="m-0">Cookies</p>
                         </a>
-                        <a href="#">
+                        <a href="/">
                             <p className="m-0">Contactanos</p>
                         </a>
                     </div>

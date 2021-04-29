@@ -13,16 +13,16 @@ class RedesSociales extends React.Component {
                 </div>
                 <div className="row pt-3">
                     <div className="col-12 d-flex justify-content-center">
-                    <a className="mr-5 h1">
+                    <a href="/" className="mr-5 h1">
                     <i className="fab fa-facebook-square"></i>
                     </a>
-                    <a className="mr-5 h1">
+                    <a href="/" className="mr-5 h1">
                     <i className="fab fa-instagram"></i>
                     </a>
-                    <a className="mr-5 h1">
+                    <a href="/" className="mr-5 h1">
                     <i className="fab fa-youtube"></i>
                     </a>
-                    <a className="h1">
+                    <a href="/" className="h1">
                     <i className="fab fa-twitter"></i>
                     </a>
                     </div>

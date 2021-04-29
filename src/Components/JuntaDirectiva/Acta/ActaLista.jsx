@@ -29,7 +29,11 @@ export default class EventoLista extends React.Component {
       archivo: "",
       errorTexto: "",
       errorArchivo: "",
-      errorFecha: ""
+      errorFecha: "",
+      itemsPaginacion: [],
+      size: 0,
+      totalPaginas: 0,
+      paginaActual: 0,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -40,10 +44,14 @@ export default class EventoLista extends React.Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          document.getElementById("modalCarga").style.display = "none";
+          var total = Math.ceil(result.length / 5);
           this.setState({
+            isLoaded: true,
             items: result,
+            size: result.length,
+            totalPaginas: total,
           });
+          this.paginacion(1);
         },
         // Nota: es importante manejar errores aquí y no en
         // un bloque catch() para que no interceptemos errores
@@ -65,9 +73,15 @@ export default class EventoLista extends React.Component {
       .then((res) => res.json())
       .then(
         (result) => {
+          var total = Math.ceil(result.length / 5);
+          console.log(total);
           this.setState({
+            isLoaded: true,
             items: result,
+            size: result.length,
+            totalPaginas: total,
           });
+          this.paginacion(1);
         },
         // Nota: es importante manejar errores aquí y no en
         // un bloque catch() para que no interceptemos errores
@@ -79,6 +93,27 @@ export default class EventoLista extends React.Component {
           });
         }
       );
+  }
+
+
+  paginacion(pagina) {
+    var arrayPaginacion = [];
+
+    const { items } = this.state;
+    var variacion = pagina * 5;
+
+    if (variacion > items.length) {
+      variacion = items.length;
+    }
+
+    for (var i = (pagina - 1) * 5; i < variacion; i++) {
+      arrayPaginacion.push(items[i]);
+    }
+
+    this.setState({
+      itemsPaginacion: arrayPaginacion,
+      paginaActual: pagina,
+    });
   }
 
 
@@ -111,7 +146,7 @@ export default class EventoLista extends React.Component {
   }
 
   guardarEdit() {
-    const {  texto, fecha, archivo, itemEdit } = this.state;
+    const {  texto, fecha, itemEdit  } = this.state;
     
     const requestOptions = {
         method: "PUT",
@@ -164,7 +199,8 @@ export default class EventoLista extends React.Component {
   }
 
   render() {
-    const { items, meses, texto, fecha, errorTexto, errorFecha } = this.state;
+    const { meses, texto, fecha, errorTexto, errorFecha, totalPaginas,
+      paginaActual, itemsPaginacion } = this.state;
     return (
       <div class="list-group mt-5">
         <div
@@ -185,7 +221,7 @@ export default class EventoLista extends React.Component {
             </div>
           </div>
         </div>
-        {items.map((item) => (
+        {itemsPaginacion.map((item) => (
           <button  data-toggle="modal"
           onClick={() => this.sacarActaId(item.id)}
           data-target="#editActa" class="list-group-item list-group-item-action">
@@ -197,7 +233,7 @@ export default class EventoLista extends React.Component {
                     fechaArray[2] + "/" + fechaArray[1] + "/" + fechaArray[0]
                   );
                   var mes = "";
-                  if(fechaArray[1] != "0") {
+                  if(fechaArray[1] !== "0") {
                     mes = meses[parseInt(fechaArray[1]) - 1];
                   } else {
                     mes = meses[parseInt(fechaArray[1])];
@@ -322,6 +358,40 @@ export default class EventoLista extends React.Component {
             </div>
           </div>
         </div>
+        <div className="d-flex justify-content-center mt-5">
+              <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                    {[...Array(totalPaginas)].map((x, i) => {
+                      if (i + 1 === paginaActual) {
+                        return (
+                          <li key={i + 1} class="page-item">
+                            <button
+                              class="page-link paginador paginadorActivo"
+                              disabled
+                              onClick={() => this.paginacion(i + 1)}
+                            >
+                              {i + 1}
+                            </button>
+                          </li>
+                        );
+                      } else {
+                        return (
+                          <li key={i + 1} class="page-item">
+                            <button
+                              class="page-link paginador"
+                              onClick={() => this.paginacion(i + 1)}
+                            >
+                              {i + 1}
+                            </button>
+                          </li>
+                        );
+                      }
+                    })}
+                  </ul>
+                </nav>
+              </nav>
+            </div>
       </div>
     );
   }

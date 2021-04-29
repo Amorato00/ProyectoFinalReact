@@ -10,6 +10,7 @@ export default class Detalles extends React.Component {
       isLoaded: false,
       item: [],
       telefono: "",
+      idEstado: null,
       correo: "",
       direccion: "",
       errorCorreo: "",
@@ -50,25 +51,15 @@ export default class Detalles extends React.Component {
 
   //Guardar sosio
 guardar(tick) {
-  const { correo, telefono, item, direccion } = this.state;
-  var fechaGuardar = new Date(item[0].fechaNacimiento);
+  const { correo, telefono, direccion, idEstado } = this.state;
+
   const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-          username: item[0].username,
-          nombre:  item[0].nombre,
-          apellidos: item[0].apellidos,
-          fechaNacimiento: fechaGuardar,
           email: correo,
-          dni: item[0].dni,
           telefono: telefono,
-          fotoPerfil: item[0].fotoPerfil,
-          role: item[0].role,
-          estado: item[0].estado,
-          password: item[0].contraseña,
-          iban: item[0].iban,
-          seccion: item[0].seccion,
+          estado: idEstado,
           direccion: direccion
       }),
   };
@@ -76,7 +67,8 @@ guardar(tick) {
       "http://api-proyecto-final/api/usuario/"+ localStorage.getItem("idUsuario"),
       requestOptions
   ).then((response) => { 
-    if(response.ok) { 
+    if(response.ok) {
+      this.sacarUsuario(); 
       console.log(tick);
       document.getElementById(tick).style.display = "block";
       document.getElementById(tick).className = "d-inline";
