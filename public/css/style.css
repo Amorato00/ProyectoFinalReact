@@ -125,6 +125,21 @@ li {
 	color: white !important;
 }
 
+.icono_volver_arriba {
+    position: fixed;
+    right: 5%;
+	bottom: 5%;
+	font-size: 4rem;
+}
+
+.icono_volver_arriba a{
+    color:white;
+}
+
+.icono_volver_arriba a:hover{
+    color:#a53636;
+}
+
 /* Estadar Socio y Junta Directiva */
 
 .header img {
@@ -177,9 +192,6 @@ li {
 
 .enlaceEstandar {
 	min-width: 4rem !important;
-}
-
-.enlaceEstandar {
 	color: #a53636 !important;
 }
 
@@ -351,6 +363,50 @@ li {
 /*=====  Fin Home ======*/
 
 /*=============================================
+=                 Políticas                   =
+=============================================*/
+
+#politicas {
+	background-color: #a53636;
+	border-radius: 1rem;
+}
+
+.indice>li{
+	list-style-type: circle !important;
+}
+
+.indice>li:hover{
+	list-style-type: disc !important;
+}
+
+.lista>li {
+	list-style-type: disc !important;
+}
+
+.enlaces {
+	color: rgb(197, 197, 197);
+	text-decoration: underline !important;
+}
+
+.enlaces:hover {
+	color: white;
+}
+
+.enlaceWeb {
+	cursor: pointer;
+	color: white;
+}
+
+.enlaceWeb:hover {
+	color: rgb(197, 197, 197);
+	text-decoration: underline !important;
+}
+
+
+
+/*=====  Fin Políticas ======*/
+
+/*=============================================
 =                 Login                       =
 =============================================*/
 
@@ -362,15 +418,6 @@ li {
 #login > div {
 	border: solid 4px #a53636;
 }
-
-#login span > a {
-	color: #a53636 !important;
-}
-
-#login span > a:hover {
-	color: #864a4a !important;
-}
-
 
 /*=====  Fin Login ======*/
 
@@ -487,6 +534,31 @@ li {
 	padding-top: 0.5rem !important;
 }
 
+.botonJuntaActivo {
+	background-color: #a53636 !important;
+	color: white !important;
+	border: solid 1px white !important;
+}
+
+.botonJunta:hover {
+	background-color: #a53636;
+	color: white;
+	border: solid 1px white;
+}
+
+.botonJunta:active {
+	background-color: #a53636;
+	color: white;
+	border: solid 1px white;
+}
+
+.interactuarSocio:hover {
+	cursor: pointer;
+	background-color: white !important;
+	color: #a53636 !important;
+}
+
+
 
 
 /*=====  Fin Junta directiva  ======*/
@@ -536,6 +608,12 @@ li {
 		margin-top: 0rem !important;
 	}
 	/* Fin Home Responsive*/
+	.icono_volver_arriba {
+		position: fixed;
+		right: 5%;
+		bottom: 5%;
+		font-size: 2rem;
+	}
 }
 
 
@@ -668,6 +746,17 @@ li {
 	#navbarMenuHome li {
 		padding-left: 2rem;
 	}
+
+	#navbarMenuHome button {
+		color: white;
+		font-size: 1rem;
+		font-weight: bold;
+	}
+	#navbarMenuHome button:hover {
+		text-decoration: none !important;
+		color: rgb(46, 46, 46) !important;
+	}
+
 	#navbarMenuHome a {
 		color: white;
 		font-size: 1rem;
