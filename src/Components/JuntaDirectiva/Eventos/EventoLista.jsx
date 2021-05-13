@@ -26,7 +26,7 @@ export default class EventoLista extends React.Component {
       titulo: "",
       texto: "",
       fechaInicio: "",
-      imagen: "",
+      imagenEvento: "",
       horaInicio: "",
       errorHoraInicio: "",
       errorTitulo: "",
@@ -114,7 +114,8 @@ export default class EventoLista extends React.Component {
             titulo: result.titulo,
             texto: result.texto,
             fechaInicio: fecha[2] + "-" + fecha[1] + "-" + fecha[0],
-            horaInicio: hora[0] + ":" + hora[1]
+            horaInicio: hora[0] + ":" + hora[1],
+            imagenEvento: result.imagen
           });
         },
         // Nota: es importante manejar errores aquí y no en
@@ -130,7 +131,7 @@ export default class EventoLista extends React.Component {
   }
 
   guardarEdit() {
-    const { titulo, texto, fechaInicio, horaInicio, itemEdit } = this.state;
+    const { titulo, texto, fechaInicio, horaInicio, itemEdit, imagenEvento } = this.state;
     
     var arrayFecha = itemEdit.fechaSubida.split("/");
   
@@ -142,7 +143,7 @@ export default class EventoLista extends React.Component {
           texto: texto,
           fechaInicio: fechaInicio + " " +horaInicio,
           fechaSubida: arrayFecha[2]+"-"+arrayFecha[1]+"-"+arrayFecha[0],
-          imagen: itemEdit.imagen,
+          imagen: imagenEvento,
           archivo: itemEdit.archivo,
           usuario: localStorage.getItem("idUsuario")
         }),
@@ -163,6 +164,7 @@ export default class EventoLista extends React.Component {
     }
 
   handleChange(event) {
+    const { itemEdit } = this.state;
     var name = event.target.name;
     console.log(name);
     this.setState({
@@ -191,6 +193,27 @@ export default class EventoLista extends React.Component {
       } else {
         this.setState({
           errorConcepto: "",
+        });
+      }
+    }
+
+    if (name === "imagenEvento") {
+      if(document.getElementById("imagenEvento").value.length > 0) {
+        if(document.getElementById("imagenEvento").files[0].type === "image/jpg" || document.getElementById("imagenEvento").files[0].type === "image/png"
+        || document.getElementById("imagenEvento").files[0].type === "image/jpeg") {
+          this.setState({
+            errorImagen: "",
+            imagenEvento: document.getElementById("imagenEvento").files[0].name
+          });
+        }else {
+          this.setState({
+            errorImagen: "Tipo de imagen no correcta, tipos aceptados[image/jpg, image/jpeg, image/png]",
+          });
+        }
+      } else {
+        this.setState({
+          errorImagen: "",
+          imagenEvento: itemEdit.imagen
         });
       }
     }
@@ -232,7 +255,7 @@ export default class EventoLista extends React.Component {
 
   render() {
     const { meses, titulo, texto, fechaInicio, errorTitulo, errorTexto, errorFecha, horaInicio, totalPaginas,
-      paginaActual, itemsPaginacion, itemEdit } = this.state;
+      paginaActual, itemsPaginacion, itemEdit, errorImagen, imagenEvento } = this.state;
     return (
       <div class="list-group mt-5">
          <div
@@ -404,13 +427,22 @@ export default class EventoLista extends React.Component {
                   />
                 </Form.Group>
                   <Form.Group>
+                  {(() => {
+                      if (errorImagen !== "") {
+                        return <p className="text-danger">{errorImagen}</p>;
+                      }
+                    })()}
                     <Form.Label>Imagen</Form.Label>
                     <input
-                      id="icono_perfil"
+                      id="imagenEvento"
                       className="form-control-file"
                       type="file"
-                      name="icono_perfil"
+                      name="imagenEvento"
+                      onChange={this.handleChange}
                     />
+                    <div className="pt-2">
+                      <img className="editImagen" src={"http://api-proyecto-final/img/" + imagenEvento} alt="Imagen noticia"/>
+                    </div>
                   </Form.Group>
                 </div>
                 <div className="modal-footer">
@@ -427,7 +459,8 @@ export default class EventoLista extends React.Component {
                     data-dismiss="modal"
                     aria-label="Close"
                     onClick={() => {
-                      if (errorTitulo === "" && errorTexto === "" && errorFecha === "") {
+                      
+                      if (errorTitulo === "" && errorTexto === "" && errorImagen === "") {
                         console.log("Enviar");
                         this.guardarEdit();
                       }

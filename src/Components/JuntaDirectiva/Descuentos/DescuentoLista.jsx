@@ -27,7 +27,7 @@ export default class DescuentoLista extends React.Component {
       texto: "",
       fechaInicio: "",
       fechaFin: "",
-      imagen: "",
+      imagenDescuento: "",
       descuento: "",
       horaInicio: "",
       errorFechaFin: "",
@@ -138,7 +138,8 @@ export default class DescuentoLista extends React.Component {
             texto: result.texto,
             fechaInicio: array[2] + "-" + array[1] + "-" + array[0],
             fechaFin: array2[2] + "-" + array2[1] + "-" + array2[0],
-            descuento: result.numDescuento,
+            imagenDescuento: result.imagen,
+            descuento: result.numDescuento
           });
         },
         // Nota: es importante manejar errores aquí y no en
@@ -161,6 +162,7 @@ export default class DescuentoLista extends React.Component {
       fechaFin,
       descuento,
       itemEdit,
+      imagenDescuento
     } = this.state;
 
     const requestOptions = {
@@ -171,7 +173,7 @@ export default class DescuentoLista extends React.Component {
         texto: texto,
         fechaInicio: fechaInicio,
         fechaFin: fechaFin,
-        imagen: itemEdit.imagen,
+        imagen: imagenDescuento,
         descuento: descuento,
         usuario: localStorage.getItem("idUsuario"),
       }),
@@ -191,6 +193,7 @@ export default class DescuentoLista extends React.Component {
   }
 
   handleChange(event) {
+    const { itemEdit } = this.state;
     var name = event.target.name;
     this.setState({
       [name]: event.target.value,
@@ -216,6 +219,27 @@ export default class DescuentoLista extends React.Component {
       } else {
         this.setState({
           errorTexto: "",
+        });
+      }
+    }
+
+    if (name === "imagenDescuento") {
+      if(document.getElementById("imagenDescuento").value.length > 0) {
+        if(document.getElementById("imagenDescuento").files[0].type === "image/jpg" || document.getElementById("imagenDescuento").files[0].type === "image/png"
+        || document.getElementById("imagenDescuento").files[0].type === "image/jpeg") {
+          this.setState({
+            errorImagen: "",
+            imagenDescuento: document.getElementById("imagenDescuento").files[0].name
+          });
+        }else {
+          this.setState({
+            errorImagen: "Tipo de imagen no correcta, tipos aceptados[image/jpg, image/jpeg, image/png]",
+          });
+        }
+      } else {
+        this.setState({
+          errorImagen: "",
+          imagenDescuento: itemEdit.imagen
         });
       }
     }
@@ -248,10 +272,12 @@ export default class DescuentoLista extends React.Component {
       errorFechaInicio,
       descuento,
       errorDescuento,
+      errorImagen,
       totalPaginas,
       paginaActual,
       itemsPaginacion,
-      itemEdit
+      itemEdit,
+      imagenDescuento
     } = this.state;
     return (
       <div class="list-group mt-5">
@@ -440,13 +466,22 @@ export default class DescuentoLista extends React.Component {
                     />
                   </Form.Group>
                   <Form.Group>
+                  {(() => {
+                      if (errorImagen !== "") {
+                        return <p className="text-danger">{errorImagen}</p>;
+                      }
+                    })()}
                     <Form.Label>Imagen</Form.Label>
                     <input
-                      id="icono_perfil"
+                      id="imagenDescuento"
                       className="form-control-file"
                       type="file"
-                      name="icono_perfil"
+                      name="imagenDescuento"
+                      onChange={this.handleChange}
                     />
+                    <div className="pt-2">
+                      <img className="editImagen" src={"http://api-proyecto-final/img/" + imagenDescuento} alt="Imagen noticia"/>
+                    </div>
                   </Form.Group>
                 </div>
                 <div className="modal-footer">
@@ -463,7 +498,7 @@ export default class DescuentoLista extends React.Component {
                     data-dismiss="modal"
                     aria-label="Close"
                     onClick={() => {
-                      if (errorTitulo === "" && errorTexto === "" && errorFechaFin === "" && errorFechaInicio === "" && errorDescuento === "") {
+                      if (errorTitulo === "" && errorTexto === "" && errorFechaFin === "" && errorFechaInicio === "" && errorDescuento === "" && errorImagen === "") {
                         console.log("Enviar");
                         this.guardarEdit();
                       }

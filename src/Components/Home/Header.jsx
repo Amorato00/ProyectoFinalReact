@@ -22,7 +22,7 @@ export default function Header() {
   return (
     <header className="menu-superior">
       <div className="container">
-        <Navbar expand="lg">
+        <Navbar expand="lg" className="py-0">
           <button
             className="navbar-toggler border-0"
             type="button"
@@ -119,10 +119,10 @@ export default function Header() {
                     Noticias
                   </button>
                   <div
-                    className="dropdown-menu"
+                    className="dropdown-menu dropdownEstandar"
                     aria-labelledby="navbarDropdown"
                   >
-                    <a className="dropdown-item" href="/#noticias-home">
+                    <a className="dropdown-item " href="/#noticias-home">
                       Últimas noticias
                     </a>
                     <a className="dropdown-item" href="/noticias">
@@ -143,7 +143,7 @@ export default function Header() {
                     Noticias
                   </button>
                   <div
-                    className="dropdown-menu"
+                    className="dropdown-menu dropdownEstandar"
                     aria-labelledby="navbarDropdown"
                   >
                     <a className="dropdown-item" href="/#noticias-home">
@@ -170,7 +170,7 @@ export default function Header() {
                         Socio
                       </button>
                       <div
-                        className="dropdown-menu"
+                        className="dropdown-menu dropdownEstandar"
                         aria-labelledby="navbarDropdown"
                       >
                         <a className="dropdown-item" href="/#irSocios">

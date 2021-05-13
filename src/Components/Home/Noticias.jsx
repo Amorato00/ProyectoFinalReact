@@ -61,7 +61,7 @@ class Noticias extends React.Component {
             <div className="card fondoRojo border-white text-white">
               <img
                 src={"./img/" + item.imagen}
-                className="card-img-top"
+                className="card-img-top imagenNoticiaHome"
                 alt={item.imagen}
               />
               <div className="card-body">

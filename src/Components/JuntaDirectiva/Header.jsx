@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <header className="menu-superior2">
       <div className="container">
-        <Navbar expand="lg">
+        <Navbar expand="lg" className="py-0">
           <button
             className="navbar-toggler border-0"
             type="button"

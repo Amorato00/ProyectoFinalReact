@@ -89,13 +89,16 @@ class Noticias extends React.Component {
         style={{ backgroundColor: "rgb(75, 75, 75)" }}
       >
         <h1 className="text-center pb-5 pt-5 text-white"> Noticias </h1>
-        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 px-5">
+        <div className="row">
+
+       <div className="col-sm-10 col-md-10 col-lg-7 mx-auto">
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 px-5 mx-auto">
           {itemsPaginacion.map((item) => (
             <div className="col mb-4 cardNoticias" key={item.id}>
               <div className="card fondo text-white border-white">
                 <img
                   src={"./img/" + item.imagen}
-                  className="card-img-top"
+                  className="card-img-top imagenNoticiaHome"
                   alt={item.imagen}
                 />
                 <div className="card-body">
@@ -139,7 +142,7 @@ class Noticias extends React.Component {
             </div>
           ))}
         </div>
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center pt-5">
           <nav aria-label="Page navigation example">
             <nav aria-label="Page navigation example">
               <ul class="pagination">
@@ -172,6 +175,8 @@ class Noticias extends React.Component {
               </ul>
             </nav>
           </nav>
+        </div>
+        </div>
         </div>
       </div>
     );

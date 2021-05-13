@@ -22,7 +22,7 @@ export default function Home() {
                 </div>
             </div>
             <div className="container-fluid py-5" id="noticias-home">
-                <div className="container">
+                <div className="container px-5">
                     <h1 className="text-center pb-4 text-white"> Noticias </h1>
                     <Noticias/>
                 </div>

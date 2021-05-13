@@ -25,7 +25,7 @@ export default class NoticiasLista extends React.Component {
       itemEdit: [],
       titulo: "",
       texto: "",
-      imagen: "",
+      imagenNoticia: "",
       errorTitulo: "",
       errorTexto: "",
       errorImagen: "",
@@ -125,7 +125,8 @@ export default class NoticiasLista extends React.Component {
           this.setState({
             itemEdit: result,
             titulo: result.titulo,
-            texto: result.texto
+            texto: result.texto,
+            imagenNoticia: result.imagen
           });
         },
         // Nota: es importante manejar errores aquí y no en
@@ -141,7 +142,7 @@ export default class NoticiasLista extends React.Component {
   }
 
   guardarEdit() {
-    const { titulo, texto, itemEdit } = this.state;
+    const { titulo, texto, itemEdit, imagenNoticia } = this.state;
     
     var arrayFecha = itemEdit.fecha.split("/");
 
@@ -152,7 +153,7 @@ export default class NoticiasLista extends React.Component {
           titulo: titulo,
           texto: texto,
           fecha: arrayFecha[2] + arrayFecha[1] + arrayFecha[0],
-          imagen: itemEdit.imagen,
+          imagen: imagenNoticia,
           archivo: itemEdit.archivo,
           usuario: localStorage.getItem("idUsuario")
         }),
@@ -173,8 +174,8 @@ export default class NoticiasLista extends React.Component {
     }
 
   handleChange(event) {
+    const { itemEdit } = this.state;
     var name = event.target.name;
-    console.log(name);
     this.setState({
       [name]: event.target.value,
     });
@@ -204,6 +205,27 @@ export default class NoticiasLista extends React.Component {
         });
       }
     }
+
+    if (name === "imagenNoticia") {
+      if(document.getElementById("imagenNoticia").value.length > 0) {
+        if(document.getElementById("imagenNoticia").files[0].type === "image/jpg" || document.getElementById("imagenNoticia").files[0].type === "image/png"
+        || document.getElementById("imagenNoticia").files[0].type === "image/jpeg") {
+          this.setState({
+            errorImagen: "",
+            imagenNoticia: document.getElementById("imagenNoticia").files[0].name
+          });
+        }else {
+          this.setState({
+            errorImagen: "Tipo de imagen no correcta, tipos aceptados[image/jpg, image/jpeg, image/png]",
+          });
+        }
+      } else {
+        this.setState({
+          errorImagen: "",
+          imagenNoticia: itemEdit.imagen
+        });
+      }
+    }
   }
 
   componentDidMount() {
@@ -222,7 +244,7 @@ export default class NoticiasLista extends React.Component {
 
   render() {
     const { meses, titulo, texto, errorTitulo, errorTexto,totalPaginas,
-      paginaActual, itemsPaginacion, itemEdit} = this.state;
+      paginaActual, itemsPaginacion, itemEdit, errorImagen, imagenNoticia} = this.state;
     return (
       <div class="list-group mt-5">
         <div
@@ -349,13 +371,22 @@ export default class NoticiasLista extends React.Component {
                     />
                   </Form.Group>
                   <Form.Group>
+                  {(() => {
+                      if (errorImagen !== "") {
+                        return <p className="text-danger">{errorImagen}</p>;
+                      }
+                    })()}
                     <Form.Label>Imagen</Form.Label>
                     <input
-                      id="icono_perfil"
+                      id="imagenNoticia"
                       className="form-control-file"
                       type="file"
-                      name="icono_perfil"
+                      name="imagenNoticia"
+                      onChange={this.handleChange}
                     />
+                    <div className="pt-2">
+                      <img className="editImagen" src={"http://api-proyecto-final/img/" + imagenNoticia} alt="Imagen noticia"/>
+                    </div>
                   </Form.Group>
                 </div>
 
@@ -373,7 +404,7 @@ export default class NoticiasLista extends React.Component {
                     data-dismiss="modal"
                     aria-label="Close"
                     onClick={() => {
-                      if (errorTitulo === "" && errorTexto === "") {
+                      if (errorTitulo === "" && errorTexto === "" && errorImagen === "") {
                         console.log("Enviar");
                         this.guardarEdit();
                       }
