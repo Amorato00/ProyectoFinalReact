@@ -198,9 +198,19 @@ export default class EventoLista extends React.Component {
     this.sacarActa();
   }
 
+  eliminar(id) {
+    fetch('http://api-proyecto-final/api/acta/' + id, {
+      method: 'DELETE',
+    })
+    .then(res => res.text()) // or res.json()
+    .then(res => {
+      this.sacarActa();
+    })
+  }
+
   render() {
     const { meses, texto, fecha, errorTexto, errorFecha, totalPaginas,
-      paginaActual, itemsPaginacion } = this.state;
+      paginaActual, itemsPaginacion, itemEdit } = this.state;
     return (
       <div class="list-group mt-5">
         <div
@@ -224,7 +234,7 @@ export default class EventoLista extends React.Component {
         {itemsPaginacion.map((item) => (
           <button  data-toggle="modal"
           onClick={() => this.sacarActaId(item.id)}
-          data-target="#editActa" class="list-group-item list-group-item-action">
+          data-target="#editActa" class="list-group-item list-group-item-action botonJunta">
            
                 {(() => {
                   var fechaActual = new Date();
@@ -334,25 +344,41 @@ export default class EventoLista extends React.Component {
                   </Form.Group>
                 </div>
                 <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
+                  <div className="w-100">
+                   
+                    <button 
                     data-dismiss="modal"
-                  >
-                    Cerrar
-                  </button>
+                    aria-label="Close"
+                    className="btn btnEstandar2 align-self-start" onClick={() => this.eliminar(itemEdit.id)}><i class="fas fa-trash"></i></button>
+
                   <button
                     type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
                     onClick={() => {
-                      if (errorFecha === "" && errorTexto === "") {
+                      if (errorTexto === "" && errorFecha === "") {
                         console.log("Enviar");
                         this.guardarEdit();
                       }
                     }}
-                    className="btn btnEstandar"
+                    className="btn btnEstandar float-right"
                   >
                     Guardar cambios
                   </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary float-right mr-2"
+                    data-dismiss="modal"
+                    onClick = {() => {
+                      document.getElementById("boton"+itemEdit.id).className = "list-group-item list-group-item-action botonJunta";
+                    }}
+                  >
+                    Cerrar
+                  </button>
+                    
+                  </div>
+                  
                 </div>
               </Form>
             </div>

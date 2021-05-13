@@ -78,7 +78,7 @@ export default class Evento extends React.Component {
             </div>
             <div className="text-left text-lg-right mb-5">
               <button
-                className="btn btnEstandar2"
+                 className="btn btn-outline-light font-weight-bold"
                 data-toggle="modal"
                 data-target="#crearNoticia"
               >

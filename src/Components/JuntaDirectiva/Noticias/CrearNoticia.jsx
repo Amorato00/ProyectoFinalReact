@@ -9,7 +9,7 @@ const schema = yup.object().shape({
   texto: yup.string().required("El texto esta vacio "),
 });
 
-export default function AddConcepto() {
+export default function AddNoticia() {
   //Guardar contabilidilidad
   function guardar(data, imagen) {
     var fecha = new Date();
@@ -139,7 +139,7 @@ export default function AddConcepto() {
                 Cerrar
               </button>
               <button type="submit" className="btn btnEstandar">
-                Guardar cambios
+                Crear Noticia
               </button>
             </div>
           </Form>

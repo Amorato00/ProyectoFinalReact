@@ -128,7 +128,7 @@ export default class SociosLista extends React.Component {
   render() {
     const { gestionSocio, totalPaginas, paginaActual, itemsPaginacion } = this.state;
     return (
-      <div>
+      <div className="mt-5">
         <div
           class="modal"
           id="modalCarga"
@@ -165,6 +165,7 @@ export default class SociosLista extends React.Component {
                 onClick={() => this.sacarGestionSocio(item.id)}
                 data-target="#gestionSocio"
                 id="trGestionSocio"
+                className="interactuarSocio"
               >
                 <td data-label="Nombre">{item.nombre}</td>
                 <td data-label="Apellidos">{item.apellidos}</td>

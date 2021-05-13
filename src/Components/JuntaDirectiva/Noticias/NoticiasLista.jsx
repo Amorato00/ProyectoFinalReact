@@ -116,7 +116,8 @@ export default class NoticiasLista extends React.Component {
   }
 
 
-  sacarNoticiasId(id) {
+  sacarNoticiasId(id, boton) {
+    document.getElementById(boton).className = "list-group-item list-group-item-action botonJuntaActivo";
     fetch("http://api-proyecto-final/api/noticia/id/"+id)
       .then((res) => res.json())
       .then(
@@ -161,7 +162,7 @@ export default class NoticiasLista extends React.Component {
         requestOptions
     ).then((response) => { 
       if(response.ok) { 
-        console.log("funciomnnnnnaa");
+        document.getElementById("boton"+itemEdit.id).className = "list-group-item list-group-item-action botonJunta";
         localStorage.setItem("alerta", "Se ha modificado correctamente");
         //window.location = "/junta-directiva/contabilidad";
         this.sacarNoticias();
@@ -208,10 +209,20 @@ export default class NoticiasLista extends React.Component {
   componentDidMount() {
     this.sacarNoticias();
   }
+  
+  eliminar(id) {
+    fetch('http://api-proyecto-final/api/noticia/' + id, {
+      method: 'DELETE',
+    })
+    .then(res => res.text()) // or res.json()
+    .then(res => {
+      this.sacarNoticias();
+    })
+  }
 
   render() {
     const { meses, titulo, texto, errorTitulo, errorTexto,totalPaginas,
-      paginaActual, itemsPaginacion, } = this.state;
+      paginaActual, itemsPaginacion, itemEdit} = this.state;
     return (
       <div class="list-group mt-5">
         <div
@@ -233,9 +244,9 @@ export default class NoticiasLista extends React.Component {
           </div>
         </div>
         {itemsPaginacion.map((item) => (
-          <button  data-toggle="modal"
-          onClick={() => this.sacarNoticiasId(item.id)}
-          data-target="#editNoticia" class="list-group-item list-group-item-action">
+          <button  data-toggle="modal" id={"boton" + item.id}
+          onClick={() => this.sacarNoticiasId(item.id, "boton"+item.id)}
+          data-target="#editNoticia" class="list-group-item list-group-item-action botonJunta">
             <div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1">{item.titulo}</h5>
               <small>
@@ -290,6 +301,9 @@ export default class NoticiasLista extends React.Component {
                   className="close"
                   data-dismiss="modal"
                   aria-label="Close"
+                  onClick = {() => {
+                    document.getElementById("boton"+itemEdit.id).className = "list-group-item list-group-item-action botonJunta";
+                  }}
                 >
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -344,26 +358,43 @@ export default class NoticiasLista extends React.Component {
                     />
                   </Form.Group>
                 </div>
+
                 <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
+                  <div className="w-100">
+                   
+                    <button 
                     data-dismiss="modal"
-                  >
-                    Cerrar
-                  </button>
+                    aria-label="Close"
+                    className="btn btnEstandar2 align-self-start" onClick={() => this.eliminar(itemEdit.id)}><i class="fas fa-trash"></i></button>
+
                   <button
                     type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
                     onClick={() => {
                       if (errorTitulo === "" && errorTexto === "") {
                         console.log("Enviar");
                         this.guardarEdit();
                       }
                     }}
-                    className="btn btnEstandar"
+                    className="btn btnEstandar float-right"
                   >
                     Guardar cambios
                   </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary float-right mr-2"
+                    data-dismiss="modal"
+                    onClick = {() => {
+                      document.getElementById("boton"+itemEdit.id).className = "list-group-item list-group-item-action botonJunta";
+                    }}
+                  >
+                    Cerrar
+                  </button>
+                    
+                  </div>
+                  
                 </div>
               </Form>
             </div>

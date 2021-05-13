@@ -4,7 +4,6 @@ import { Line, Pie } from "react-chartjs-2";
 
 import {
   ScheduleComponent,
-  Week,
   Month,
   Inject,
   ViewsDirective,
@@ -19,7 +18,10 @@ export default class Cuerpo extends React.Component {
       fechaContabilidad: [],
       activos: 0,
       pidePago: 0,
-      baja: 0
+      baja: 0,
+      error: null,
+      isLoaded: false,
+      items: [],
     };
   }
 
@@ -96,9 +98,40 @@ export default class Cuerpo extends React.Component {
       );
   }
 
+  sacarEventos() {
+    fetch("http://api-proyecto-final/api/evento")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          result.forEach(element => {
+            var separar = element.fechaInicio.split(" ");
+            var fecha = separar[0].split("/");
+            var hora = separar[1].split(":");
+            this.setState({
+              items: [
+                ...this.state.items,
+                {id: element.id, Subject: element.titulo, StartTime: new Date(fecha[2],fecha[1],fecha[0],hora[0],hora[1]), EndTime: new Date(fecha[2],fecha[1],fecha[0],hora[0],hora[1])} 
+              ]
+              });
+            })
+            
+          },
+        // Nota: es importante manejar errores aquí y no en
+        // un bloque catch() para que no interceptemos errores
+        // de errores reales en los componentes.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      )
+  }
+
   componentDidMount() {
     this.sacarContabilidad();
     this.sacarSocios();
+    this.sacarEventos();
   }
 
   render() {
@@ -129,9 +162,9 @@ export default class Cuerpo extends React.Component {
 
     const dataPie = {
       labels: [
-        'Activo',
-        'Pide Pago',
-        'Baja'
+        'Activo ('+this.state.activos+')',
+        'Pide Pago ('+this.state.pidePago+')',
+        'Baja ('+this.state.baja+')'
       ],
       datasets: [{
         label: 'My First Dataset',
@@ -196,16 +229,13 @@ export default class Cuerpo extends React.Component {
                 width="100%"
                 height="550px"
                 selectedDate={new Date()}
+                eventSettings={{ dataSource: this.state.items }}
+                readonly
               >
                 <ViewsDirective>
                   <ViewDirective option="Month" showWeekend={true} />
-                  <ViewDirective
-                    option="Week"
-                    startHour="07:00"
-                    endHour="20:00"
-                  />
                 </ViewsDirective>
-                <Inject services={[Month, Week]} />
+                <Inject services={[Month]} />
               </ScheduleComponent>
             </div>
           </div>

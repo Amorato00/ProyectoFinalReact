@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,9 +19,13 @@ export default function Login(props) {
     resolver: yupResolver(schema),
   });
 
+  const [errorUsuario, setErrorUsuario] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+
   //Enviar formulario
   const onSubmit = (data, evt) => {
-    console.log(data);
+    setErrorUsuario("");
+    setErrorPassword("");
     comprobarLogin(data);
     evt.target.reset();
   };
@@ -32,15 +36,13 @@ export default function Login(props) {
     .then((res) => res.json())
     .then(
       (result) => {
-          
+            if(result.length > 0) {
             result.forEach((item) => {
               document.getElementById("modalCarga").style.display = "none";
               const bcrypt = require('bcryptjs');
               const doesPasswordMatch = bcrypt.compareSync(data.password, item.password);
           
               if (doesPasswordMatch) {
-                console.log("Iniciar sesion");
-                localStorage.setItem("alerta", "Se ha realizado el login correctamente");
                 localStorage.setItem("sesion", true);
                 localStorage.setItem("idUsuario", item.id);
                 localStorage.setItem("imagenPerfil", item.fotoPerfil);
@@ -64,9 +66,12 @@ export default function Login(props) {
                   
                 }
               } else {
-                console.log("Contraseña incorrecta");
+                setErrorPassword("Contraseña incorrecta");
               }
             });
+          }else  {
+            setErrorUsuario("El nombre de usuario no existe");
+          }
           })
           .finally(function () {
             document.getElementById("modalCarga").style.display = "none";
@@ -117,6 +122,7 @@ export default function Login(props) {
                 <Form.Group>
                 <p className="text-danger mb-1">{alert}</p>
                 <p className="text-danger mb-1">{errors.emailUsername?.message}</p>
+                <p className="text-danger mb-1">{errorUsuario}</p>
                   <Form.Label> Email o Username</Form.Label>
                   <Form.Control
                     type="text"
@@ -129,6 +135,7 @@ export default function Login(props) {
                 </Form.Group>
                 <Form.Group>
                 <p className="text-danger mb-1">{errors.password?.message}</p>
+                <p className="text-danger mb-1">{errorPassword}</p>
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
@@ -152,7 +159,7 @@ export default function Login(props) {
                 {" "}
                 No eres socio, pulsa{" "}
                 <span>
-                  <a href="/register"> aquí </a>
+                  <a href="/register" className="enlaceEstandar"> aquí </a>
                 </span>{" "}
                 para ser uno.{" "}
               </p>

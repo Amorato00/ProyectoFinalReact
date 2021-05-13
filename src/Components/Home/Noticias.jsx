@@ -55,7 +55,7 @@ class Noticias extends React.Component {
     const { items, meses } = this.state;
 
     return (
-      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" id="sectionNocias">
         {items.map((item) => (
           <div className="col mb-4 cardNoticias" key={item.id}>
             <div className="card fondoRojo border-white text-white">

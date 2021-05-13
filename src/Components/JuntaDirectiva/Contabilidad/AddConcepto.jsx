@@ -156,7 +156,7 @@ export default function AddConcepto() {
                 Cerrar
               </button>
               <button type="submit" className="btn btnEstandar">
-                Guardar cambios
+                Crear Concepto
               </button>
             </div>
           </Form>

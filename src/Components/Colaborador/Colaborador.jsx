@@ -72,16 +72,6 @@ export default function Colaborador() {
     sacarSocio(data);
   };
 
-  useEffect(() => {
-    if (localStorage.getItem("alerta") != null) {
-      console.log(localStorage.getItem("alerta"));
-      document.getElementById("textoAlerta").innerHTML = localStorage.getItem(
-        "alerta"
-      );
-      document.getElementById("alerta").style.display = "block";
-      localStorage.removeItem("alerta");
-    }
-  });
 
   return (
     <div>
@@ -104,24 +94,6 @@ export default function Colaborador() {
         </div>
       </div>
       {/*Alerta*/}
-
-      <div
-        className="alert alert-info alert-dismissible fade show w-50 mx-auto alertaEstandar"
-        role="alert"
-        id="alerta"
-      >
-        <p id="textoAlerta" className="mb-0">
-          Ejemplo de alerta.
-        </p>
-        <button
-          type="button"
-          className="close"
-          data-dismiss="alert"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
       <section id="colaboladorSingleSocio" className="text-white py-5">
         <div className="container pt-5">
           <div className="d-flex justify-content-center">

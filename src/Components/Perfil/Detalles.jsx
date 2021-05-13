@@ -62,7 +62,7 @@ export default class Detalles extends React.Component {
 //Guardar sosio
 guardar(tick) {
   const { username, nombre, apellidos, DNI, fecha, iban, idEstado } = this.state;
-
+  this.reiniciarTick(); 
   const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -180,7 +180,7 @@ guardar(tick) {
 
     //validar Cuenta Contable
     if(name === "iban") {
-      expreg = /([A-Z]{2})\s*\t*(\d\d)\s*\t*(\d\d\d\d)\s*\t*(\d\d\d\d)\s*\t*(\d\d\d\d)\s*\t*(\d\d\d\d)/g;
+      expreg = /ES\d{2}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}|ES\d{22}/;
      if(!expreg.test(event.target.value)){
         this.setState({
           errorIban: "El formato del IBAN es incorrecto",
@@ -191,7 +191,6 @@ guardar(tick) {
         });
       }
     }
-   
   }
 
 
@@ -296,6 +295,7 @@ render() {
                   }
                 })()}
                 <input
+                  style={{width: "70%"}}
                   type="text"
                   id="iban"
                   name="iban"

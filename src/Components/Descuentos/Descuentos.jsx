@@ -21,7 +21,6 @@ class Descuentos extends React.Component {
       .then(
         (result) => {
           var total = Math.ceil(result.length / 4);
-          console.log(total);
           this.setState({
             isLoaded: true,
             items: result,
@@ -88,7 +87,7 @@ class Descuentos extends React.Component {
                   { item.texto }
                   </p>
                   <p className="card-text">
-                    <small className="text-danger h6">
+                    <small className="text-danger h6 border rounded bg-white p-1">
                       Disponible des de el <strong>{ item.fechaInicio }</strong> hasta el <strong>{ item.fechaFin }</strong>
                     </small>
                   </p>

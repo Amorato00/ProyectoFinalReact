@@ -169,7 +169,7 @@ export default function CrearEvento() {
                 Cerrar
               </button>
               <button type="submit" className="btn btnEstandar">
-                Guardar cambios
+                Crear Evento
               </button>
             </div>
           </Form>

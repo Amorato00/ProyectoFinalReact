@@ -158,11 +158,12 @@ export default function Header() {
               )}
                
               </li>
+              {/*
               <li className="active my-auto d-block d-md-none">
                 <a className="nav-link enlace-nav" href="/junta-directiva/contabilidad">
                 <i class="far fa-address-book pr-3"></i> Consultas
                 </a>
-              </li>
+              </li>*/}
               <li className="active my-auto d-block d-md-none">
                 {location.pathname === "/junta-directiva/agenda" ? (
                    <a className="nav-link marcar enlace-nav" href="/junta-directiva/agenda">
@@ -176,9 +177,16 @@ export default function Header() {
               
               </li>
               <li className="active my-auto d-block d-md-none">
-                <a className="nav-link enlace-nav"  href="/junta-directiva/contabilidad">
+              {location.pathname === "/junta-directiva/archivos" ? (
+                  <a className="nav-link marcar enlace-nav"  href="/junta-directiva/archivos">
+                  <i className="fas fa-file-medical pr-3"></i> Archivos
+                  </a>
+              ) : (
+                <a className="nav-link enlace-nav"  href="/junta-directiva/archivos">
                 <i className="fas fa-file-medical pr-3"></i> Archivos
                 </a>
+              )}
+                
               </li>
               {/*
               <li className="active my-auto">

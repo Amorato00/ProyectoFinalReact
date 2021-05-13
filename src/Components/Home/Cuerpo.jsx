@@ -4,7 +4,7 @@ import {} from "react-bootstrap";
 class Cuerpo extends React.Component {
   render() {
     return (
-      <div className="container-fluid p-0">
+      <div className="container-fluid p-0" id="irQuienesSomos">
         <div className="row m-0">
           <div className="col-12 col-lg-8 p-0">
             <div>
@@ -22,7 +22,7 @@ class Cuerpo extends React.Component {
                 </h4>
               </div>
             </div>
-            <div>
+            <div id="irSocios">
               <img
                 src={"./img/StockSnap_VKR6HOS0DC-min.jpg"}
                 className="card-img-top"

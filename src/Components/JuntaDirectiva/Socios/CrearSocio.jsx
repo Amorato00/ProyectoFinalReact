@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -37,13 +37,8 @@ const schema = yup.object().shape({
       /^[0-9]{8,8}[A-Za-z]$/,
       "El dni introducido no tiene el formato correcto"
     ),
-  iban: yup
-    .string()
-    .nullable()
-   ,
-  direccion: yup
-    .string()
-    .nullable(),
+  iban: yup.string().nullable(),
+  direccion: yup.string().nullable(),
   fecha: yup
     .string()
     .required("La fecha de nacimiento es obligatoria")
@@ -86,18 +81,14 @@ function guardar(data, imagen) {
       password: hashedPassword,
       seccion: parseInt(data.seccion),
       direccion: data.direccion,
-      iban: data.iban
+      iban: data.iban,
     }),
   };
   fetch("http://api-proyecto-final/api/add/usuario", requestOptions).then(
     (response) => {
       if (response.ok) {
         document.getElementById("modalCarga").style.display = "none";
-        localStorage.setItem(
-          "socioCreado",
-          "Ahora eres socio de BicyRide, Inicia sesion para ver todas las novedades"
-        );
-        window.location = "/login";
+        window.location = "/junta-directiva/socios";
         response.json();
       } else {
         document.getElementById("modalCarga").style.display = "none";
@@ -106,7 +97,7 @@ function guardar(data, imagen) {
   );
 }
 
-export default function Login(props) {
+export default function AddSocio() {
   const {
     register,
     handleSubmit,
@@ -116,44 +107,51 @@ export default function Login(props) {
   });
   const [imagenError, setImagenError] = useState("");
   const [usuarios, setUsuarios] = useState([]);
-  const [errorUsername, serErrorUsername] = useState([]);
-  const [errorEmail, serErrorEmail] = useState([]);
-
+  const [errorUsername, serErrorUsername] = useState("");
+  const [errorEmail, serErrorEmail] = useState("");
 
   //Enviar formulario
   const onSubmit = (data, evt) => {
     serErrorUsername("");
     serErrorEmail("");
-    var correcto = true;
-    /*usuarios.forEach((element) => {
-      if(element.username !== data.username && element.email !== data.correo){
-        correcto = true;
-      } else {
-        if(element.username !== data.username){
-          serErrorUsername("El username ya existe");
-        }
-        if(element.email !== data.correo){
-          serErrorEmail("El email ya esta en uso");
-        }
-      }
-    });*/
 
-    if(correcto) {
-      if(document.getElementById("imagen").value.length > 0) {
-        if(document.getElementById("imagen").files[0].type === "image/jpg" || document.getElementById("imagen").files[0].type === "image/png"
-        || document.getElementById("imagen").files[0].type === "image/jpeg") {
+    var boolUsername = false;
+    var boolEmail = false;
+
+    usuarios.forEach((element) => {
+      if (element.email === data.correo) {
+          serErrorEmail("El email ya esta en uso");
+          boolUsername = true;
+      }
+    });
+
+    usuarios.forEach((element) => {
+      if (element.username === data.username) {
+          serErrorUsername("El username ya existe");
+          boolEmail = true;
+      }
+    });
+  
+    if (boolUsername === false && boolEmail === false) {
+      if (document.getElementById("imagen").value.length > 0) {
+        if (
+          document.getElementById("imagen").files[0].type === "image/jpg" ||
+          document.getElementById("imagen").files[0].type === "image/png" ||
+          document.getElementById("imagen").files[0].type === "image/jpeg"
+        ) {
           setImagenError("");
           guardar(data, document.getElementById("imagen").files[0].name);
           evt.target.reset();
-        }else {
-          setImagenError("Tipo de imagen no correcta, tipos aceptados[image/jpg, image/jpeg, image/png]");
+        } else {
+          setImagenError(
+            "Tipo de imagen no correcta, tipos aceptados[image/jpg, image/jpeg, image/png]"
+          );
         }
       } else {
         guardar(data, null);
         evt.target.reset();
       }
     }
-  
   };
 
   function sacarUsuarios() {
@@ -187,24 +185,34 @@ export default function Login(props) {
   }
 
   return (
-    <div className="container-fuild pb-5" id="register">
-
-    <div class="modal" id="modalCarga" style={{display:"none" , backgroundColor: "rgba(0,0,0, 0.5)"}} >
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content py-4 mx-auto w-25 border-0"  style={{backgroundColor: "rgba(0,0,0, 0.5)"}} >
-                <div class="d-flex justify-content-center text-white">
-                  <div class="spinner-border" role="status">
-                    <span class="visually-hidden"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <div
+      className="modal fade bd-example-modal-lg"
+      id="crearSocio"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div
+        className="modal-dialog modal-dialog-centered modal-lg"
+        role="document"
+      >
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="exampleModalLongTitle">
+              Añadir Nuevo Socio
+            </h5>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-      <div className="card mx-auto" style={{ maxWidth: "720px" }}>
-        <h1 className="text-center py-3">Ser socio</h1>
-        <div className="row no-gutters">
           <Form onSubmit={handleSubmit(onSubmit)} className="w-100">
-            <h2 className="pl-3 textRed">Datos personales</h2>
+            <h2 className="pl-3 textRed pt-4">Datos personales</h2>
             <div className="card-body row pb-0">
               <div className="col-6">
                 <Form.Group>
@@ -213,7 +221,7 @@ export default function Login(props) {
                   </Form.Label>
                   <input
                     type="text"
-                    className="form-control mx-auto inputRed"
+                    className="form-control mx-auto"
                     id="username"
                     name="username"
                     placeholder="Nombre de usuario"
@@ -228,7 +236,7 @@ export default function Login(props) {
                   </Form.Label>
                   <input
                     type="text"
-                    className="form-control mx-auto inputRed"
+                    className="form-control mx-auto"
                     id="apellidos"
                     name="apellidos"
                     placeholder="Apellidos"
@@ -242,7 +250,7 @@ export default function Login(props) {
                   </Form.Label>
                   <input
                     type="text"
-                    className="form-control mx-auto inputRed"
+                    className="form-control mx-auto"
                     id="dni"
                     name="dni"
                     placeholder="DNI"
@@ -256,7 +264,7 @@ export default function Login(props) {
                   </Form.Label>
                   <input
                     type="text"
-                    className="form-control mx-auto inputRed"
+                    className="form-control mx-auto"
                     id="telefono"
                     name="telefono"
                     placeholder="Numero de telefono"
@@ -269,7 +277,7 @@ export default function Login(props) {
                   </Form.Label>
                   <input
                     type="text"
-                    className="form-control mx-auto inputRed"
+                    className="form-control mx-auto"
                     id="iban"
                     name="iban"
                     placeholder="Cuenta IBAN"
@@ -284,7 +292,7 @@ export default function Login(props) {
                   </Form.Label>
                   <input
                     type="text"
-                    className="form-control mx-auto inputRed"
+                    className="form-control mx-auto"
                     id="nombre"
                     name="nombre"
                     placeholder="Nombre"
@@ -298,7 +306,7 @@ export default function Login(props) {
                   </Form.Label>
                   <input
                     type="email"
-                    className="form-control mx-auto inputRed"
+                    className="form-control mx-auto"
                     id="correo"
                     name="correo"
                     placeholder="Email"
@@ -313,7 +321,7 @@ export default function Login(props) {
                   </Form.Label>
                   <input
                     type="date"
-                    className="form-control mx-auto inputRed"
+                    className="form-control mx-auto"
                     id="fecha"
                     name="fecha"
                     {...register("fecha")}
@@ -336,7 +344,7 @@ export default function Login(props) {
                   </Form.Label>
                   <input
                     type="text"
-                    className="form-control mx-auto inputRed"
+                    className="form-control mx-auto"
                     id="direccion"
                     name="direccion"
                     placeholder="Dirección"
@@ -354,7 +362,7 @@ export default function Login(props) {
                   <div>
                     <input
                       id="imagen"
-                      className="form-control-file inputRed"
+                      className="form-control-file"
                       type="file"
                       name="fotoPerfil"
                       {...register("fotoPerfil")}
@@ -373,7 +381,7 @@ export default function Login(props) {
                   </Form.Label>
                   <input
                     type="password"
-                    className="form-control mx-auto inputRed"
+                    className="form-control mx-auto"
                     id="password"
                     name="password"
                     placeholder="Repetir Contraseña"
@@ -389,7 +397,7 @@ export default function Login(props) {
                   </Form.Label>
                   <input
                     type="password"
-                    className="form-control mx-auto inputRed"
+                    className="form-control mx-auto"
                     id="repetirPassword"
                     name="repetirPassword"
                     placeholder="Repetir Contraseña"
@@ -401,30 +409,18 @@ export default function Login(props) {
                 </Form.Group>
               </div>
             </div>
-            <Form.Group className="text-center">
-              <p className="text-danger mb-1">{errors.politicas?.message}</p>
-              <input
-                type="checkbox"
-                className="mx-auto inputRed"
-                id="politicas"
-                name="politicas"
-                {...register("politicas")}
-              />
-              <label>
-                Aceptar <span>
-                  <a href="/politicas-privacidad" target="_blank" className="enlaceEstandar"> <i class="fas fa-external-link-alt"></i> Políticas de privacidad </a>
-                </span>
-                <span className="obligatorio">*</span>
-              </label>
-            </Form.Group>
-            <Form.Group className="text-center">
-              <input
-                type="submit"
-                className="btn btnEstandar3"
-                value="Registrarse"
-                id="boton_login"
-              />
-            </Form.Group>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Cerrar
+              </button>
+              <button type="submit" className="btn btnEstandar">
+                Crear Socio
+              </button>
+            </div>
           </Form>
         </div>
       </div>

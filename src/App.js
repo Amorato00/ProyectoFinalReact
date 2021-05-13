@@ -27,6 +27,10 @@ import Socios from "./Components/JuntaDirectiva/Socios/Socios";
 import Descuento from "./Components/JuntaDirectiva/Descuentos/Descuento";
 import Agenda from "./Components/JuntaDirectiva/Agenda/Agenda";
 import AgendaSocio from "./Components/AgendaSocio";
+import Archivos from "./Components/JuntaDirectiva/Archivos/Archivos";
+import Cookies from "./Components/Politicas/Cookies";
+import Privacidad from "./Components/Politicas/Privacidad";
+import Legal from "./Components/Politicas/Legal";
 
 export default function App() {
   return (
@@ -55,6 +59,15 @@ export default function App() {
 
           <Perfil />
           <Footer />
+        </Route>
+        <Route path="/junta-directiva/archivos">
+          <HeaderJuntaDirectiva />
+          <div className="container-fluid fondo" id="juntaDirectiva">
+            <div className="row">
+              <HeaderLeft />
+              <Archivos />
+            </div>
+          </div>
         </Route>
         <Route path="/junta-directiva/agenda">
           <HeaderJuntaDirectiva />
@@ -126,6 +139,21 @@ export default function App() {
         <Route path="/agenda">
           <Header />
           <AgendaSocio />
+          <Footer />
+        </Route>
+        <Route path="/politicas-legal">
+          <Header />
+          <Legal />
+          <Footer />
+        </Route>
+        <Route path="/politicas-privacidad">
+          <Header />
+          <Privacidad />
+          <Footer />
+        </Route>
+        <Route path="/politicas-cookies">
+          <Header />
+          <Cookies />
           <Footer />
         </Route>
         <Route path="/descuentos">

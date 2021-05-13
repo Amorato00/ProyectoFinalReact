@@ -1,5 +1,6 @@
 import React from "react";
 import SocioLista from "./SociosLista";
+import CrearSocio from "./CrearSocio";
 
 export default class Socios extends React.Component {
 
@@ -49,6 +50,19 @@ export default class Socios extends React.Component {
                 onChange={this.handleChange}
               />
             </div>
+            <div className="text-left text-lg-right mb-5">
+              <button
+                 className="btn btn-outline-light font-weight-bold"
+                data-toggle="modal"
+                data-target="#crearSocio"
+              >
+                {" "}
+                <i class="fas fa-plus pr-3 p-1 p-md-2"></i> Añadir Socio
+              </button>
+            </div>
+            <h4 className="text-white">
+              Selecciona un SOCIO para ver más
+            </h4>
             <SocioLista search={search}
             ref={element => {
               this.socioLista = element;
@@ -56,6 +70,7 @@ export default class Socios extends React.Component {
           </div>
 
         </div>
+        <CrearSocio/>
       </div>
     );
   }

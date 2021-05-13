@@ -119,7 +119,7 @@ export default function HeaderLeft() {
           </a>
         )}
 
-        {location.pathname === "/" ? (
+        {/*location.pathname === "/" ? (
           <a
             href="/junta-directiva"
             className="list-group-item list-group-item-action pl-md-4 pl-lg-5"
@@ -133,7 +133,7 @@ export default function HeaderLeft() {
           >
             <i class="far fa-address-book pr-3"></i> Consultas
           </a>
-        )}
+        )*/}
 
         {location.pathname === "/junta-directiva/agenda" ? (
           <a
@@ -151,16 +151,16 @@ export default function HeaderLeft() {
           </a>
         )}
 
-        {location.pathname === "/" ? (
+        {location.pathname === "/junta-directiva/archivos" ? (
           <a
-            href="/junta-directiva"
-            className="list-group-item list-group-item-action pl-md-4 pl-lg-5"
+            href="/junta-directiva/archivos"
+            className="list-group-item list-group-item-action active pl-md-4 pl-lg-5"
           >
             <i className="fas fa-file-medical pr-3"></i> Archivos
           </a>
         ) : (
           <a
-            href="/junta-directiva"
+            href="/junta-directiva/archivos"
             className="list-group-item list-group-item-action pl-md-4 pl-lg-5"
           >
             <i className="fas fa-file-medical pr-3"></i> Archivos

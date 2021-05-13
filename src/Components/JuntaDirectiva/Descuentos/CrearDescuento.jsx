@@ -186,7 +186,7 @@ export default function CrearDescuento() {
                 Cerrar
               </button>
               <button type="submit" className="btn btnEstandar">
-                Guardar cambios
+                Crear Descuento
               </button>
             </div>
           </Form>

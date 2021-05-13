@@ -23,6 +23,7 @@ export default class Contabilidad extends PureComponent {
       size: 0,
       totalPaginas: 0,
       paginaActual: 0,
+      years: [],
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -88,10 +89,15 @@ export default class Contabilidad extends PureComponent {
       .then((res) => res.json())
       .then(
         (result) => {
+          var total = Math.ceil(result.length / 5);
+          console.log(total);
           this.setState({
             isLoaded: true,
             items: result,
+            size: result.length,
+            totalPaginas: total,
           });
+          this.paginacion(1);
         },
         // Nota: es importante manejar errores aquí y no en
         // un bloque catch() para que no interceptemos errores
@@ -127,6 +133,28 @@ export default class Contabilidad extends PureComponent {
       );
   }
 
+  sacarYears() {
+    fetch("http://api-proyecto-final/api/contabilidad/years")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            isLoaded: true,
+            years: result,
+          });
+        },
+        // Nota: es importante manejar errores aquí y no en
+        // un bloque catch() para que no interceptemos errores
+        // de errores reales en los componentes.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+  }
+
   componentDidMount() {
     var fecha = new Date();
     var year = fecha.getFullYear();
@@ -135,6 +163,7 @@ export default class Contabilidad extends PureComponent {
     });
     this.sacarContabilidad(year);
     this.sacarConceptoYearPasado(year);
+    this.sacarYears();
 
     if (localStorage.getItem("alerta") != null) {
       document.getElementById("textoAlerta").innerHTML = localStorage.getItem(
@@ -253,6 +282,7 @@ export default class Contabilidad extends PureComponent {
       totalPaginas,
       paginaActual,
       itemsPaginacion,
+      years,
     } = this.state;
     return (
       <div
@@ -324,16 +354,16 @@ export default class Contabilidad extends PureComponent {
                   value={this.state.selecYear}
                   onChange={this.handleChange}
                 >
-                  <option value="2021">2021</option>
-                  <option value="2020">2020</option>
-                  <option value="2019">2019</option>
-                  <option value="2018">2018</option>
-                  <option value="2017">2017</option>
+                  {years.map((year) => (
+                    <option value={year} key={year}>
+                      {year}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div>
                 <button
-                  className="btn btnEstandar2 p-1 p-md-2"
+                   className="btn btn-outline-light font-weight-bold"
                   data-toggle="modal"
                   data-target="#addConcepto"
                 >

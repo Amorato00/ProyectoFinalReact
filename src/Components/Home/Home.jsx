@@ -10,26 +10,11 @@ import Footer from "./Footer";
 
 export default function Home() {
 
-    useEffect(() => {
-        if(localStorage.getItem("alerta") != null) {
-            console.log(localStorage.getItem("alerta"));
-            document.getElementById("textoAlerta").innerHTML = localStorage.getItem("alerta");
-            document.getElementById("alerta").style.display = "block";
-            localStorage.removeItem("alerta");
-        }
-    });
-
     return (
         <div>
             {/*Cabecera*/}
             <Cabecera/>
             {/*Alerta*/}
-            <div className="alert alert-info alert-dismissible fade show w-50 mx-auto alertaEstandar" role="alert" id="alerta">
-                <p id="textoAlerta" className="mb-0">Ejemplo de alerta.</p>
-                <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
             <div className="container my-5">
                 <div className="row flex-column flex-md-row m-0 justify-content-lg-between">
                     {/*Partners*/}

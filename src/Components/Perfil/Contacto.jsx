@@ -52,6 +52,12 @@ export default class Detalles extends React.Component {
   //Guardar sosio
 guardar(tick) {
   const { correo, telefono, direccion, idEstado } = this.state;
+  document.getElementById("tickCorreo").style.display = "none";
+  document.getElementById("tickCorreo").className = "";
+  document.getElementById("tickTelefono").style.display = "none";
+  document.getElementById("tickTelefono").className = "";
+  document.getElementById("tickDireccion").style.display = "none";
+  document.getElementById("tickDireccion").className = "";
 
   const requestOptions = {
       method: "PUT",
@@ -113,7 +119,7 @@ guardar(tick) {
     }
     //Validar correo
     if(name === "correo") {
-      var expregCorreo = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      var expregCorreo = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
       if(event.target.value === "") {
         this.setState({
           errorCorreo: "El email esta vacio",

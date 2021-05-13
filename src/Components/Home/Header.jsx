@@ -173,7 +173,7 @@ export default function Header() {
                         className="dropdown-menu"
                         aria-labelledby="navbarDropdown"
                       >
-                        <a className="dropdown-item" href="/#socio">
+                        <a className="dropdown-item" href="/#irSocios">
                           Ventajas de ser socio
                         </a>
                         <a className="dropdown-item" href="/register">
@@ -231,7 +231,7 @@ export default function Header() {
                 }
               })()}
               <li className="active my-auto">
-                <Nav.Link className="enlace-nav" href="/#quines-somos">
+                <Nav.Link className="enlace-nav" href="/#irQuienesSomos">
                   ¿Quiénes somos?
                 </Nav.Link>
               </li>
@@ -285,7 +285,6 @@ export default function Header() {
                         <Button
                           onClick={() => {
                             localStorage.clear();
-                            localStorage.setItem("alerta", "Sesion cerrada");
                             window.location = "/";
                           }}
                           className="dropdown-item"
