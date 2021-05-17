@@ -71,7 +71,7 @@ export default class Descuento extends React.Component {
                 type="text"
                 id="search"
                 name="search"
-                placeholder="Buscar noticia"
+                placeholder="Buscar descuento"
                 value={this.state.search}
                 onChange={this.handleChange}
               />

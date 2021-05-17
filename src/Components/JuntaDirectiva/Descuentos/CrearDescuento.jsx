@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,11 +10,13 @@ const schema = yup.object().shape({
   fechaInicio: yup.string().required("La fecha de inicio es obligatoria ").nullable().transform ( ( curr ,  orig )  =>  orig  ===  '' ? null : curr ),
   fechaFin: yup.string().required("La fecha de fin es obligatoria ").nullable().transform ( ( curr ,  orig )  =>  orig  ===  '' ? null : curr ),
   numDescuento: yup.number().typeError("El descuento es oblibatorio").min(1, "El minimo no puede ser 0").max(100, "El maximo no puede ser mayor de 100"),
+  colaboradorSelect: yup.string().required("Debes seleccionar un colaboradro")
 });
 
 export default function CrearDescuento() {
 
   const [imagenError, setImagenError] = useState("");
+  subirImagen();
   //Guardar contabilidilidad
   function guardar(data, imagen) {
     const requestOptions = {
@@ -27,10 +29,11 @@ export default function CrearDescuento() {
         fechaFin: data.fechaFin,
         numDescuento: data.numDescuento,
         imagen: imagen,
-        usuario: localStorage.getItem("idUsuario")
+        usuario: localStorage.getItem("idUsuario"),
+        colaborador: data.colaboradorSelect
       }),
     };
-    fetch("http://api-proyecto-final/api/add/descuento", requestOptions).then(
+    fetch("https://api.ccpegoilesvalls.es/api/add/descuento", requestOptions).then(
       (response) => {
         if (response.ok) {
           localStorage.setItem("alerta", "Descuento añadido con exito");
@@ -39,6 +42,49 @@ export default function CrearDescuento() {
         }
       }
     );
+  }
+
+  useEffect(() => {
+    sacarColaboradores();
+  }, []);
+
+  function sacarColaboradores() {
+    fetch("https://api.ccpegoilesvalls.es/api/colaborador")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          var text = "";
+          text += '<option value="" label="Selecciona una seccion" />';
+          result.forEach((item) => {
+              text += '<option value="'+item.id+'" label="'+item.username+'" />';
+          });
+          document.getElementById('colaboradorSelect').innerHTML = text;
+        
+        },
+        // Nota: es importante manejar errores aquí y no en
+        // un bloque catch() para que no interceptemos errores
+        // de errores reales en los componentes.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+  }
+
+  function subirImagen() {
+    var inputFile = document.getElementById("imagen");
+    let formData = new FormData();
+    formData.append("archivo", inputFile.files[0]);
+    fetch("https://api.ccpegoilesvalls.es/upload/img", {
+      method: 'POST',
+      body: formData,
+        })
+    .then(respuesta => respuesta.text())
+    .then(decodificado => {
+        console.log(decodificado);
+    });
   }
 
   const {
@@ -165,6 +211,16 @@ export default function CrearDescuento() {
                     name="fechaFin"
                     {...register("fechaFin")}
                   />
+                </Form.Group>
+                <Form.Group>
+                <p className="text-danger">{errors.colaboradorSelect?.message}</p>
+                  <Form.Label>
+                    Colaborador<span className="obligatorio">*</span>
+                  </Form.Label>
+                  <Form.Control as="select" name="colaboradorSelect" id="colaboradorSelect" {...register("colaboradorSelect")}>
+                    <option value="" label="Selecciona un colaborador" />
+
+                  </Form.Control>
                 </Form.Group>
               <Form.Group>
               <p className="text-danger">{imagenError}</p>

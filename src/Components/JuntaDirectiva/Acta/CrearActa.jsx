@@ -22,7 +22,7 @@ export default function CrearEvento() {
         usuario: localStorage.getItem("idUsuario")
       }),
     };
-    fetch("http://api-proyecto-final/api/add/acta", requestOptions).then(
+    fetch("https://api.ccpegoilesvalls.es/api/add/acta", requestOptions).then(
       (response) => {
         if (response.ok) {
           localStorage.setItem("alerta", "Añadido concepto con exito");

@@ -16,7 +16,7 @@ class Descuentos extends React.Component {
   }
 
   sacarDescuentos() {
-    fetch("http://api-proyecto-final/api/descuento")
+    fetch("https://api.ccpegoilesvalls.es/api/descuento")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -77,7 +77,7 @@ class Descuentos extends React.Component {
           <div className="card mb-3 w-50 mx-auto fondo border-white text-white" key={ item.id }>
             <div className="row no-gutters">
               <div className="col-md-4">
-                <img className="imagenDescuentoSocio" src={ "./img/"+item.imagen } alt="..." />
+                <img className="imagenDescuentoSocio" src={ "https://api.ccpegoilesvalls.es/img/"+item.imagen } alt="..." />
               </div>
               <div className="col-md-8">
                 <div className="card-body">

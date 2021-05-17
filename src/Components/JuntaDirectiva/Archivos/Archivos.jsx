@@ -37,10 +37,7 @@ export default class Acta extends React.Component  {
                                 placeholder="Buscar archivo" value={this.state.search}
                                 onChange={this.handleChange}/>
                         </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="customFile"/>
-                            <label class="custom-file-label" for="customFile">Subir Nuevo Archivo</label>
-                        </div>
+                       
                         <ArchivosLista search={search}
                         ref={element => {
                             this.archivoLista = element;

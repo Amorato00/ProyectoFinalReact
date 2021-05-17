@@ -40,7 +40,7 @@ export default class EventoLista extends React.Component {
 
   sacarActa() {
     document.getElementById("modalCarga").style.display = "block";
-    fetch("http://api-proyecto-final/api/acta")
+    fetch("https://api.ccpegoilesvalls.es/api/acta")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -69,7 +69,7 @@ export default class EventoLista extends React.Component {
   }
 
   sacarActaSearch(search) {
-    fetch("http://api-proyecto-final/api/acta/search/" + search)
+    fetch("https://api.ccpegoilesvalls.es/acta/search/" + search)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -119,7 +119,7 @@ export default class EventoLista extends React.Component {
 
   sacarActaId(id) {
     console.log("Holaaaa");
-    fetch("http://api-proyecto-final/api/acta/id/"+id)
+    fetch("https://api.ccpegoilesvalls.es/api/acta/id/"+id)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -159,7 +159,7 @@ export default class EventoLista extends React.Component {
         }),
     };
     fetch(
-        "http://api-proyecto-final/api/acta/"+itemEdit.id,
+        "https://api.ccpegoilesvalls.es/api/acta/"+itemEdit.id,
         requestOptions
     ).then((response) => { 
       if(response.ok) { 
@@ -199,7 +199,7 @@ export default class EventoLista extends React.Component {
   }
 
   eliminar(id) {
-    fetch('http://api-proyecto-final/api/acta/' + id, {
+    fetch('https://api.ccpegoilesvalls.es/api/acta/' + id, {
       method: 'DELETE',
     })
     .then(res => res.text()) // or res.json()

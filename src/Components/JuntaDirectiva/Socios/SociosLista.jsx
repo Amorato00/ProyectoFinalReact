@@ -17,7 +17,7 @@ export default class SociosLista extends React.Component {
   }
 
   sacarSocioSearch(search) {
-    fetch("http://api-proyecto-final/api/usuario/search/socio/" + search)
+    fetch("https://api.ccpegoilesvalls.es/api/usuario/search/socio/" + search)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -45,7 +45,7 @@ export default class SociosLista extends React.Component {
 
   sacarGestionSocio(id) {
     document.getElementById("modalCarga").style.display = "block";
-    fetch("http://api-proyecto-final/api/gestion-socio/" + id)
+    fetch("https://api.ccpegoilesvalls.es/api/gestion-socio/" + id)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -72,7 +72,7 @@ export default class SociosLista extends React.Component {
 
   sacarSocio() {
     document.getElementById("modalCarga").style.display = "block";
-    fetch("http://api-proyecto-final/api/socio")
+    fetch("https://api.ccpegoilesvalls.es/api/socio")
       .then((res) => res.json())
       .then(
         (result) => {

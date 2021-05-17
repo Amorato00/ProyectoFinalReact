@@ -15,7 +15,7 @@ export default function CrearEvento() {
   //Guardar contabilidilidad
   function guardar(data, imagen) {
     var fechaSubida = new Date();
-    
+    subirImagen();
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -29,7 +29,7 @@ export default function CrearEvento() {
         user: localStorage.getItem("idUsuario")
       }),
     };
-    fetch("http://api-proyecto-final/api/add/evento", requestOptions).then(
+    fetch("https://api.ccpegoilesvalls.es/api/add/evento", requestOptions).then(
       (response) => {
         if (response.ok) {
           localStorage.setItem("alerta", "Evento añadido con exito");
@@ -38,6 +38,20 @@ export default function CrearEvento() {
         }
       }
     );
+  }
+
+  function subirImagen() {
+    var inputFile = document.getElementById("imagen");
+    let formData = new FormData();
+    formData.append("archivo", inputFile.files[0]);
+    fetch("https://api.ccpegoilesvalls.es/upload/img", {
+      method: 'POST',
+      body: formData,
+        })
+    .then(respuesta => respuesta.text())
+    .then(decodificado => {
+        console.log(decodificado);
+    });
   }
 
   const [imagenError, setImagenError] = useState("");

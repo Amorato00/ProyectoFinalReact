@@ -32,7 +32,7 @@ export default function Login(props) {
 
   function comprobarLogin(data) {
     document.getElementById("modalCarga").style.display = "block";
-    fetch("http://api-proyecto-final/api/usuario/search/"+data.emailUsername)
+    fetch("https://api.ccpegoilesvalls.es/api/usuario/search/"+data.emailUsername)
     .then((res) => res.json())
     .then(
       (result) => {
@@ -168,7 +168,7 @@ export default function Login(props) {
           <div className="col-md-6 p-0 m-0 d-none d-md-block">
             <img
               src={
-                "./img/val-gardena-roads-dolomites-italy-picjumbo-com-min-min.jpg"
+                "https://api.ccpegoilesvalls.es/img/val-gardena-roads-dolomites-italy-picjumbo-com-min-min.jpg"
               }
               alt="..."
               className="w-100"

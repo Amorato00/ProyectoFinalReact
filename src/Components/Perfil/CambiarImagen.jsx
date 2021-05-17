@@ -17,7 +17,7 @@ export default class CambiarImagen extends React.Component {
   
   sacarUsuario() {
     document.getElementById("modalCarga").style.display = "block";
-    fetch("http://api-proyecto-final/api/usuario/" + localStorage.getItem("idUsuario"))
+    fetch("https://api.ccpegoilesvalls.es/api/usuario/" + localStorage.getItem("idUsuario"))
       .then((res) => res.json())
       .then(
         (result) => {
@@ -42,27 +42,42 @@ export default class CambiarImagen extends React.Component {
   }
 
   //Guardar sosio
-guardar(fotoPerfil) {
+guardar(fotoPerfilNueva) {
+  this.subirImagen();
   const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-          fotoPerfil: fotoPerfil,
+        fotoPerfil: fotoPerfilNueva,
       }),
   };
   fetch(
-      "http://api-proyecto-final/api/usuario/"+ localStorage.getItem("idUsuario"),
+      "https://api.ccpegoilesvalls.es/api/usuario/"+ localStorage.getItem("idUsuario"),
       requestOptions
   ).then((response) => { 
     if(response.ok) { 
 
-      localStorage.setItem("imagenPerfil", fotoPerfil);
+      localStorage.setItem("imagenPerfil", fotoPerfilNueva);
       localStorage.setItem("alerta", "Se ha modificado correctamente");
       response.json();
       window.location = "/perfil";
       
     }
    });
+  }
+
+  subirImagen() {
+    var inputFile = document.getElementById("icono_perfil");
+    let formData = new FormData();
+    formData.append("archivo", inputFile.files[0]);
+    fetch("https://api.ccpegoilesvalls.es/upload/img/perfil", {
+      method: 'POST',
+      body: formData,
+        })
+    .then(respuesta => respuesta.text())
+    .then(decodificado => {
+        console.log(decodificado);
+    });
   }
 
   componentDidMount() {
@@ -123,7 +138,7 @@ guardar(fotoPerfil) {
       </div>
       <div className="text-center">
         <img
-          src={"./img/fotoPerfil/" + fotoPerfil}
+          src={"https://api.ccpegoilesvalls.es/img/fotoPerfil/" + fotoPerfil}
           alt="foto perfil"
           id="fotoPerfil"
           className="border-0"

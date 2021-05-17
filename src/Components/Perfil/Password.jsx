@@ -21,7 +21,7 @@ export default class Password extends React.Component {
   }
 
   sacarUsuario() {
-    fetch("http://api-proyecto-final/api/usuario/"+localStorage.getItem("idUsuario"))
+    fetch("https://api.ccpegoilesvalls.es/api/usuario/"+localStorage.getItem("idUsuario"))
       .then((res) => res.json())
       .then(
         (result) => {
@@ -52,7 +52,7 @@ guardar() {
     }),
   };
   fetch(
-    "http://api-proyecto-final/api/usuario/"+ localStorage.getItem("idUsuario"),
+    "https://api.ccpegoilesvalls.es/api/usuario/"+ localStorage.getItem("idUsuario"),
     requestOptions
   ).then((response) => { 
     if(response.ok) {
@@ -232,7 +232,7 @@ guardar() {
                             if(password !== "" && newPassword !== "" && repeatPassword !== "") {
                               if(doesPasswordMatch) {
                                 if(newPassword.length >= 8) {
-                                  if(repeatPassword == newPassword) {
+                                  if(repeatPassword === newPassword) {
                                     this.guardar();
                                   } else {
                                     this.setState({

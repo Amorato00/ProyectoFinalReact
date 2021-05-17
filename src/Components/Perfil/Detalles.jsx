@@ -21,13 +21,14 @@ export default class Detalles extends React.Component {
       errorFecha: "",
       errorIban: "",
       idEstado: null,
+      estado: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
   }
   
   sacarUsuario() {
-    fetch("http://api-proyecto-final/api/usuario/" + localStorage.getItem("idUsuario"))
+    fetch("https://api.ccpegoilesvalls.es/api/usuario/" + localStorage.getItem("idUsuario"))
       .then((res) => res.json())
       .then(
         (result) => {
@@ -45,7 +46,8 @@ export default class Detalles extends React.Component {
               DNI: item.dni,
               fecha: item.fechaNacimiento,
               item: result,
-              iban: ibanGuardar
+              iban: ibanGuardar,
+              estado: item.estado
             });
           });
         },
@@ -77,7 +79,7 @@ guardar(tick) {
       }),
   };
   fetch(
-      "http://api-proyecto-final/api/usuario/"+ localStorage.getItem("idUsuario"),
+      "https://api.ccpegoilesvalls.es/api/usuario/"+ localStorage.getItem("idUsuario"),
       requestOptions
   ).then((response) => { 
     if(response.ok) {  
@@ -197,7 +199,7 @@ guardar(tick) {
 
 render() { 
   const { username, nombre, apellidos, DNI, fecha, errorUsername, errorNombre,
-  errorApellidos, errorDNI, errorFecha, iban, errorIban } = this.state;
+  errorApellidos, errorDNI, errorFecha, iban, errorIban, estado } = this.state;
  
   return (
     <div class="col-12 col-md-6 mx-auto">
@@ -207,6 +209,17 @@ render() {
         </h4>
         <div className="p-0">
           <table className="table mb-0">
+          {(() => {
+                  if(localStorage.getItem("tipoUsuario") === "2"){
+                    return ( <tr>
+                      <td className="font-weight-bold">Estado</td>
+                      <td>
+                       {estado}
+                      </td>
+                    </tr>);
+                  }
+                })()}
+         
             <tr>
               <td className="font-weight-bold">Username</td>
               <td>

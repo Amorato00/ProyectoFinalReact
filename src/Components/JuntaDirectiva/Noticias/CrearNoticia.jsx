@@ -13,7 +13,7 @@ export default function AddNoticia() {
   //Guardar contabilidilidad
   function guardar(data, imagen) {
     var fecha = new Date();
-
+    subirImagen();
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -26,7 +26,7 @@ export default function AddNoticia() {
         usuario: localStorage.getItem("idUsuario")
       }),
     };
-    fetch("http://api-proyecto-final/api/add/noticia", requestOptions).then(
+    fetch("https://api.ccpegoilesvalls.es/api/add/noticia", requestOptions).then(
       (response) => {
         if (response.ok) {
           localStorage.setItem("alerta", "Noticia añadida con exito");
@@ -35,6 +35,20 @@ export default function AddNoticia() {
         }
       }
     );
+  }
+
+  function subirImagen() {
+    var inputFile = document.getElementById("imagen");
+    let formData = new FormData();
+    formData.append("archivo", inputFile.files[0]);
+    fetch("https://api.ccpegoilesvalls.es/upload/img", {
+      method: 'POST',
+      body: formData,
+        })
+    .then(respuesta => respuesta.text())
+    .then(decodificado => {
+        console.log(decodificado);
+    });
   }
 
   const {

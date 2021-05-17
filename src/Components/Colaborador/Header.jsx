@@ -38,7 +38,7 @@ export default function Header() {
             href="/colaborador"
             id="logo"
           >
-            <img src={"./img/logo/logo.png"} alt="Logo de bycyryde" />
+            <img src={"https://api.ccpegoilesvalls.es/img/logo/logo.png"} alt="Logo de bycyryde" />
             <h3 className="d-md-inline d-none d-md-block pl-4">BYCIRYDE</h3>
           </Navbar.Brand>
 
@@ -53,7 +53,7 @@ export default function Header() {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <img src={"./img/fotoPerfil/" + fotoPerfil} alt="" />
+              <img src={"https://api.ccpegoilesvalls.es/img/fotoPerfil/" + fotoPerfil} alt="" />
             </button>
             <div className="dropdown-menu" aria-labelledby="navbarDropdown">
               <a href="/perfil" title="perfil" className="dropdown-item">
@@ -72,15 +72,13 @@ export default function Header() {
             </div>
           </Navbar.Brand>
 
-          <div className="collapse navbar-collapse" id="navbarMenuHome">
+          <div className="collapse navbar-collapse mb-2 mb-lg-0" id="navbarMenuHome">
             <ul className="navbar-nav ">
-              {/*
-              <li className="active my-auto">
-                <a className="nav-link enlace-nav" href="/">
-                  ES
+             <li className="active my-auto">
+                <a className="nav-link enlace-nav" href="/" title="Volver a la home">
+                  <i class="fas fa-globe-europe h4 m-0"></i>
                 </a>
               </li>
-              */}
 
               <li
                 className="dropdown nav-item active my-auto  d-none d-lg-block"
@@ -93,7 +91,7 @@ export default function Header() {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <img src={"./img/fotoPerfil/" + fotoPerfil} alt="" />
+                  <img src={"https://api.ccpegoilesvalls.es/img/fotoPerfil/" + fotoPerfil} alt="" />
                 </button>
                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a href="/perfil" title="perfil" className="dropdown-item">

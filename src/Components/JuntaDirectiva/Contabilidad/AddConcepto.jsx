@@ -12,7 +12,7 @@ const schema = yup.object().shape({
 
 export default function AddConcepto() {
   function sacarUltimoSaldo(data) {
-    fetch("http://api-proyecto-final/api/ultima/contabilidad")
+    fetch("https://api.ccpegoilesvalls.es/api/ultima/contabilidad")
       .then((res) => res.json())
       .then((result) => {
         guardar(data, parseInt(result.saldo));
@@ -46,7 +46,7 @@ export default function AddConcepto() {
       }),
     };
     fetch(
-      "http://api-proyecto-final/api/add/contabilidad",
+      "https://api.ccpegoilesvalls.es/api/add/contabilidad",
       requestOptions
     ).then((response) => {
       if (response.ok) {

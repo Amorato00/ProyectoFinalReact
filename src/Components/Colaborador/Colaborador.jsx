@@ -12,10 +12,14 @@ export default function Colaborador() {
   function sacarSocio(data) {
     if (data.search !== "") {
       document.getElementById("modalCarga").style.display = "block";
-      fetch("http://api-proyecto-final/api/usuario/colaborador/" + data.search)
+      fetch("https://api.ccpegoilesvalls.es/api/usuario/colaborador/" + data.search)
         .then((res) => res.json())
         .then((result) => {
           console.log(result);
+          if(result.length <= 0) {
+            document.getElementById("tarjetaSocio").style.visibility =
+            "hidden";
+          }
           result.forEach((item) => {
             document.getElementById("nombreTitulo").innerHTML = item.nombre;
             document.getElementById("id").innerHTML = "#" + item.id;
@@ -53,7 +57,18 @@ export default function Colaborador() {
         });
     } else {
       document.getElementById("modalCarga").style.display = "none";
+      document.getElementById("tarjetaSocio").style.visibility =
+              "hidden";
     }
+  }
+
+  function actualizar() {
+    if(document.getElementById('search').value === "") {
+      console.log("Quitar carta");
+      document.getElementById("tarjetaSocio").style.visibility =
+              "hidden";
+    }
+    console.log(document.getElementById('search').value);
   }
 
   const [fotoPerfil, setFotoPerfil] = useState("");
@@ -98,7 +113,7 @@ export default function Colaborador() {
         <div className="container pt-5">
           <div className="d-flex justify-content-center">
               <img
-                  src={"./img/fotoPerfil/" + localStorage.getItem("imagenPerfil")}
+                  src={"https://api.ccpegoilesvalls.es/img/fotoPerfil/" + localStorage.getItem("imagenPerfil")}
                   alt="..."
                   id="logoColaborador"
                   className="pt-2"
@@ -121,6 +136,7 @@ export default function Colaborador() {
                 id="search"
                 name="search"
                 placeholder="Buscar socio"
+                onKeyDown={actualizar}
                 {...register("search")}
               />
             </Form>
@@ -131,7 +147,7 @@ export default function Colaborador() {
               <h3 id="id">#id</h3>
               <div className="pt-3">
                 <img
-                  src={"./img/fotoPerfil/" + fotoPerfil}
+                  src={"https://api.ccpegoilesvalls.es/img/fotoPerfil/" + fotoPerfil}
                   alt="..."
                   id="fotoPerfil"
                 />

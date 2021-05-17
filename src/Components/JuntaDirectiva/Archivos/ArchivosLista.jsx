@@ -12,11 +12,12 @@ export default class ArchivosLista extends React.Component {
       totalPaginas: 0,
       paginaActual: 0,
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   sacarArchivos() {
     document.getElementById("modalCarga").style.display = "block";
-    fetch("http://api-proyecto-final/api/archivo")
+    fetch("https://api.ccpegoilesvalls.es/api/archivo")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -45,7 +46,7 @@ export default class ArchivosLista extends React.Component {
   }
 
   sacarArchivoSearch(search) {
-    fetch("http://api-proyecto-final/api/archivo/search/" + search)
+    fetch("https://api.ccpegoilesvalls.es/api/archivo/search/" + search)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -92,7 +93,7 @@ export default class ArchivosLista extends React.Component {
   }
 
   eliminar(id) {
-    fetch('http://api-proyecto-final/api/archivo/' + id, {
+    fetch('https://api.ccpegoilesvalls.es/api/archivo/' + id, {
       method: 'DELETE',
     })
     .then(res => res.text()) // or res.json()
@@ -103,6 +104,66 @@ export default class ArchivosLista extends React.Component {
     
   }
 
+  subirImagen() {
+    var inputFile = document.getElementById("subirFile");
+    let formData = new FormData();
+    formData.append("archivo", inputFile.files[0]);
+    fetch("https://api.ccpegoilesvalls.es/upload/img", {
+      method: 'POST',
+      body: formData,
+        })
+    .then(respuesta => respuesta.text())
+    .then(decodificado => {
+        console.log(decodificado);
+    });
+  }
+
+  subirFile() {
+    var inputFile = document.getElementById("subirFile");
+    let formData = new FormData();
+    formData.append("archivo", inputFile.files[0]);
+    fetch("https://api.ccpegoilesvalls.es/upload/file", {
+      method: 'POST',
+      body: formData,
+        })
+    .then(respuesta => respuesta.text())
+    .then(decodificado => {
+        console.log(decodificado);
+    });
+  }
+
+   //Guardar contabilidilidad
+   guardar(tipoFile, nombre) {
+    if(tipoFile=== "pdf") {
+      this.subirFile();
+    } else {
+      this.subirImagen();
+    }
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: nombre,
+        usuario: localStorage.getItem("idUsuario")
+      }),
+    };
+    fetch("https://api.ccpegoilesvalls.es/api/add/archivo", requestOptions).then(
+      (response) => {
+        if (response.ok) {
+          this.sacarArchivos();
+          response.json();
+        }
+      }
+    );
+  }
+
+  handleChange(event) {
+    console.log(document.getElementById("subirFile"));
+    console.log(document.getElementById("subirFile").files[0].type);
+    var array = document.getElementById("subirFile").files[0].type.split("/");
+    this.guardar(array[1], document.getElementById("subirFile").files[0].name);
+  }
+
   componentDidMount() {
     this.sacarArchivos();
   }
@@ -111,6 +172,10 @@ export default class ArchivosLista extends React.Component {
     const { totalPaginas, paginaActual, itemsPaginacion } = this.state;
     return (
       <>
+       <div class="custom-file">
+            <input type="file" class="custom-file-input" id="subirFile" onChange={this.handleChange}/>
+            <label class="custom-file-label" for="customFile">Subir Nuevo Archivo</label>
+        </div>
         <table class="table table-striped table-dark mt-3 tableResponsive mt-5">
           <thead>
             <tr>

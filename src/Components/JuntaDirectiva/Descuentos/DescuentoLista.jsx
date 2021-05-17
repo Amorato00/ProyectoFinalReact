@@ -40,13 +40,15 @@ export default class DescuentoLista extends React.Component {
       size: 0,
       totalPaginas: 0,
       paginaActual: 0,
+      colaboradorSelect: "",
+      errorColaboradorSelect: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   sacarDescuento() {
     document.getElementById("modalCarga").style.display = "block";
-    fetch("http://api-proyecto-final/api/descuento")
+    fetch("https://api.ccpegoilesvalls.es/api/descuento")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -75,6 +77,8 @@ export default class DescuentoLista extends React.Component {
       });
   }
 
+ 
+
   paginacion(pagina) {
     var arrayPaginacion = [];
 
@@ -96,7 +100,7 @@ export default class DescuentoLista extends React.Component {
   }
 
   sacarDescuentoSearch(search) {
-    fetch("http://api-proyecto-final/api/descuento/search/" + search)
+    fetch("https://api.ccpegoilesvalls.es/api/descuento/search/" + search)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -124,7 +128,7 @@ export default class DescuentoLista extends React.Component {
 
   sacarDescuentoId(id, boton) {
     document.getElementById(boton).className = "list-group-item list-group-item-action botonJuntaActivo";
-    fetch("http://api-proyecto-final/api/descuento/id/" + id)
+    fetch("https://api.ccpegoilesvalls.es/api/descuento/id/" + id)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -141,6 +145,7 @@ export default class DescuentoLista extends React.Component {
             imagenDescuento: result.imagen,
             descuento: result.numDescuento
           });
+          this.sacarColaboradores(result.colaborador);
         },
         // Nota: es importante manejar errores aquí y no en
         // un bloque catch() para que no interceptemos errores
@@ -154,6 +159,50 @@ export default class DescuentoLista extends React.Component {
       );
   }
 
+  sacarColaboradores(idColaborador) {
+    fetch("https://api.ccpegoilesvalls.es/api/colaborador")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          var text = "";
+          text += '<option value="" label="Selecciona una seccion" />';
+          result.forEach((item) => {
+            if(idColaborador === item.id) {
+              text += '<option value="'+item.id+'" selected label="'+item.username+'" />';
+            } else {
+              text += '<option value="'+item.id+'" label="'+item.username+'" />';
+            }
+              
+          });
+          document.getElementById('colaboradorSelect').innerHTML = text;
+        
+        },
+        // Nota: es importante manejar errores aquí y no en
+        // un bloque catch() para que no interceptemos errores
+        // de errores reales en los componentes.
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error,
+          });
+        }
+      );
+  }
+
+  subirImagen() {
+    var inputFile = document.getElementById("imagenDescuento");
+    let formData = new FormData();
+    formData.append("archivo", inputFile.files[0]);
+    fetch("https://api.ccpegoilesvalls.es/upload/img", {
+      method: 'POST',
+      body: formData,
+        })
+    .then(respuesta => respuesta.text())
+    .then(decodificado => {
+        console.log(decodificado);
+    });
+  }
+
   guardarEdit() {
     const {
       titulo,
@@ -162,9 +211,10 @@ export default class DescuentoLista extends React.Component {
       fechaFin,
       descuento,
       itemEdit,
-      imagenDescuento
+      imagenDescuento,
+      colaboradorSelect
     } = this.state;
-
+    this.subirImagen();
     const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -176,10 +226,11 @@ export default class DescuentoLista extends React.Component {
         imagen: imagenDescuento,
         descuento: descuento,
         usuario: localStorage.getItem("idUsuario"),
+        colaborador: colaboradorSelect
       }),
     };
     fetch(
-      "http://api-proyecto-final/api/descuento/" + itemEdit.id,
+      "https://api.ccpegoilesvalls.es/api/descuento/" + itemEdit.id,
       requestOptions
     ).then((response) => {
       if (response.ok) {
@@ -243,6 +294,18 @@ export default class DescuentoLista extends React.Component {
         });
       }
     }
+
+    if(name === "colaboradorSelect") {
+      if (event.target.value === "") {
+        this.setState({
+          errorColaboradorSelect: "Tienes que seleccionar un select",
+        });
+      } else {
+        this.setState({
+          errorColaboradorSelect: "",
+        });
+      }
+    }
   }
 
   componentDidMount() {
@@ -250,7 +313,7 @@ export default class DescuentoLista extends React.Component {
   }
 
   eliminar(id) {
-    fetch('http://api-proyecto-final/api/descuento/' + id, {
+    fetch('https://api.ccpegoilesvalls.es/api/descuento/' + id, {
       method: 'DELETE',
     })
     .then(res => res.text()) // or res.json()
@@ -277,7 +340,8 @@ export default class DescuentoLista extends React.Component {
       paginaActual,
       itemsPaginacion,
       itemEdit,
-      imagenDescuento
+      imagenDescuento,
+      errorColaboradorSelect
     } = this.state;
     return (
       <div class="list-group mt-5">
@@ -467,6 +531,20 @@ export default class DescuentoLista extends React.Component {
                   </Form.Group>
                   <Form.Group>
                   {(() => {
+                      if (errorColaboradorSelect !== "") {
+                        return <p className="text-danger">{errorColaboradorSelect}</p>;
+                      }
+                    })()}
+                  <Form.Label>
+                    Colaborador<span className="obligatorio">*</span>
+                  </Form.Label>
+                  <Form.Control as="select" name="colaboradorSelect" id="colaboradorSelect"  onChange={this.handleChange}>
+                    <option value="" label="Selecciona un colaborador" />
+
+                  </Form.Control>
+                </Form.Group>
+                  <Form.Group>
+                  {(() => {
                       if (errorImagen !== "") {
                         return <p className="text-danger">{errorImagen}</p>;
                       }
@@ -480,7 +558,7 @@ export default class DescuentoLista extends React.Component {
                       onChange={this.handleChange}
                     />
                     <div className="pt-2">
-                      <img className="editImagen" src={"http://api-proyecto-final/img/" + imagenDescuento} alt="Imagen noticia"/>
+                      <img className="editImagen" src={"https://api.ccpegoilesvalls.es/img/" + imagenDescuento} alt="Imagen noticia"/>
                     </div>
                   </Form.Group>
                 </div>
@@ -498,7 +576,7 @@ export default class DescuentoLista extends React.Component {
                     data-dismiss="modal"
                     aria-label="Close"
                     onClick={() => {
-                      if (errorTitulo === "" && errorTexto === "" && errorFechaFin === "" && errorFechaInicio === "" && errorDescuento === "" && errorImagen === "") {
+                      if (errorTitulo === "" && errorTexto === "" && errorFechaFin === "" && errorFechaInicio === "" && errorDescuento === "" && errorImagen === "" && errorColaboradorSelect === "") {
                         console.log("Enviar");
                         this.guardarEdit();
                       }

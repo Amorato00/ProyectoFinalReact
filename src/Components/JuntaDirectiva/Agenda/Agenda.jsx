@@ -23,7 +23,7 @@ export default class Agenda extends React.Component {
 
 sacarEventos() {
   document.getElementById("modalCarga").style.display = "block";
-  fetch("http://api-proyecto-final/api/evento")
+  fetch("https://api.ccpegoilesvalls.es/api/evento")
     .then((res) => res.json())
     .then(
       (result) => {

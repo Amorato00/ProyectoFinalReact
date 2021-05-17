@@ -28,7 +28,7 @@ export default class Cuerpo extends React.Component {
   sacarContabilidad() {
     var fecha = new Date();
     var year = fecha.getFullYear();
-    fetch("http://api-proyecto-final/api/contabilidad/" + year)
+    fetch("https://api.ccpegoilesvalls.es/api/contabilidad/" + year)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -59,7 +59,7 @@ export default class Cuerpo extends React.Component {
   }
 
   sacarSocios() {
-    fetch("http://api-proyecto-final/api/socio")
+    fetch("https://api.ccpegoilesvalls.es/api/socio")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -99,7 +99,7 @@ export default class Cuerpo extends React.Component {
   }
 
   sacarEventos() {
-    fetch("http://api-proyecto-final/api/evento")
+    fetch("https://api.ccpegoilesvalls.es/api/evento")
       .then((res) => res.json())
       .then(
         (result) => {

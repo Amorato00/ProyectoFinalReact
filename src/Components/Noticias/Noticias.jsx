@@ -30,7 +30,7 @@ class Noticias extends React.Component {
   }
 
   sacarNoticias() {
-    fetch("http://api-proyecto-final/api/noticia")
+    fetch("https://api.ccpegoilesvalls.es/api/noticia")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -97,7 +97,7 @@ class Noticias extends React.Component {
             <div className="col mb-4 cardNoticias" key={item.id}>
               <div className="card fondo text-white border-white">
                 <img
-                  src={"./img/" + item.imagen}
+                  src={"https://api.ccpegoilesvalls.es/img/" + item.imagen}
                   className="card-img-top imagenNoticiaHome"
                   alt={item.imagen}
                 />

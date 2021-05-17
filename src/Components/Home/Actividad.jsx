@@ -37,7 +37,7 @@ class Actividad extends React.Component {
   }
 
   sacarEventos() {
-    fetch("http://api-proyecto-final/api/evento")
+    fetch("https://api.ccpegoilesvalls.es/api/evento")
       .then((res) => res.json())
       .then(
         (result) => {

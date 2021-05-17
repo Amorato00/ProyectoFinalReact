@@ -9,7 +9,7 @@ class Cuerpo extends React.Component {
           <div className="col-12 col-lg-8 p-0">
             <div>
               <img
-                src={"./img/StockSnap_U75QCQN721-min.jpg"}
+                src={"https://api.ccpegoilesvalls.es/img/StockSnap_U75QCQN721-min.jpg"}
                 className="card-img-top"
                 alt="..."
               />
@@ -24,7 +24,7 @@ class Cuerpo extends React.Component {
             </div>
             <div id="irSocios">
               <img
-                src={"./img/StockSnap_VKR6HOS0DC-min.jpg"}
+                src={"https://api.ccpegoilesvalls.es/img/StockSnap_VKR6HOS0DC-min.jpg"}
                 className="card-img-top"
                 alt="..."
               />
@@ -63,7 +63,7 @@ class Cuerpo extends React.Component {
           <div className="col-4 p-0 d-none d-lg-block">
             <img
               src={
-                "./img/cyclist-drinking-from-a-bottle-picjumbo-com-min-min.jpg"
+                "https://api.ccpegoilesvalls.es/img/cyclist-drinking-from-a-bottle-picjumbo-com-min-min.jpg"
               }
               className="card-img-top"
               id="imagen-lateral-1"
@@ -71,7 +71,7 @@ class Cuerpo extends React.Component {
             />
             <img
               src={
-                "./img/val-gardena-roads-dolomites-italy-picjumbo-com-min-min.jpg"
+                "https://api.ccpegoilesvalls.es/img/val-gardena-roads-dolomites-italy-picjumbo-com-min-min.jpg"
               }
               className="card-img-top"
               id="imagen-lateral-2"

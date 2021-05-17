@@ -42,7 +42,7 @@ export default class EventoLista extends React.Component {
 
   sacarEvento() {
     document.getElementById("modalCarga").style.display = "block";
-    fetch("http://api-proyecto-final/api/evento")
+    fetch("https://api.ccpegoilesvalls.es/api/evento")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -71,7 +71,7 @@ export default class EventoLista extends React.Component {
   }
 
   sacarEventoSearch(search) {
-    fetch("http://api-proyecto-final/api/evento/search/" + search)
+    fetch("https://api.ccpegoilesvalls.es/api/evento/search/" + search)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -100,7 +100,7 @@ export default class EventoLista extends React.Component {
 
   sacarEventoId(id, boton) {
     document.getElementById(boton).className = "list-group-item list-group-item-action botonJuntaActivo";
-    fetch("http://api-proyecto-final/api/evento/id/"+id)
+    fetch("https://api.ccpegoilesvalls.es/api/evento/id/"+id)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -134,7 +134,7 @@ export default class EventoLista extends React.Component {
     const { titulo, texto, fechaInicio, horaInicio, itemEdit, imagenEvento } = this.state;
     
     var arrayFecha = itemEdit.fechaSubida.split("/");
-  
+    this.subirImagen();
     const requestOptions = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -149,7 +149,7 @@ export default class EventoLista extends React.Component {
         }),
     };
     fetch(
-        "http://api-proyecto-final/api/evento/"+itemEdit.id,
+        "https://api.ccpegoilesvalls.es/api/evento/"+itemEdit.id,
         requestOptions
     ).then((response) => { 
       if(response.ok) { 
@@ -244,13 +244,28 @@ export default class EventoLista extends React.Component {
   }
 
   eliminar(id) {
-    fetch('http://api-proyecto-final/api/evento/' + id, {
+    fetch('https://api.ccpegoilesvalls.es/api/evento/' + id, {
       method: 'DELETE',
     })
     .then(res => res.text()) // or res.json()
     .then(res => {
       this.sacarEvento();
     })
+  }
+
+
+  subirImagen() {
+    var inputFile = document.getElementById("imagenEvento");
+    let formData = new FormData();
+    formData.append("archivo", inputFile.files[0]);
+    fetch("https://api.ccpegoilesvalls.es/upload/img", {
+      method: 'POST',
+      body: formData,
+        })
+    .then(respuesta => respuesta.text())
+    .then(decodificado => {
+        console.log(decodificado);
+    });
   }
 
   render() {
@@ -441,7 +456,7 @@ export default class EventoLista extends React.Component {
                       onChange={this.handleChange}
                     />
                     <div className="pt-2">
-                      <img className="editImagen" src={"http://api-proyecto-final/img/" + imagenEvento} alt="Imagen noticia"/>
+                      <img className="editImagen" src={"https://api.ccpegoilesvalls.es/img/" + imagenEvento} alt="Imagen noticia"/>
                     </div>
                   </Form.Group>
                 </div>

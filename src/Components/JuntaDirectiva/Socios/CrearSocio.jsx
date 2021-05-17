@@ -59,9 +59,24 @@ const schema = yup.object().shape({
   seccion: yup.string().required("La seccion es obligatoria"),
 });
 
-//Guardar sosio
+
+export default function AddSocio() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const [imagenError, setImagenError] = useState("");
+  const [usuarios, setUsuarios] = useState([]);
+  const [errorUsername, serErrorUsername] = useState("");
+  const [errorEmail, serErrorEmail] = useState("");
+
+  //Guardar sosio
 function guardar(data, imagen) {
   document.getElementById("modalCarga").style.display = "block";
+  subirImagen();
   const bcrypt = require("bcryptjs");
   const hashedPassword = bcrypt.hashSync(data.password, bcrypt.genSaltSync());
   const requestOptions = {
@@ -84,7 +99,7 @@ function guardar(data, imagen) {
       iban: data.iban,
     }),
   };
-  fetch("http://api-proyecto-final/api/add/usuario", requestOptions).then(
+  fetch("https://api.ccpegoilesvalls.es/api/add/usuario", requestOptions).then(
     (response) => {
       if (response.ok) {
         document.getElementById("modalCarga").style.display = "none";
@@ -96,19 +111,6 @@ function guardar(data, imagen) {
     }
   );
 }
-
-export default function AddSocio() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-  const [imagenError, setImagenError] = useState("");
-  const [usuarios, setUsuarios] = useState([]);
-  const [errorUsername, serErrorUsername] = useState("");
-  const [errorEmail, serErrorEmail] = useState("");
 
   //Enviar formulario
   const onSubmit = (data, evt) => {
@@ -155,7 +157,7 @@ export default function AddSocio() {
   };
 
   function sacarUsuarios() {
-    fetch("http://api-proyecto-final/api/usuario")
+    fetch("https://api.ccpegoilesvalls.es/api/usuario")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -170,7 +172,7 @@ export default function AddSocio() {
   }, []);
 
   function sacarSeccion() {
-    fetch("http://api-proyecto-final/api/seccion")
+    fetch("https://api.ccpegoilesvalls.es/api/seccion")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -182,6 +184,20 @@ export default function AddSocio() {
           document.getElementById('seccion').innerHTML = text;
         }
       );
+  }
+
+  function subirImagen() {
+    var inputFile = document.getElementById("imagen");
+    let formData = new FormData();
+    formData.append("archivo", inputFile.files[0]);
+    fetch("https://api.ccpegoilesvalls.es/upload/img/perfil", {
+      method: 'POST',
+      body: formData,
+        })
+    .then(respuesta => respuesta.text())
+    .then(decodificado => {
+        console.log(decodificado);
+    });
   }
 
   return (

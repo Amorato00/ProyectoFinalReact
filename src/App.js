@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -33,6 +33,7 @@ import Privacidad from "./Components/Politicas/Privacidad";
 import Legal from "./Components/Politicas/Legal";
 
 export default function App() {
+  const [location] = useState(window.location);
   return (
     <Router>
       <Switch>
@@ -45,101 +46,306 @@ export default function App() {
             console.log(localStorage.getItem("tipoUsuario"));
             if (localStorage.getItem("tipoUsuario") === "2") {
               console.log("HEader de socio");
-              return <Header />;
+              return (
+                <>
+                  <Header />
+                  <Perfil />
+                  <Footer />
+                </>
+              );
             }
             if (localStorage.getItem("tipoUsuario") === "4") {
               console.log("HEader de colaborador");
-              return <HeaderColaborador />;
+              return (
+                <>
+                  <HeaderColaborador />
+                  <Perfil />
+                  <Footer />
+                </>
+              );
             }
             if (localStorage.getItem("tipoUsuario") === "3") {
               console.log("HEader de juntaDirectiva");
-              return <HeaderJuntaDirectiva />;
+              return (
+                <>
+                  <HeaderJuntaDirectiva />
+                  <Perfil />
+                  <Footer />
+                </>
+              );
+            }
+
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              localStorage.getItem("tipoUsuario") !== "2" &&
+              localStorage.getItem("tipoUsuario") !== "4" &&
+              location.pathname === "/perfil"
+            ) {
+              return (
+                <>
+                  <Header />
+                  <ErrorPermisos />
+                </>
+              );
             }
           })()}
-
-          <Perfil />
-          <Footer />
         </Route>
         <Route path="/junta-directiva/archivos">
-          <HeaderJuntaDirectiva />
-          <div className="container-fluid fondo" id="juntaDirectiva">
-            <div className="row">
-              <HeaderLeft />
-              <Archivos />
-            </div>
-          </div>
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              location.pathname === "/junta-directiva/archivos"
+            ) {
+              return (
+                <>
+                  <Header />
+                  <ErrorPermisos />
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <HeaderJuntaDirectiva />
+                  <div className="container-fluid fondo" id="juntaDirectiva">
+                    <div className="row">
+                      <HeaderLeft />
+                      <Archivos />
+                    </div>
+                  </div>
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/junta-directiva/agenda">
-          <HeaderJuntaDirectiva />
-          <div className="container-fluid fondo" id="juntaDirectiva">
-            <div className="row">
-              <HeaderLeft />
-              <Agenda />
-            </div>
-          </div>
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              location.pathname === "/junta-directiva/agenda"
+            ) {
+              return (
+                <>
+                  <Header />
+                  <ErrorPermisos />
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <HeaderJuntaDirectiva />
+                  <div className="container-fluid fondo" id="juntaDirectiva">
+                    <div className="row">
+                      <HeaderLeft />
+                      <Agenda />
+                    </div>
+                  </div>
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/junta-directiva/descuentos">
-          <HeaderJuntaDirectiva />
-          <div className="container-fluid fondo" id="juntaDirectiva">
-            <div className="row">
-              <HeaderLeft />
-              <Descuento />
-            </div>
-          </div>
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              location.pathname === "/junta-directiva/descuentos"
+            ) {
+              return (
+                <>
+                  <Header />
+                  <ErrorPermisos />
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <HeaderJuntaDirectiva />
+                  <div className="container-fluid fondo" id="juntaDirectiva">
+                    <div className="row">
+                      <HeaderLeft />
+                      <Descuento />
+                    </div>
+                  </div>
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/junta-directiva/socios">
-          <HeaderJuntaDirectiva />
-          <div className="container-fluid fondo" id="juntaDirectiva">
-            <div className="row">
-              <HeaderLeft />
-              <Socios/>
-            </div>
-          </div>
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              location.pathname === "/junta-directiva/socios"
+            ) {
+              return (
+                <>
+                  <Header />
+                  <ErrorPermisos />
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <HeaderJuntaDirectiva />
+                  <div className="container-fluid fondo" id="juntaDirectiva">
+                    <div className="row">
+                      <HeaderLeft />
+                      <Socios />
+                    </div>
+                  </div>
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/junta-directiva/acta">
-          <HeaderJuntaDirectiva />
-          <div className="container-fluid fondo" id="juntaDirectiva">
-            <div className="row">
-              <HeaderLeft />
-              <Acta />
-            </div>
-          </div>
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              location.pathname === "/junta-directiva/acta"
+            ) {
+              return (
+                <>
+                  <Header />
+                  <ErrorPermisos />
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <HeaderJuntaDirectiva />
+                  <div className="container-fluid fondo" id="juntaDirectiva">
+                    <div className="row">
+                      <HeaderLeft />
+                      <Acta />
+                    </div>
+                  </div>
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/junta-directiva/eventos">
-          <HeaderJuntaDirectiva />
-          <div className="container-fluid fondo" id="juntaDirectiva">
-            <div className="row">
-              <HeaderLeft />
-              <Evento />
-            </div>
-          </div>
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              location.pathname === "/junta-directiva/eventos"
+            ) {
+              return (
+                <>
+                  <Header />
+                  <ErrorPermisos />
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <HeaderJuntaDirectiva />
+                  <div className="container-fluid fondo" id="juntaDirectiva">
+                    <div className="row">
+                      <HeaderLeft />
+                      <Evento />
+                    </div>
+                  </div>
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/junta-directiva/noticias">
-          <HeaderJuntaDirectiva />
-          <div className="container-fluid fondo" id="juntaDirectiva">
-            <div className="row">
-              <HeaderLeft />
-              <NoticiasJunta />
-            </div>
-          </div>
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              location.pathname === "/junta-directiva/noticias"
+            ) {
+              return (
+                <>
+                  <Header />
+                  <ErrorPermisos />
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <HeaderJuntaDirectiva />
+                  <div className="container-fluid fondo" id="juntaDirectiva">
+                    <div className="row">
+                      <HeaderLeft />
+                      <NoticiasJunta />
+                    </div>
+                  </div>
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/junta-directiva/contabilidad">
-          <HeaderJuntaDirectiva />
-          <div className="container-fluid fondo" id="juntaDirectiva">
-            <div className="row">
-              <HeaderLeft />
-              <Contabilidad />
-            </div>
-          </div>
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              location.pathname === "/junta-directiva/contabilidad"
+            ) {
+              return (
+                <>
+                  <Header />
+                  <ErrorPermisos />
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <HeaderJuntaDirectiva />
+                  <div className="container-fluid fondo" id="juntaDirectiva">
+                    <div className="row">
+                      <HeaderLeft />
+                      <Contabilidad />
+                    </div>
+                  </div>
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/junta-directiva">
-          <HeaderJuntaDirectiva />
-          <JuntaDirectiva />
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              location.pathname === "/junta-directiva"
+            ) {
+              return (
+                <>
+                  <Header />
+                  <ErrorPermisos />
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <HeaderJuntaDirectiva />
+                  <JuntaDirectiva />
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/agenda">
           <Header />
-          <AgendaSocio />
-          <Footer />
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              localStorage.getItem("tipoUsuario") !== "2" &&
+              location.pathname === "/agenda"
+            ) {
+              return <ErrorPermisos />;
+            } else {
+              return (
+                <>
+                  <AgendaSocio />
+                  <Footer />
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/politicas-legal">
           <Header />
@@ -158,27 +364,109 @@ export default function App() {
         </Route>
         <Route path="/descuentos">
           <Header />
-          <Descuentos />
-          <Footer />
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              localStorage.getItem("tipoUsuario") !== "2" &&
+              location.pathname === "/descuentos"
+            ) {
+              return <ErrorPermisos />;
+            } else {
+              return (
+                <>
+                  <Descuentos />
+                  <Footer />
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/noticias">
-          <Header />
-          <Noticias />
-          <Footer />
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "3" &&
+              localStorage.getItem("tipoUsuario") !== "2" &&
+              location.pathname === "/noticias"
+            ) {
+              return (
+                <>
+                  <Header />
+                  <ErrorPermisos />
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <Header />
+                  <Noticias />
+                  <Footer />
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/colaborador">
-          <HeaderColaborador />
-          <Colaborador />
+          {(() => {
+            if (
+              localStorage.getItem("tipoUsuario") !== "4" &&
+              location.pathname === "/colaborador"
+            ) {
+              return (
+                <>
+                  <Header />
+                  <ErrorPermisos />
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <HeaderColaborador />
+                  <Colaborador />
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="/register">
-          <Header />
-          <Register />
-          <Footer />
+         {(() => {
+            if (
+              (localStorage.getItem("tipoUsuario") === "3" ||
+              localStorage.getItem("tipoUsuario") === "2" ||
+              localStorage.getItem("tipoUsuario") === "4") &&
+              location.pathname === "/register"
+            )  {
+              window.location = "/";
+            } else {
+              return (
+                <>
+                  <Header />
+                  <Register />
+                  <Footer />
+                </>
+              );
+            }
+          })()}
+          
         </Route>
         <Route path="/login">
-          <Header />
-          <Login />
-          <Footer />
+             {(() => {
+            if (
+              (localStorage.getItem("tipoUsuario") === "3" ||
+              localStorage.getItem("tipoUsuario") === "2" ||
+              localStorage.getItem("tipoUsuario") === "4") &&
+              location.pathname === "/login"
+            ) {
+              window.location = "/";
+            } else {
+              return (
+                <>
+                  <Header />
+                  <Login />
+                  <Footer />
+                </>
+              );
+            }
+          })()}
         </Route>
         <Route path="*">
           <Header />
@@ -192,11 +480,31 @@ export default function App() {
 function NoMatch() {
   let location = useLocation();
   return (
-    <div id="contenido">
-      <h3>Error 404</h3>
-      <h3>
-        La ruta introducida no existe(<code>{location.pathname}</code>)
-      </h3>
+    <div id="contenido" className="container">
+      <div className="row">
+        <div className="pt-5">
+          <h3>Error 404</h3>
+          <h3>
+            La ruta introducida no existe(<code>{location.pathname}</code>)
+          </h3>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ErrorPermisos() {
+  return (
+    <div id="contenido" className="container">
+      <div className="row">
+        <div className="pt-5">
+          <h3>Error Permisos</h3>
+          <h3>Pulse en el siguiente botón para volver a la home.</h3>
+          <a className="btn btnEstandar" href="/">
+            Volver a la home
+          </a>
+        </div>
+      </div>
     </div>
   );
 }

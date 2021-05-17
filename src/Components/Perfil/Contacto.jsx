@@ -22,7 +22,7 @@ export default class Detalles extends React.Component {
   }
   
   sacarUsuario() {
-    fetch("http://api-proyecto-final/api/usuario/" + localStorage.getItem("idUsuario"))
+    fetch("https://api.ccpegoilesvalls.es/api/usuario/" + localStorage.getItem("idUsuario"))
       .then((res) => res.json())
       .then(
         (result) => {
@@ -70,7 +70,7 @@ guardar(tick) {
       }),
   };
   fetch(
-      "http://api-proyecto-final/api/usuario/"+ localStorage.getItem("idUsuario"),
+      "https://api.ccpegoilesvalls.es/api/usuario/"+ localStorage.getItem("idUsuario"),
       requestOptions
   ).then((response) => { 
     if(response.ok) {
@@ -172,7 +172,7 @@ render() {
               </td>
             </tr>
             <tr>
-              <td class="font-weight-bold">Fecha</td>
+              <td class="font-weight-bold">Teléfono</td>
               <td>
               {(() => {
                   if(errorTelefono !== ""){

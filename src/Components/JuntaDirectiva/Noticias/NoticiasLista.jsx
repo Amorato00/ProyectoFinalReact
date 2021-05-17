@@ -39,7 +39,7 @@ export default class NoticiasLista extends React.Component {
 
   sacarNoticias() {
     document.getElementById("modalCarga").style.display = "block";
-    fetch("http://api-proyecto-final/api/noticia")
+    fetch("https://api.ccpegoilesvalls.es/api/noticia")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -89,7 +89,7 @@ export default class NoticiasLista extends React.Component {
   }
 
   sacarNoticiaSearch(search) {
-    fetch("http://api-proyecto-final/api/noticia/search/"+search)
+    fetch("https://api.ccpegoilesvalls.es/api/noticia/search/"+search)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -118,7 +118,7 @@ export default class NoticiasLista extends React.Component {
 
   sacarNoticiasId(id, boton) {
     document.getElementById(boton).className = "list-group-item list-group-item-action botonJuntaActivo";
-    fetch("http://api-proyecto-final/api/noticia/id/"+id)
+    fetch("https://api.ccpegoilesvalls.es/api/noticia/id/"+id)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -145,7 +145,7 @@ export default class NoticiasLista extends React.Component {
     const { titulo, texto, itemEdit, imagenNoticia } = this.state;
     
     var arrayFecha = itemEdit.fecha.split("/");
-
+    this.subirImagen();
     const requestOptions = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -159,7 +159,7 @@ export default class NoticiasLista extends React.Component {
         }),
     };
     fetch(
-        "http://api-proyecto-final/api/noticia/"+itemEdit.id,
+        "https://api.ccpegoilesvalls.es/api/noticia/"+itemEdit.id,
         requestOptions
     ).then((response) => { 
       if(response.ok) { 
@@ -233,13 +233,27 @@ export default class NoticiasLista extends React.Component {
   }
   
   eliminar(id) {
-    fetch('http://api-proyecto-final/api/noticia/' + id, {
+    fetch('https://api.ccpegoilesvalls.es/api/noticia/' + id, {
       method: 'DELETE',
     })
     .then(res => res.text()) // or res.json()
     .then(res => {
       this.sacarNoticias();
     })
+  }
+
+  subirImagen() {
+    var inputFile = document.getElementById("imagenNoticia");
+    let formData = new FormData();
+    formData.append("archivo", inputFile.files[0]);
+    fetch("https://api.ccpegoilesvalls.es/upload/img", {
+      method: 'POST',
+      body: formData,
+        })
+    .then(respuesta => respuesta.text())
+    .then(decodificado => {
+        console.log(decodificado);
+    });
   }
 
   render() {
@@ -385,7 +399,7 @@ export default class NoticiasLista extends React.Component {
                       onChange={this.handleChange}
                     />
                     <div className="pt-2">
-                      <img className="editImagen" src={"http://api-proyecto-final/img/" + imagenNoticia} alt="Imagen noticia"/>
+                      <img className="editImagen" src={"https://api.ccpegoilesvalls.es/img/" + imagenNoticia} alt="Imagen noticia"/>
                     </div>
                   </Form.Group>
                 </div>

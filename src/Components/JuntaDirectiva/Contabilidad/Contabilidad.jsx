@@ -31,7 +31,7 @@ export default class Contabilidad extends PureComponent {
   sacarConceptoYearPasado(year) {
     var yearPasado = year - 1;
     console.log(yearPasado);
-    fetch("http://api-proyecto-final/api/contabilidad/ultima/" + yearPasado)
+    fetch("https://api.ccpegoilesvalls.es/api/contabilidad/ultima/" + yearPasado)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -55,7 +55,7 @@ export default class Contabilidad extends PureComponent {
 
   sacarContabilidad(year) {
     document.getElementById("modalCarga").style.display = "block";
-    fetch("http://api-proyecto-final/api/contabilidad/" + year)
+    fetch("https://api.ccpegoilesvalls.es/api/contabilidad/" + year)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -85,7 +85,7 @@ export default class Contabilidad extends PureComponent {
   }
 
   sacarContabilidadSearch(search) {
-    fetch("http://api-proyecto-final/api/contabilidad/search/" + search)
+    fetch("https://api.ccpegoilesvalls.es/api/contabilidad/search/" + search)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -112,7 +112,7 @@ export default class Contabilidad extends PureComponent {
   }
 
   sacarIdContabilidad(id) {
-    fetch("http://api-proyecto-final/api/contabilidad/id/" + id)
+    fetch("https://api.ccpegoilesvalls.es/api/contabilidad/id/" + id)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -134,7 +134,7 @@ export default class Contabilidad extends PureComponent {
   }
 
   sacarYears() {
-    fetch("http://api-proyecto-final/api/contabilidad/years")
+    fetch("https://api.ccpegoilesvalls.es/api/contabilidad/years")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -201,7 +201,7 @@ export default class Contabilidad extends PureComponent {
       }),
     };
     fetch(
-      "http://api-proyecto-final/api/contabilidad/" + itemEditar.id,
+      "https://api.ccpegoilesvalls.es/api/contabilidad/" + itemEditar.id,
       requestOptions
     ).then((response) => {
       if (response.ok) {
