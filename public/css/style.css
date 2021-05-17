@@ -140,6 +140,38 @@ li {
     color:#a53636;
 }
 
+.dropdownEstandar {
+	background-color: #a53636;
+	color: white !important;
+}
+
+.dropdownEstandar a{
+	color: white !important;
+}
+
+.dropdownEstandar a:hover{
+	background-color: white;
+	color: #a53636 !important;
+}
+
+.dropdownEstandar button{
+	color: white !important;
+}
+
+.dropdownEstandar button:hover{
+	background-color: white;
+	color: #a53636 !important;
+}
+
+.imagenDescuentoSocio {
+	height: 12.125rem;
+	width: 16.188rem;
+}
+
+.imagenNoticiaHome{
+	height: 12rem;
+	width: 100%;
+}
 /* Estadar Socio y Junta Directiva */
 
 .header img {
@@ -199,7 +231,10 @@ li {
 	color: #0c0c0c !important;
 }
 
-
+.editImagen {
+	height: 12.125rem;
+	width: 16.188rem;
+}
 
 /*=============================================
 =                 Home                        =
@@ -214,7 +249,7 @@ li {
 }
 
 #carruselHome {
-	padding-top: 7.5rem !important;
+	padding-top: 6.5rem !important;
 	color: white;
 	-webkit-text-stroke: 0.03rem rgb(75, 75, 75);
 	z-index: 0;
@@ -226,7 +261,7 @@ li {
 }
 
 #contenido {
-	padding-top: 7.5rem !important;
+	padding-top: 6.5rem !important;
 }
 
 .fila1-img {
@@ -607,12 +642,25 @@ li {
 	#redes-sociales {
 		margin-top: 0rem !important;
 	}
+	#carruselHome {
+		padding-top: 6.5rem !important;
+	}
 	/* Fin Home Responsive*/
 	.icono_volver_arriba {
 		position: fixed;
 		right: 5%;
 		bottom: 5%;
 		font-size: 2rem;
+	}
+
+	.editImagen {
+		height: 8.063rem;
+		width: 10.15rem;
+	}
+
+	.imagenDescuentoSocio {
+		height: 8.063rem;
+		width: 100%;
 	}
 }
 
@@ -714,7 +762,12 @@ li {
 
     .tableResponsive td:last-child {
         border-bottom: 0;
-    }
+	}
+	
+	.imagenDescuentoSocio {
+		height: 100%;
+		width: 110%;
+	}
 	/* Fin Home Responsive */
 }
 
@@ -775,6 +828,11 @@ li {
 	#colaboladorSingleUser {
 		height: 100%;
 	}
+
+	.imagenDescuentoSocio {
+		height: 100%;
+		width: 110%;
+	}
 }
 
 @media only screen and (max-width: 1024px) {
@@ -785,6 +843,11 @@ li {
 	}
 	#redes-sociales {
 		margin-top: -8rem;
+	}
+
+	.imagenDescuentoSocio {
+		height: 12.125rem;
+		width: 80%;
 	}
 	/* Fin Home Responsive */
 }
@@ -801,6 +864,11 @@ li {
 	.fila1-texto h1{
 		font-size: 1.5rem !important;
 	}
+
+	.imagenDescuentoSocio {
+		height: 12.125rem;
+		width: 80%;
+	}
 	/* Fin Home Responsive */
 }
 
@@ -814,4 +882,8 @@ li {
 		margin-top: -8rem;
 	}
 	/* Fin Home Responsive */
+	.imagenDescuentoSocio {
+		height: 12.125rem;
+		width: 100%;
+	}
 }
