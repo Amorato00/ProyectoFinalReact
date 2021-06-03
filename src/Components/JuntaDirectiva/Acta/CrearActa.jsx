@@ -9,7 +9,7 @@ const schema = yup.object().shape({
   fecha: yup.date().required("La fecha es obligatoria ").nullable().transform ( ( curr ,  orig )  =>  orig  ===  '' ? null : curr ),
 });
 
-export default function CrearEvento() {
+export default function CrearActa() {
   //Guardar contabilidilidad
   function guardar(data) {
     const requestOptions = {
@@ -104,6 +104,7 @@ export default function CrearEvento() {
                     {...register("fecha")}
                   />
                 </Form.Group>
+                {/*
               <Form.Group>
                 <Form.Label>Archivo</Form.Label>
                 <input
@@ -112,7 +113,7 @@ export default function CrearEvento() {
                   type="file"
                   name="archivo"
                 />
-              </Form.Group>
+                </Form.Group>*/}
             </div>
             <div className="modal-footer">
               <button

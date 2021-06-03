@@ -29,6 +29,7 @@ export default class GestionSocio extends React.Component {
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+            <p className="pl-3">Cuenta IBAN: {this.props.iban}</p>
             <table class="table">
               <thead>
                 <tr>

@@ -160,6 +160,7 @@ export default class DescuentoLista extends React.Component {
   }
 
   sacarColaboradores(idColaborador) {
+    console.log(idColaborador);
     fetch("https://api.ccpegoilesvalls.es/api/colaborador")
       .then((res) => res.json())
       .then(
@@ -167,6 +168,8 @@ export default class DescuentoLista extends React.Component {
           var text = "";
           text += '<option value="" label="Selecciona una seccion" />';
           result.forEach((item) => {
+            console.log(item.id);
+            console.log(item.username);
             if(idColaborador === item.id) {
               text += '<option value="'+item.id+'" selected label="'+item.username+'" />';
             } else {
@@ -174,7 +177,8 @@ export default class DescuentoLista extends React.Component {
             }
               
           });
-          document.getElementById('colaboradorSelect').innerHTML = text;
+          console.log(text);
+          document.getElementById('colaboradorSelectEdit').innerHTML = text;
         
         },
         // Nota: es importante manejar errores aquí y no en
@@ -235,7 +239,7 @@ export default class DescuentoLista extends React.Component {
     ).then((response) => {
       if (response.ok) {
         document.getElementById("boton"+itemEdit.id).className = "list-group-item list-group-item-action botonJunta";
-        localStorage.setItem("alerta", "Se ha modificado correctamente");
+        //localStorage.setItem("alerta", "Se ha modificado correctamente");
         //window.location = "/junta-directiva/contabilidad";
         this.sacarDescuento();
         response.json();
@@ -295,7 +299,7 @@ export default class DescuentoLista extends React.Component {
       }
     }
 
-    if(name === "colaboradorSelect") {
+    if(name === "colaboradorSelectEdit") {
       if (event.target.value === "") {
         this.setState({
           errorColaboradorSelect: "Tienes que seleccionar un select",
@@ -418,7 +422,7 @@ export default class DescuentoLista extends React.Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLongTitle">
-                  Editar evento
+                  Editar descuento
                 </h5>
                 <button
                   type="button"
@@ -538,7 +542,7 @@ export default class DescuentoLista extends React.Component {
                   <Form.Label>
                     Colaborador<span className="obligatorio">*</span>
                   </Form.Label>
-                  <Form.Control as="select" name="colaboradorSelect" id="colaboradorSelect"  onChange={this.handleChange}>
+                  <Form.Control as="select" name="colaboradorSelect" id="colaboradorSelectEdit"  onChange={this.handleChange}>
                     <option value="" label="Selecciona un colaborador" />
 
                   </Form.Control>

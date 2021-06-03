@@ -116,6 +116,8 @@ export default class NoticiasLista extends React.Component {
   }
 
 
+
+
   sacarNoticiasId(id, boton) {
     document.getElementById(boton).className = "list-group-item list-group-item-action botonJuntaActivo";
     fetch("https://api.ccpegoilesvalls.es/api/noticia/id/"+id)
@@ -164,7 +166,7 @@ export default class NoticiasLista extends React.Component {
     ).then((response) => { 
       if(response.ok) { 
         document.getElementById("boton"+itemEdit.id).className = "list-group-item list-group-item-action botonJunta";
-        localStorage.setItem("alerta", "Se ha modificado correctamente");
+        //localStorage.setItem("alerta", "Se ha modificado correctamente");
         //window.location = "/junta-directiva/contabilidad";
         this.sacarNoticias();
         response.json();

@@ -37,7 +37,7 @@ export default class Acta extends React.Component  {
                         <div className="text-center pb-5">
                             <label><i className="fas fa-search pr-3 text-white h5"></i> </label>
                             <input className="form-control w-50 d-inline inputGreen" type="text" id="search" name="search"
-                                placeholder="Buscar noticia" value={this.state.search}
+                                placeholder="Buscar acta" value={this.state.search}
                                 onChange={this.handleChange}/>
                         </div>
                         <div className="text-left text-lg-right mb-5">

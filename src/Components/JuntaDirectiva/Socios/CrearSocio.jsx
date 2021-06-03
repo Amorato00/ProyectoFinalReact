@@ -20,11 +20,11 @@ const schema = yup.object().shape({
     .max(255, "Máximo 255 caracteres"),
   telefono: yup
     .string()
-    .required("El numero de telefono es obligatorio")
+    .required("El número de teléfono es obligatorio")
     .matches(/^\d{9}$/, "El número de telefono no tiene 9 digitos"),
   correo: yup
     .string()
-    .email("Correo electronico invalido")
+    .email("Correo electrónico invalido")
     .required("El correo electronico es obligatorio")
     .matches(
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/,
@@ -56,7 +56,7 @@ const schema = yup.object().shape({
   }),
   fotoPerfil: yup.mixed().nullable(),
   politicas: yup.boolean().oneOf([true], "Campo requerido"),
-  seccion: yup.string().required("La seccion es obligatoria"),
+  seccion: yup.string().required("La sección es obligatoria"),
 });
 
 
@@ -72,6 +72,7 @@ export default function AddSocio() {
   const [usuarios, setUsuarios] = useState([]);
   const [errorUsername, serErrorUsername] = useState("");
   const [errorEmail, serErrorEmail] = useState("");
+  const [errorIban, setErrorIban] = useState("");
 
   //Guardar sosio
 function guardar(data, imagen) {
@@ -119,6 +120,7 @@ function guardar(data, imagen) {
 
     var boolUsername = false;
     var boolEmail = false;
+    var boolIban = false;
 
     usuarios.forEach((element) => {
       if (element.email === data.correo) {
@@ -134,7 +136,18 @@ function guardar(data, imagen) {
       }
     });
   
-    if (boolUsername === false && boolEmail === false) {
+    if(data.iban.length > 0) {
+      var expregCorreo = /^([a-zA-Z]{2}\d{2})\s*\t*(\d{4})\s*\t*(\d{4})\s*\t*(\d{4})\s*\t*(\d{4})\s*\t*(\d{4})$/;
+      if(!expregCorreo.test(data.iban)) {
+        setErrorIban("El iban es incorrecto, (ESXX XXXX XXXX XXXX XXXX XXXX)");
+        boolIban = true;
+      } else {
+        setErrorIban("");
+        boolIban = false;
+      }
+    }
+  
+   if (boolUsername === false && boolEmail === false && boolIban === false) {
       if (document.getElementById("imagen").value.length > 0) {
         if (
           document.getElementById("imagen").files[0].type === "image/jpg" ||
@@ -177,7 +190,7 @@ function guardar(data, imagen) {
       .then(
         (result) => {
           var text = "";
-          text += '<option value="" label="Selecciona una seccion" />';
+          text += '<option value="" label="Selecciona una sección" />';
           result.forEach((item) => {
               text += '<option value="'+item.id+'" label="'+item.name+'" />';
           });
@@ -233,7 +246,7 @@ function guardar(data, imagen) {
               <div className="col-6">
                 <Form.Group>
                   <Form.Label>
-                    Username<span className="obligatorio">*</span>
+                  Nombre de usuario<span className="obligatorio">*</span>
                   </Form.Label>
                   <input
                     type="text"
@@ -283,7 +296,7 @@ function guardar(data, imagen) {
                     className="form-control mx-auto"
                     id="telefono"
                     name="telefono"
-                    placeholder="Numero de telefono"
+                    placeholder="Número de teléfono"
                     {...register("telefono")}
                   />
                   <p className="text-danger">{errors.telefono?.message}</p>
@@ -299,7 +312,7 @@ function guardar(data, imagen) {
                     placeholder="Cuenta IBAN"
                     {...register("iban")}
                   />
-                  <p className="text-danger">{errors.iban?.message}</p>
+                  <p className="text-danger">{errorIban}</p>
               </div>
               <div className="col-6">
                 <Form.Group>
@@ -393,14 +406,14 @@ function guardar(data, imagen) {
               <div className="col-6">
                 <Form.Group>
                   <Form.Label>
-                    Password<span className="obligatorio">*</span>
+                    Contraseña<span className="obligatorio">*</span>
                   </Form.Label>
                   <input
                     type="password"
                     className="form-control mx-auto"
                     id="password"
                     name="password"
-                    placeholder="Repetir Contraseña"
+                    placeholder="Contraseña"
                     {...register("password")}
                   />
                   <p className="text-danger">{errors.password?.message}</p>
@@ -409,7 +422,7 @@ function guardar(data, imagen) {
               <div className="col-6">
                 <Form.Group>
                   <Form.Label>
-                    Repetir Password<span className="obligatorio">*</span>
+                    Repetir Contraseña<span className="obligatorio">*</span>
                   </Form.Label>
                   <input
                     type="password"

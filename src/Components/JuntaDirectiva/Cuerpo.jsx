@@ -107,10 +107,11 @@ export default class Cuerpo extends React.Component {
             var separar = element.fechaInicio.split(" ");
             var fecha = separar[0].split("/");
             var hora = separar[1].split(":");
+            var mes = fecha[1] - 1;
             this.setState({
               items: [
                 ...this.state.items,
-                {id: element.id, Subject: element.titulo, StartTime: new Date(fecha[2],fecha[1],fecha[0],hora[0],hora[1]), EndTime: new Date(fecha[2],fecha[1],fecha[0],hora[0],hora[1])} 
+                {id: element.id, Subject: element.titulo, StartTime: new Date(fecha[2],mes,fecha[0],hora[0],hora[1]), EndTime: new Date(fecha[2],mes,fecha[0],hora[0],hora[1])} 
               ]
               });
             })

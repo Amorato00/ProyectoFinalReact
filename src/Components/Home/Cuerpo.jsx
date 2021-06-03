@@ -11,13 +11,13 @@ class Cuerpo extends React.Component {
               <img
                 src={"https://api.ccpegoilesvalls.es/img/StockSnap_U75QCQN721-min.jpg"}
                 className="card-img-top"
-                alt="..."
+                alt="Imagen"
               />
               <div id="quines-somos">
                 <h1>¿Quiénes somos?</h1>
                 <h4 className="pt-4">
-                  El club más grande de toda españa de ciclismo, llevamos 15
-                  años realizando actividades y informando de las últimas
+                  El club más grande de toda España de ciclismo, llevamos 15
+                  años realizando actividades e informando de las últimas
                   noticias sobre el mundo del ciclismo
                 </h4>
               </div>
@@ -26,7 +26,7 @@ class Cuerpo extends React.Component {
               <img
                 src={"https://api.ccpegoilesvalls.es/img/StockSnap_VKR6HOS0DC-min.jpg"}
                 className="card-img-top"
-                alt="..."
+                alt="Imagen"
               />
               <div className="text-white" id="socio">
                 <h1 className="pl-4 pt-4">Beneficios de ser socio</h1>
@@ -67,7 +67,7 @@ class Cuerpo extends React.Component {
               }
               className="card-img-top"
               id="imagen-lateral-1"
-              alt="..."
+              alt="Imagen lateral"
             />
             <img
               src={
@@ -75,7 +75,7 @@ class Cuerpo extends React.Component {
               }
               className="card-img-top"
               id="imagen-lateral-2"
-              alt="..."
+              alt="Imagen lateral"
             />
           </div>
         </div>

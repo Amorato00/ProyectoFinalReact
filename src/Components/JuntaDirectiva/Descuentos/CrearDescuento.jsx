@@ -16,9 +16,9 @@ const schema = yup.object().shape({
 export default function CrearDescuento() {
 
   const [imagenError, setImagenError] = useState("");
-  subirImagen();
   //Guardar contabilidilidad
   function guardar(data, imagen) {
+    subirImagen();
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -44,20 +44,18 @@ export default function CrearDescuento() {
     );
   }
 
-  useEffect(() => {
-    sacarColaboradores();
-  }, []);
-
   function sacarColaboradores() {
     fetch("https://api.ccpegoilesvalls.es/api/colaborador")
       .then((res) => res.json())
       .then(
         (result) => {
+          console.log(result);
           var text = "";
           text += '<option value="" label="Selecciona una seccion" />';
           result.forEach((item) => {
               text += '<option value="'+item.id+'" label="'+item.username+'" />';
           });
+          console.log(text);
           document.getElementById('colaboradorSelect').innerHTML = text;
         
         },
@@ -114,6 +112,17 @@ export default function CrearDescuento() {
   };
   return (
     <>
+    <div className="text-left text-lg-right mb-5">
+      <button
+        className="btn btn-outline-light font-weight-bold"
+        data-toggle="modal"
+        data-target="#crearDescuento"
+        onClick = {sacarColaboradores}
+      >
+        {" "}
+        <i class="fas fa-plus pr-3 p-1 p-md-2"></i> Añadir Descuento
+      </button>
+    </div>
     <div
       className="modal fade bd-example-modal-lg"
       id="crearDescuento"
@@ -249,6 +258,7 @@ export default function CrearDescuento() {
         </div>
       </div>
     </div>
+  
     </>
   );
 }

@@ -154,7 +154,7 @@ export default class EventoLista extends React.Component {
     ).then((response) => { 
       if(response.ok) { 
         document.getElementById("boton"+itemEdit.id).className = "list-group-item list-group-item-action botonJunta";
-        localStorage.setItem("alerta", "Se ha modificado correctamente");
+        //localStorage.setItem("alerta", "Se ha modificado correctamente");
         //window.location = "/junta-directiva/contabilidad";
         this.sacarEvento();
         response.json();

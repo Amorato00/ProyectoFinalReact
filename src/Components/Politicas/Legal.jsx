@@ -13,7 +13,7 @@ export default class Cookies extends React.Component {
         <div className="container" id="contenido">
           <div className="row">
             <div
-              className="col-12 col-md-9 col-lg-7 mx-auto py-5 px-5 my-5 text-white text-justify"
+              className="col-12 col-md-9 col-lg-7 mx-auto py-5 px-5 my-5 text-white"
               id="politicas"
             >
               <h2>TÉRMINOS LEGALES</h2>
@@ -31,7 +31,7 @@ export default class Cookies extends React.Component {
                     onClick={() => this.desplazarIndice("condiciones")}
                     className="enlaceWeb"
                   >
-                    CONDICIONES GENERALES DE USO
+                    Condiciones generales de uso
                   </a>
                 </li>
                 <li>
@@ -39,7 +39,7 @@ export default class Cookies extends React.Component {
                     onClick={() => this.desplazarIndice("personales")}
                     className="enlaceWeb"
                   >
-                    DATOS PERSONALES QUE RECABAMOS Y CÓMO LO HACEMOS
+                    Datos personales que recabamos y cómo lo hacemos
                   </a>
                 </li>
                 <li>
@@ -47,7 +47,7 @@ export default class Cookies extends React.Component {
                     onClick={() => this.desplazarIndice("compromisos")}
                     className="enlaceWeb"
                   >
-                    COMPROMISOS Y OBLIGACIONES DE LOS USUARIOS
+                    Compromisos y obligaciones de los usuarios
                   </a>
                 </li>
                 <li>
@@ -55,7 +55,7 @@ export default class Cookies extends React.Component {
                     onClick={() => this.desplazarIndice("medidas")}
                     className="enlaceWeb"
                   >
-                    MEDIDAS DE SEGURIDAD
+                    Medidas de seguridad
                   </a>
                 </li>
                 <li>
@@ -63,7 +63,7 @@ export default class Cookies extends React.Component {
                     onClick={() => this.desplazarIndice("reclamaciones")}
                     className="enlaceWeb"
                   >
-                    RECLAMACIONES
+                    Reclamaciones
                   </a>
                 </li>
                 <li>
@@ -71,7 +71,7 @@ export default class Cookies extends React.Component {
                     onClick={() => this.desplazarIndice("plataforma")}
                     className="enlaceWeb"
                   >
-                    PLATAFORMA DE RESOLUCIÓN DE CONFLICTOS
+                    Plataforma de resolución de conflictos
                   </a>
                 </li>
                 <li>
@@ -79,7 +79,7 @@ export default class Cookies extends React.Component {
                     onClick={() => this.desplazarIndice("derechos")}
                     className="enlaceWeb"
                   >
-                    DERECHOS DE PROPIEDAD INTELECTUAL E INDUSTRIAL
+                    Derechos de propiedad intelectual e industrial
                   </a>
                 </li>
                 <li>
@@ -87,7 +87,7 @@ export default class Cookies extends React.Component {
                     onClick={() => this.desplazarIndice("enlaces")}
                     className="enlaceWeb"
                   >
-                    ENLACES EXTERNOS
+                    Enlaces externos
                   </a>
                 </li>
                 <li>
@@ -95,7 +95,7 @@ export default class Cookies extends React.Component {
                     onClick={() => this.desplazarIndice("politica")}
                     className="enlaceWeb"
                   >
-                    POLÍTICA DE COMENTARIOS
+                    Política de comentarios
                   </a>
                 </li>
                 <li>
@@ -103,7 +103,7 @@ export default class Cookies extends React.Component {
                     onClick={() => this.desplazarIndice("exclusion")}
                     className="enlaceWeb"
                   >
-                    EXCLUSIÓN DE GARANTÍAS Y RESPONSABILIDAD
+                    Exclusión de garantías y responsabilidad
                   </a>
                 </li>
                 <li>
@@ -111,7 +111,7 @@ export default class Cookies extends React.Component {
                     onClick={() => this.desplazarIndice("ley")}
                     className="enlaceWeb"
                   >
-                    LEY APLICABLE Y JURISDICCIÓN
+                    Ley aplicable y jurisdicción
                   </a>
                 </li>
                 <li>
@@ -119,7 +119,7 @@ export default class Cookies extends React.Component {
                     onClick={() => this.desplazarIndice("contacto")}
                     className="enlaceWeb"
                   >
-                    CONTACTO
+                    Contacto
                   </a>
                 </li>
               </ul>
@@ -133,7 +133,7 @@ export default class Cookies extends React.Component {
               <h2 className="pt-5" id="aviso">
                 Aviso legal y términos de uso
               </h2>
-              <p>
+              <p className="text-justify">
                 En este espacio, el USUARIO, podrá encontrar toda la información
                 relativa a los términos y condiciones legales que definen las
                 relaciones entre los usuarios y nosotros como responsables de
@@ -150,9 +150,9 @@ export default class Cookies extends React.Component {
               </p>
 
               <h2 className="pt-4" id="condiciones">
-                CONDICIONES GENERALES DE USO
+                Condiciones generales de uso
               </h2>
-              <p>
+              <p className="text-justify">
                 Las presentes Condiciones Generales regulan el uso (incluyendo
                 el mero acceso) de las páginas de la web, integrantes del sitio
                 web de sitio web incluidos los contenidos y servicios puestos a
@@ -162,24 +162,24 @@ export default class Cookies extends React.Component {
               </p>
 
               <h2 className="pt-4" id="personales">
-                DATOS PERSONALES QUE RECABAMOS Y CÓMO LO HACEMOS
+                Datos personales que recabamos y cómo lo hacemos
               </h2>
-              <p>
-                Leer
+              <p className="text-justify">
+                Leer&nbsp;
                 <a
                   target="_blank"
                   href="/politicas-privacidad"
                   className="enlaces"
                 >
-                  &nbsp;<i class="fas fa-external-link-alt"></i> Política de
-                  Privacidad
+                  Política de
+                  Privacidad &nbsp;<i class="fas fa-external-link-alt"></i> 
                 </a>
               </p>
 
               <h2 className="pt-4" id="compromisos">
-                COMPROMISOS Y OBLIGACIONES DE LOS USUARIOS
+                Compromisos y obligaciones de los usuarios
               </h2>
-              <p>
+              <p className="text-justify">
                 El Usuario queda informado, y acepta, que el acceso a la
                 presente web no supone, en modo alguno, el inicio de una
                 relación comercial con sitio web. De esta forma, el usuario se
@@ -194,7 +194,7 @@ export default class Cookies extends React.Component {
                 los derechos del prestador o de los legítimos titulares;Su
                 utilización para fines comerciales o publicitarios.
               </p>
-              <p>
+              <p className="text-justify">
                 En la utilización de la web, sitio web, el Usuario se compromete
                 a no llevar a cabo ninguna conducta que pudiera dañar la imagen,
                 los intereses y los derechos de sitio web o de terceros o que
@@ -210,9 +210,9 @@ export default class Cookies extends React.Component {
               </p>
 
               <h2 className="pt-4" id="medidas">
-                MEDIDAS DE SEGURIDAD
+                Medidas de seguridad
               </h2>
-              <p>
+              <p className="text-justify">
                 Los datos personales comunicados por el usuario a sitio web
                 pueden ser almacenados en bases de datos automatizadas o no,
                 cuya titularidad corresponde en exclusiva a sitio web, asumiendo
@@ -221,7 +221,7 @@ export default class Cookies extends React.Component {
                 calidad de la información contenida en las mismas de acuerdo con
                 lo establecido en la normativa vigente en protección de datos.
               </p>
-              <p>
+              <p className="text-justify">
                 La comunicación entre los usuarios y sitio web utiliza un canal
                 seguro, y los datos transmitidos son cifrados gracias a
                 protocolos a https, por tanto, garantizamos las mejores
@@ -230,9 +230,9 @@ export default class Cookies extends React.Component {
               </p>
 
               <h2 className="pt-4" id="reclamaciones">
-                RECLAMACIONES
+                Reclamaciones
               </h2>
-              <p>
+              <p className="text-justify">
                 sitio web informa que existen hojas de reclamación a disposición
                 de usuarios y clientes. El Usuario podrá realizar reclamaciones
                 solicitando su hoja de reclamación o remitiendo un correo
@@ -240,7 +240,7 @@ export default class Cookies extends React.Component {
                 el servicio y/o producto adquirido y exponiendo los motivos de
                 su reclamación.
               </p>
-              <p>
+              <p className="text-justify">
                 El usuario/comprador podrá notificarnos la reclamación, bien a
                 través de correo electrónico a: correo@gmail.com, si lo desea
                 adjuntando el siguiente formulario de reclamación: El
@@ -250,27 +250,27 @@ export default class Cookies extends React.Component {
               </p>
 
               <h2 className="pt-4" id="plataforma">
-                PLATAFORMA DE RESOLUCIÓN DE CONFLICTOS
+                Plataforma de resolución de conflictos
               </h2>
-              <p>
+              <p className="text-justify">
                 Por si puede ser de tu interés, para someter tus reclamaciones
                 puedes utilizar también la plataforma de resolución de litigios
                 que facilita la Comisión Europea y que se encuentra disponible
-                en el siguiente enlace:
+                en el siguiente enlace:&nbsp;
                 <a
                   target="_blank"
                   href="http://ec.europa.eu/consumers/odr/"
                   className="enlaces"
                 >
-                  &nbsp;<i class="fas fa-external-link-alt"></i>{" "}
-                  http://ec.europa.eu/consumers/odr/
+                  
+                  http://ec.europa.eu/consumers/odr/&nbsp;<i class="fas fa-external-link-alt"></i>
                 </a>
               </p>
 
               <h2 className="pt-4" id="derechos">
-                DERECHOS DE PROPIEDAD INTELECTUAL E INDUSTRIAL
+                Derechos de propiedad intelectual e industrial
               </h2>
-              <p>
+              <p className="text-justify">
                 En virtud de lo dispuesto en los artículos 8 y 32.1, párrafo
                 segundo, de la Ley de Propiedad Intelectual, quedan expresamente
                 prohibidas la reproducción, la distribución y la comunicación
@@ -281,7 +281,7 @@ export default class Cookies extends React.Component {
                 compromete a respetar los derechos de Propiedad Intelectual e
                 Industrial titularidad de sitio web.
               </p>
-              <p>
+              <p className="text-justify">
                 El usuario conoce y acepta que la totalidad del sitio web,
                 conteniendo sin carácter exhaustivo el texto, software,
                 contenidos (incluyendo estructura, selección, ordenación y
@@ -295,13 +295,13 @@ export default class Cookies extends React.Component {
                 de un determinado contenido en la web, deberá notificar dicha
                 circunstancia a sitio web indicando:
               </p>
-              <p>
+              <p className="text-justify">
                 Datos personales del interesado titular de los derechos
                 presuntamente infringidos, o indicar la representación con la
                 que actúa en caso de que la reclamación la presente un tercero
                 distinto del interesado..
               </p>
-              <p>
+              <p className="text-justify">
                 Señalar los contenidos protegidos por los derechos de propiedad
                 intelectual y su ubicación en la web, la acreditación de los
                 derechos de propiedad intelectual señalados y declaración
@@ -310,9 +310,9 @@ export default class Cookies extends React.Component {
               </p>
 
               <h2 className="pt-4" id="enlaces">
-                ENLACES EXTERNOS
+                Enlaces externos
               </h2>
-              <p>
+              <p className="text-justify">
                 Las páginas de la web sitio web, podría proporcionar enlaces a
                 otros sitios web propios y contenidos que son propiedad de
                 terceros. El único objeto de los enlaces es proporcionar al
@@ -320,13 +320,13 @@ export default class Cookies extends React.Component {
                 se responsabiliza en ningún caso de los resultados que puedan
                 derivarse al Usuario por acceso a dichos enlaces.
               </p>
-              <p>
+              <p className="text-justify">
                 Asimismo, el usuario encontrará dentro de este sitio, páginas,
                 promociones, programas de afiliados que acceden a los hábitos de
                 navegación de los usuarios para establecer perfiles. Esta
                 información siempre es anónima y no se identifica al usuario..
               </p>
-              <p>
+              <p className="text-justify">
                 La Información que se proporcione en estos Sitios patrocinado o
                 enlaces de afiliados está sujeta a las políticas de privacidad
                 que se utilicen en dichos Sitios y no estará sujeta a esta
@@ -334,7 +334,7 @@ export default class Cookies extends React.Component {
                 los Usuarios a revisar detalladamente las políticas de
                 privacidad de los enlaces de afiliado.
               </p>
-              <p>
+              <p className="text-justify">
                 El Usuario que se proponga establecer cualquier dispositivo
                 técnico de enlace desde su sitio web al portal sitio web deberá
                 obtener la autorización previa y escrita de sitio web El
@@ -345,9 +345,9 @@ export default class Cookies extends React.Component {
               </p>
 
               <h2 className="pt-4" id="politica">
-                POLÍTICA DE COMENTARIOS
+                Política de comentarios
               </h2>
-              <p>
+              <p className="text-justify">
                 En nuestra web y se permiten realizar comentarios para
                 enriquecer los contenidos y realizar consultas. No se admitirán
                 comentarios que no estén relacionados con la temática de esta
@@ -359,12 +359,12 @@ export default class Cookies extends React.Component {
                 por ejemplo, domicilios privado o teléfonos y que vulneren
                 nuestra política de protección de datos.
               </p>
-              <p>
+              <p className="text-justify">
                 Se desestimará, igualmente, aquellos comentarios creados sólo
                 con fines promocionales de una web, persona o colectivo y todo
                 lo que pueda ser considerado spam en general.
               </p>
-              <p>
+              <p className="text-justify">
                 No se permiten comentarios anónimos, así como aquellos
                 realizados por una misma persona con distintos apodos. No se
                 considerarán tampoco aquellos comentarios que intenten forzar un
@@ -372,40 +372,40 @@ export default class Cookies extends React.Component {
               </p>
 
               <h2 className="pt-4" id="exclusion">
-                EXCLUSIÓN DE GARANTÍAS Y RESPONSABILIDAD
+                Exclusión de garantías y responsabilidad
               </h2>
-              <p>
+              <p className="text-justify">
                 El Prestador no otorga ninguna garantía ni se hace responsable,
                 en ningún caso, de los daños y perjuicios de cualquier
                 naturaleza que pudieran traer causa de:
               </p>
-              <p>
+              <p className="text-justify">
                 La falta de disponibilidad, mantenimiento y efectivo
                 funcionamiento de la web, o de sus servicios y contenidos;
               </p>
-              <p>
+              <p className="text-justify">
                 La existencia de virus, programas maliciosos o lesivos en los
                 contenidos;
               </p>
-              <p>
+              <p className="text-justify">
                 El uso ilícito, negligente, fraudulento o contrario a este Aviso
                 Legal;
               </p>
-              <p>
+              <p className="text-justify">
                 La falta de licitud, calidad, fiabilidad, utilidad y
                 disponibilidad de los servicios prestados por terceros y puestos
                 a disposición de los usuarios en el sitio web.
               </p>
-              <p>
+              <p className="text-justify">
                 El prestador no se hace responsable bajo ningún concepto de los
                 daños que pudieran dimanar del uso ilegal o indebido de la
                 presente página web.
               </p>
 
               <h2 className="pt-4" id="ley">
-                LEY APLICABLE Y JURISDICCIÓN
+                Ley aplicable y jurisdicción
               </h2>
-              <p>
+              <p className="text-justify">
                 Con carácter general las relaciones entre sitio web con los
                 Usuarios de sus servicios telemáticos, presentes en esta web se
                 encuentran sometidas a la legislación y jurisdicción españolas y
@@ -413,14 +413,14 @@ export default class Cookies extends React.Component {
               </p>
 
               <h2 className="pt-4" id="contacto">
-                CONTACTO
+                Contacto
               </h2>
-              <p>
+              <p className="text-justify">
                 En caso de que cualquier Usuario tuviese alguna duda acerca de
                 estas Condiciones legales o cualquier comentario sobre el portal
                 sitio web, por favor diríjase a correo@gmail.com
               </p>
-              <p>
+              <p className="text-justify">
                 De parte del equipo que formamos titulas te agradecemos el
                 tiempo dedicado en leer este Aviso Legal
               </p>

@@ -13,6 +13,7 @@ export default class SociosLista extends React.Component {
       size: 0,
       totalPaginas: 0,
       paginaActual: 0,
+      iban: ""
     };
   }
 
@@ -43,7 +44,7 @@ export default class SociosLista extends React.Component {
       );
   }
 
-  sacarGestionSocio(id) {
+  sacarGestionSocio(id, ibanSocio) {
     document.getElementById("modalCarga").style.display = "block";
     fetch("https://api.ccpegoilesvalls.es/api/gestion-socio/" + id)
       .then((res) => res.json())
@@ -53,6 +54,7 @@ export default class SociosLista extends React.Component {
           document.getElementById("modalCarga").style.display = "none";
           this.setState({
             gestionSocio: result,
+            iban: ibanSocio
           });
         },
         // Nota: es importante manejar errores aquí y no en
@@ -126,7 +128,7 @@ export default class SociosLista extends React.Component {
   }
 
   render() {
-    const { gestionSocio, totalPaginas, paginaActual, itemsPaginacion } = this.state;
+    const { gestionSocio, totalPaginas, paginaActual, itemsPaginacion, iban } = this.state;
     return (
       <div className="mt-5">
         <div
@@ -162,7 +164,7 @@ export default class SociosLista extends React.Component {
               <tr
                 key={item.id}
                 data-toggle="modal"
-                onClick={() => this.sacarGestionSocio(item.id)}
+                onClick={() => this.sacarGestionSocio(item.id, item.iban)}
                 data-target="#gestionSocio"
                 id="trGestionSocio"
                 className="interactuarSocio"
@@ -210,7 +212,7 @@ export default class SociosLista extends React.Component {
             </nav>
           </nav>
         </div>
-        <GestionSocio gestionSocio={gestionSocio} />
+        <GestionSocio gestionSocio={gestionSocio} iban={iban} />
       </div>
     );
   }

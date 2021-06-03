@@ -27,7 +27,6 @@ export default function Login(props) {
     setErrorUsuario("");
     setErrorPassword("");
     comprobarLogin(data);
-    evt.target.reset();
   };
 
   function comprobarLogin(data) {
@@ -41,12 +40,12 @@ export default function Login(props) {
               document.getElementById("modalCarga").style.display = "none";
               const bcrypt = require('bcryptjs');
               const doesPasswordMatch = bcrypt.compareSync(data.password, item.password);
-          
+              
               if (doesPasswordMatch) {
                 localStorage.setItem("sesion", true);
                 localStorage.setItem("idUsuario", item.id);
                 localStorage.setItem("imagenPerfil", item.fotoPerfil);
-
+                
                 //socio
                 if(item.role === 2) {
                   console.log("Hola");
@@ -80,7 +79,6 @@ export default function Login(props) {
 
   useEffect(() => {
     if(localStorage.getItem("socioCreado") != null) {
-        console.log(localStorage.getItem("socioCreado"));
         document.getElementById("textoAlerta").innerHTML = localStorage.getItem("socioCreado");
         document.getElementById("alerta").style.display = "block";
         localStorage.removeItem("socioCreado");
@@ -117,19 +115,19 @@ export default function Login(props) {
         <div className="row no-gutters">
           <div className="col-md-6">
             <div className="card-body px-5">
-              <h1 className="card-title text-center pt-5 pb-5">Login</h1>
+              <h1 className="card-title text-center pt-5 pb-5">Iniciar sesión</h1>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
                 <p className="text-danger mb-1">{alert}</p>
                 <p className="text-danger mb-1">{errors.emailUsername?.message}</p>
                 <p className="text-danger mb-1">{errorUsuario}</p>
-                  <Form.Label> Email o Username</Form.Label>
+                  <Form.Label> Email o Nombre de usuario</Form.Label>
                   <Form.Control
                     type="text"
                     className="form-control mx-auto inputRed"
                     id="emailUsername"
                     name="emailUsername"
-                    placeholder="Introduce tu Email o Username.."
+                    placeholder="Email o Nombre de usuario.."
                     {...register("emailUsername")}
                   />
                 </Form.Group>
@@ -150,7 +148,7 @@ export default function Login(props) {
                   <input
                     type="submit"
                     className="btn btnEstandar3"
-                    value="Login"
+                    value="Iniciar sesión"
                     id="boton_login"
                   />
                 </Form.Group>

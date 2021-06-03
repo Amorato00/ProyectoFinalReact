@@ -47,7 +47,7 @@ export default function Header() {
             id="imagenPerfil"
           >
             <button
-              className="nav-link enlace-nav btn"
+              className="nav-link enlace-nav btn px-0"
               id="navbarDropdown2"
               data-toggle="dropdown"
               aria-haspopup="true"
@@ -62,7 +62,6 @@ export default function Header() {
               <Button
                 onClick={() => {
                   localStorage.clear();
-                  localStorage.setItem("alerta", "Sesion cerrada");
                   window.location = "/";
                 }}
                 className="dropdown-item"
@@ -100,7 +99,6 @@ export default function Header() {
                   <Button
                     onClick={() => {
                       localStorage.clear();
-                      localStorage.setItem("alerta", "Sesion cerrada");
                       window.location = "/";
                     }}
                     className="dropdown-item"

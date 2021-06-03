@@ -182,10 +182,10 @@ guardar(tick) {
 
     //validar Cuenta Contable
     if(name === "iban") {
-      expreg = /ES\d{2}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}|ES\d{22}/;
+      expreg = /^([a-zA-Z]{2}\d{2})\s*\t*(\d{4})\s*\t*(\d{4})\s*\t*(\d{4})\s*\t*(\d{4})\s*\t*(\d{4})$/;
      if(!expreg.test(event.target.value)){
         this.setState({
-          errorIban: "El formato del IBAN es incorrecto",
+          errorIban: "El formato del IBAN es incorrecto, (ESXX XXXX XXXX XXXX XXXX XXXX)",
         });
       } else {
         this.setState({
@@ -194,8 +194,6 @@ guardar(tick) {
       }
     }
   }
-
-
 
 render() { 
   const { username, nombre, apellidos, DNI, fecha, errorUsername, errorNombre,
@@ -236,12 +234,7 @@ render() {
                   maxLength = "25"
                   value={username}
                   onChange={this.handleChange}
-                  onBlur={() => {
-                    if(errorUsername === "") {
-                      console.log('Enviar');
-                      this.guardar("tickUsername");
-                    }
-                  }}
+                  disabled
                   className="rounded pl-1"
                 />
                 <div id="tickUsername" style={{display:"none"}}><i className="fas fa-check-circle pl-5 text-success"></i></div>

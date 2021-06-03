@@ -71,10 +71,12 @@ guardar() {
   }
 
   handleChange(event) {
+    const {items} = this.state;
     var name = event.target.name;
     this.setState({
       [name]: event.target.value,
     });
+
   }
 
 
@@ -128,13 +130,14 @@ guardar() {
                           }
                         })()}
                         <Form.Label>
-                          Contraseña<span className="obligatorio">*</span>
+                          Contraseña Actual<span className="obligatorio">*</span>
                         </Form.Label>
                         <Form.Control
                           type="password"
                           className="form-control"
                           id="password"
                           name="password"
+                          placeholder="Contraseña Actual"
                           onChange={this.handleChange}
                           value={password}
                         />
@@ -154,6 +157,7 @@ guardar() {
                           className="form-control"
                           id="newPassword"
                           name="newPassword"
+                          placeholder="Nueva contraseña"
                           onChange={this.handleChange}
                           value={newPassword}
                         />
@@ -173,6 +177,7 @@ guardar() {
                           className="form-control"
                           id="repeatPassword"
                           name="repeatPassword"
+                          placeholder="Repetir Nueva contraseña"
                           onChange={this.handleChange}
                           value={repeatPassword}
                         />

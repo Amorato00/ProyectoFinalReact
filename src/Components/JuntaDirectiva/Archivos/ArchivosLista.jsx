@@ -168,6 +168,18 @@ export default class ArchivosLista extends React.Component {
     this.sacarArchivos();
   }
 
+  descargar(name) {
+
+    var array = name.split(".");
+    if (array[1] === "pdf") {
+      window.location = "https://api.ccpegoilesvalls.es/file/" + name;
+    
+    } else {
+      window.location = "https://api.ccpegoilesvalls.es/descargar/img/" + name;
+    }
+    
+  }
+
   render() {
     const { totalPaginas, paginaActual, itemsPaginacion } = this.state;
     return (
@@ -187,7 +199,7 @@ export default class ArchivosLista extends React.Component {
           <tbody>
             {itemsPaginacion.map((item) => (
               <tr>
-                <td data-label="Descargar"><button className="btn btnEstandar2"><i class="fas fa-download"></i></button></td>
+                <td data-label="Descargar"><button className="btn btnEstandar2" onClick={() => this.descargar(item.name)}><i class="fas fa-download"></i></button></td>
                 <td data-label="Nombre">{item.name}</td>
                 <td data-label="Eliminar"><button className="btn btnEstandar2" onClick={() => this.eliminar(item.id)}><i class="fas fa-trash"></i></button></td>
               </tr>

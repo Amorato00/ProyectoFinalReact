@@ -76,16 +76,9 @@ export default class Descuento extends React.Component {
                 onChange={this.handleChange}
               />
             </div>
-            <div className="text-left text-lg-right mb-5">
-              <button
-                className="btn btn-outline-light font-weight-bold"
-                data-toggle="modal"
-                data-target="#crearDescuento"
-              >
-                {" "}
-                <i class="fas fa-plus pr-3 p-1 p-md-2"></i> Añadir Descuento
-              </button>
-            </div>
+            
+              <CrearDescuento/>
+           
             <h4 className="text-white">
               Selecciona uno de los DESCUENTOS para pasar al modo editor
             </h4>
@@ -95,7 +88,6 @@ export default class Descuento extends React.Component {
                 this.descuentoLista = element;
               }}
             />
-            <CrearDescuento />
           </div>
         </div>
       </div>

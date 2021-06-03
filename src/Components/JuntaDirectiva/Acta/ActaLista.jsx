@@ -264,7 +264,7 @@ export default class EventoLista extends React.Component {
                 })()}
 
             <p class="mb-1">{item.texto.substr(0, 100)}</p>
-            <small class="text-muted"> Archivos </small>
+            <small class="text-muted"> {item.archivo} </small>
           </button>
         ))}
         <div
@@ -333,7 +333,7 @@ export default class EventoLista extends React.Component {
                     value={fecha}
                   />
                 </Form.Group>
-                  <Form.Group>
+                 {/*} <Form.Group>
                     <Form.Label>Archivo</Form.Label>
                     <input
                       id="icono_perfil"
@@ -341,7 +341,7 @@ export default class EventoLista extends React.Component {
                       type="file"
                       name="icono_perfil"
                     />
-                  </Form.Group>
+                  </Form.Group>*/}
                 </div>
                 <div className="modal-footer">
                   <div className="w-100">

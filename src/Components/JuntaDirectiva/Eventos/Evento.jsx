@@ -71,7 +71,7 @@ export default class Evento extends React.Component {
                 type="text"
                 id="search"
                 name="search"
-                placeholder="Buscar noticia"
+                placeholder="Buscar evento"
                 value={this.state.search}
                 onChange={this.handleChange}
               />

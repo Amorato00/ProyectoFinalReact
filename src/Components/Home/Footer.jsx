@@ -23,7 +23,7 @@ class Footer extends React.Component {
                             <p className="m-0">Cookies</p>
                         </a>
                         <a href="/">
-                            <p className="m-0">Contactanos</p>
+                            <p className="m-0">Contáctanos</p>
                         </a>
                     </div>
                     <div className="col-12 col-lg-5 d-block d-lg-none text-center pt-4">

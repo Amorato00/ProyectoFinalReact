@@ -39,6 +39,7 @@ export default function Header() {
             className="navbar-brand d-flex align-items-center mr-0"
             href="/"
             id="logo"
+            title="Home"
           >
             <img
               src={"https://api.ccpegoilesvalls.es/img/logo/logo.png"}
@@ -52,6 +53,7 @@ export default function Header() {
                 <Nav.Link
                   className="nav-link enlace-nav d-block d-lg-none"
                   href="/login"
+                  title="Iniciar sesión"
                 >
                   <i className="fas fa-user h3"></i>
                 </Nav.Link>
@@ -59,11 +61,11 @@ export default function Header() {
             } else {
               return (
                 <Navbar.Brand
-                  className="dropdown nav-item active my-auto d-block d-lg-none"
+                  className="dropdown nav-item active my-auto float-right d-block d-lg-none"
                   id="imagenPerfil"
                 >
                   <button
-                    className="nav-link enlace-nav btn"
+                    className="nav-link enlace-nav btn px-0"
                     id="navbarDropdown2"
                     data-toggle="dropdown"
                     aria-haspopup="true"
@@ -87,7 +89,6 @@ export default function Header() {
                     <Button
                       onClick={() => {
                         localStorage.clear();
-                        localStorage.setItem("alerta", "Sesion cerrada");
                         window.location = "/";
                       }}
                       className="dropdown-item"
@@ -106,13 +107,13 @@ export default function Header() {
             <ul className="navbar-nav ">
               {location.pathname === "/" ? (
                 <li className="nav-item active my-auto">
-                  <a className="nav-link marcar enlace-nav" href="/">
+                  <a className="nav-link marcar enlace-nav" href="/" title="Home">
                     Home
                   </a>
                 </li>
               ) : (
                 <li className="nav-item active my-auto">
-                  <a className="nav-link enlace-nav" href="/">
+                  <a className="nav-link enlace-nav" href="/" title="Home">
                     Home
                   </a>
                 </li>
@@ -127,6 +128,7 @@ export default function Header() {
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
+                    title="Noticias"
                   >
                     Noticias
                   </button>
@@ -134,7 +136,7 @@ export default function Header() {
                     className="dropdown-menu dropdownEstandar border-0"
                     aria-labelledby="navbarDropdown"
                   >
-                    <a className="dropdown-item " href="/#noticias-home">
+                    <a className="dropdown-item " href="/#noticias-home" title="Últimas noticias">
                       Últimas noticias
                     </a>
                     {(() => {
@@ -231,7 +233,7 @@ export default function Header() {
                           Ser socio
                         </a>
                         <a className="dropdown-item" href="/login">
-                          Acceder
+                          Iniciar sesión
                         </a>
                       </div>
                     </li>
@@ -269,7 +271,7 @@ export default function Header() {
               </li>
               <li className="active my-auto">
                 <Nav.Link className="enlace-nav" href="/">
-                  Contactanos
+                  Contáctanos
                 </Nav.Link>
               </li>
               {/*
