@@ -22,6 +22,14 @@ html,body{
 
 /* Estandar */
 
+.e-quick-popup-wrapper .e-delete-icon::before {
+	content: "" !important;
+}
+
+.e-quick-popup-wrapper .e-edit-icon::before {
+	content: "" !important;
+}
+
 a {
 	text-decoration: none !important;
 }
@@ -171,6 +179,10 @@ li {
 .imagenNoticiaHome{
 	height: 12rem;
 	width: 100%;
+}
+
+.manita {
+	cursor: pointer;
 }
 /* Estadar Socio y Junta Directiva */
 
@@ -662,6 +674,10 @@ li {
 		height: 8.063rem;
 		width: 100%;
 	}
+
+	#icono_perfil {
+		font-size: 0.8rem !important;
+	}
 }
 
 
@@ -673,7 +689,7 @@ li {
 		font-size: 2rem !important;
 	}
 	h5 {
-		font-size: 0.8rem !important;
+		font-size: 1.2rem !important;
 	}
 	h4 {
 		font-size: 1.5rem;
@@ -686,6 +702,9 @@ li {
 	}
 	small {
 		font-size: 0.6rem !important;
+	}
+	#politicas li {
+		font-size: 0.8rem !important;
 	}
 	li {
 		font-size: 0.6rem !important;
@@ -769,6 +788,9 @@ li {
 		width: 110%;
 	}
 	/* Fin Home Responsive */
+	#icono_perfil {
+		font-size: 0.8rem;
+	}
 }
 
 
@@ -832,6 +854,10 @@ li {
 	.imagenDescuentoSocio {
 		height: 100%;
 		width: 110%;
+	}
+
+	#icono_perfil {
+		font-size: 0.7rem;
 	}
 }
 
